@@ -38,21 +38,31 @@ public class Game {
 		for (int i = 0; i < 8; i++){
 			for (int j = 0; j < 8; j++){
 				if(player1.getDragonTowers(i, j) != "empty"){
-					System.out.print(player1.getDragonTowers(i, j) + "\t");
+					System.out.print("W" + player1.getDragonTowers(i, j) + "\t");
 				} else if (player2.getDragonTowers(i, j) != "empty"){
-					System.out.print(player2.getDragonTowers(i, j) + "\t");
-				} 
+					System.out.print("B" + player2.getDragonTowers(i, j) + "\t");
+				} else {
+					System.out.print(board.getTiles(i, j) + "\t");
+				}
 			}
+			System.out.print("\r\n");
 		}
 	}
 	
 	private void makeMove(){
+		System.out.println(playerPlaying().getColor().se + " player's turn...");
 		do {
+			System.out.println("Please enter valid starting coordinates:");
+			System.out.print("I: ");
 			startI = scanner.nextInt();
+			System.out.print("J: ");
 			startJ = scanner.nextInt();
 		} while(!isValidStartingMove());
 		do {
+			System.out.println("Please enter valid finishing coordinates:");
+			System.out.print("I: ");
 			finishI = scanner.nextInt();
+			System.out.print("J: ");
 			finishJ = scanner.nextInt();
 		} while(!isValidFinishingMove());
 		playerPlaying().move(startI, startJ, finishI, finishJ);
