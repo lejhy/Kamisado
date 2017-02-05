@@ -50,7 +50,7 @@ public class Game {
 	}
 	
 	private void makeMove(){
-		System.out.println(playerPlaying().getColor().se + " player's turn...");
+		System.out.println(playerPlaying().getColor() + " player's turn...");
 		do {
 			System.out.println("Please enter valid starting coordinates:");
 			System.out.print("I: ");
