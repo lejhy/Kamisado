@@ -14,7 +14,7 @@ public class Player {
 				dragonTowers[i][j] = "empty";
 			}
 		}
-		if (color == "white"){
+		if (color == "1"){
 			dragonTowers[7][0] = "brown";
 			dragonTowers[7][1] = "green";
 			dragonTowers[7][2] = "red";
@@ -23,7 +23,7 @@ public class Player {
 			dragonTowers[7][5] = "purple";
 			dragonTowers[7][6] = "blue";
 			dragonTowers[7][7] = "orange";
-		} else if (color == "black"){
+		} else if (color == "2"){
 			dragonTowers[0][0] = "orange";
 			dragonTowers[0][1] = "blue";
 			dragonTowers[0][2] = "purple";
@@ -33,7 +33,7 @@ public class Player {
 			dragonTowers[0][6] = "green";
 			dragonTowers[0][7] = "brown";
 		} else {
-			System.out.println("Wrong player color");
+			System.out.println("Wrong player colour");
 		}
 	}
 	

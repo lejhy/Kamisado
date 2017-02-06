@@ -16,8 +16,8 @@ public class Game {
 	
 	
 	public Game(){
-		player1 = new Player("white", "bottom");
-		player2 = new Player("black", "top");
+		player1 = new Player("1", "bottom");
+		player2 = new Player("2", "top");
 		board = new Board();
 		gameOver = false;
 		scanner = new Scanner(System.in);
