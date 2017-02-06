@@ -38,9 +38,9 @@ public class Game {
 		for (int i = 0; i < 8; i++){
 			for (int j = 0; j < 8; j++){
 				if(player1.getDragonTowers(i, j) != "empty"){
-					System.out.print("W" + player1.getDragonTowers(i, j) + "\t");
+					System.out.print("1" + player1.getDragonTowers(i, j) + "\t");
 				} else if (player2.getDragonTowers(i, j) != "empty"){
-					System.out.print("B" + player2.getDragonTowers(i, j) + "\t");
+					System.out.print("2" + player2.getDragonTowers(i, j) + "\t");
 				} else {
 					System.out.print(board.getTiles(i, j) + "\t");
 				}
