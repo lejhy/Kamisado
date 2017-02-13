@@ -1,5 +1,5 @@
 public class Board {
-	private String[][] tiles;
+	private Color[][] tiles;
 	
 	public Board(){
 		tiles = new String[8][8];
@@ -14,8 +14,7 @@ public class Board {
 			{"brown", "green", "red", "yellow", "pink", "purple", "blue", "orange"}
 		};
 		this.tiles = tiles;
-	};
-	
+	}	
 	public void  render(){
 		for (int i = 0; i < 8; i++){
 			for (int j = 0; j < 8; j++){
@@ -25,11 +24,11 @@ public class Board {
 		}
 	}
 	
-	public String[][] getTiles(){
+	public Color[][] getTiles(){
 		return tiles;
 	}
 	
-	public String getTiles(int i, int j){
+	public Color getTile(int i, int j){
 		return tiles[i][j];
 	}
 }
