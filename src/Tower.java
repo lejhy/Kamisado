@@ -1,14 +1,33 @@
+import java.util.HashSet;
+import java.util.Set;
 
 public class Tower {
-   private Color color;
+private Player player;
    
-   public void setColor(Color value) {
-      this.color = value;
+   public void setPlayer(Player value) {
+      this.player = value;
    }
    
-   public Color getColor() {
-      return this.color;
+   public Player getPlayer() {
+      return this.player;
    }
+   
+   /**
+    * <pre>
+    *           0..*     0..*
+    * Tower ------------------------> Player
+    *           tower        &gt;       player1
+    * </pre>
+    */
+   private Set<Player> player1;
+   
+   public Set<Player> getPlayer1() {
+      if (this.player1 == null) {
+         this.player1 = new HashSet<Player>();
+      }
+      return this.player1;
+   }
+   
    
    private String/*No type specified!*/ positionX;
    
@@ -33,21 +52,21 @@ public class Tower {
    /**
     * <pre>
     *           0..*     0..1
-    * Tower ------------------------- Player
-    *           tower        &lt;       player
+    * Tower ------------------------- Board
+    *           tower        &lt;       newClass1
     * </pre>
     */
-   private Player player;
+   private Board newClass1;
    
-   public void setPlayer(Player value) {
-      this.player = value;
+   public void setNewClass1(Board value) {
+      this.newClass1 = value;
    }
    
-   public Player getPlayer() {
-      return this.player;
+   public Board getNewClass1() {
+      return this.newClass1;
    }
    
-   public void render() {
+   public Tower (Color color, Player player) {
       // TODO implement this operation
       throw new UnsupportedOperationException("not implemented");
    }
