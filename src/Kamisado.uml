@@ -4,7 +4,7 @@
     <eAnnotations xmi:id="_AcSUAPHfEea-pfnksqgg4Q" source="http://ns.yatta.de/umllab">
       <contents xmi:type="ecore:EAnnotation" xmi:id="_AcTiIPHfEea-pfnksqgg4Q" source="codegen">
         <details xmi:id="_AcTiIfHfEea-pfnksqgg4Q" key="codegenDirectory" value="/Kamisado/src"/>
-        <details xmi:id="_Bh5RMPHfEea-pfnksqgg4Q" key="AssociatedSourceCode" value="/Kamisado/src/Board.java;3635240998/1;/Kamisado/src/Game.java;2737224012/1;/Kamisado/src/Kamisado.java;2354116308/1;/Kamisado/src/Player.java;1830243032/1;/Kamisado/src/Tower.java;3908572133/1;/Kamisado/src/Color.java;3587638085/1;"/>
+        <details xmi:id="_Bh5RMPHfEea-pfnksqgg4Q" key="AssociatedSourceCode" value="/Kamisado/src/Board.java;1405161691/1;/Kamisado/src/Game.java;3886468085/1;/Kamisado/src/Kamisado.java;845183573/1;/Kamisado/src/Player.java;2848340781/1;/Kamisado/src/Tower.java;1925058481/1;/Kamisado/src/Color.java;3587638085/1;/Kamisado/src/UI.java;4082835420/1;/Kamisado/src/Controller.java;2200579108/1;/Kamisado/src/Config.java;3554393217/1;/Kamisado/src/AI.java;2605524014/1;/Kamisado/src/Easy.java;1557233207/1;/Kamisado/src/Hard.java;4003612192/1;/Kamisado/src/Data.java;2362544026/1;/Kamisado/src/Score.java;2430045132/1;"/>
       </contents>
     </eAnnotations>
     <elementImport xmi:id="_AupPUPHfEea-pfnksqgg4Q">
