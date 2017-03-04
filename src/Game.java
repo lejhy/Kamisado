@@ -3,14 +3,12 @@ import java.util.Set;
 import java.util.Scanner;
 
 public class Game {
-/**
-    * <pre>
-    *           0..1     0..*
-    * Game ------------------------- Config
-    *           game        &gt;       config
-    * </pre>
-    */
+
    private Set<Config> config;
+   private Set<AI> aI;
+   private Data data;
+   private int lastX;
+   private int lastY;
    
    public Set<Config> getConfig() {
       if (this.config == null) {
@@ -19,14 +17,8 @@ public class Game {
       return this.config;
    }
    
-   /**
-    * <pre>
-    *           0..*     0..*
-    * Game ------------------------> AI
-    *           game        &gt;       aI
-    * </pre>
-    */
-   private Set<AI> aI;
+  
+   
    
    public Set<AI> getAI() {
       if (this.aI == null) {
@@ -42,7 +34,7 @@ public class Game {
     *           game        &lt;       data
     * </pre>
     */
-   private Data data;
+  
    
    public void setData(Data value) {
       this.data = value;
@@ -52,7 +44,7 @@ public class Game {
       return this.data;
    }
    
-   private int lastX;
+   
    
    public void setLastX(int value) {
       this.lastX = value;
@@ -62,7 +54,7 @@ public class Game {
       return this.lastX;
    }
    
-   private int lastY;
+ 
    
    public void setLastY(int value) {
       this.lastY = value;

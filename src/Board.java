@@ -1,8 +1,18 @@
 import java.util.HashSet;
 import java.util.Set;
+
+
 public class Board {
-private Set<Integer> previousMoves;
-   
+	private Set<Integer> previousMoves;
+	private Color lastColor;
+	private Set<Player> player;
+	private Player lastPlayer;
+	private Game game;
+	private Set<Tower> tower;
+	private Tower[] dragonTowers;
+	private Color[][] tiles;
+	   
+	
    public void setPreviousMoves(Set<Integer> value) {
       this.previousMoves = value;
    }
@@ -11,7 +21,7 @@ private Set<Integer> previousMoves;
       return this.previousMoves;
    }
    
-   private Color lastColor;
+  
    
    public void setLastColor(Color value) {
       this.lastColor = value;
@@ -21,14 +31,7 @@ private Set<Integer> previousMoves;
       return this.lastColor;
    }
    
-   /**
-    * <pre>
-    *           0..*     0..*
-    * Board ------------------------> Player
-    *           board        &gt;       player
-    * </pre>
-    */
-   private Set<Player> player;
+ 
    
    public Set<Player> getPlayer() {
       if (this.player == null) {
@@ -37,7 +40,7 @@ private Set<Integer> previousMoves;
       return this.player;
    }
    
-   private Player lastPlayer;
+
    
    public void setLastPlayer(Player value) {
       this.lastPlayer = value;
@@ -54,7 +57,7 @@ private Set<Integer> previousMoves;
     *           board        &lt;       game
     * </pre>
     */
-   private Game game;
+
    
    public void setGame(Game value) {
       this.game = value;
@@ -71,7 +74,6 @@ private Set<Integer> previousMoves;
     *           newClass1        &gt;       tower
     * </pre>
     */
-   private Set<Tower> tower;
    
    public Set<Tower> getTower() {
       if (this.tower == null) {
@@ -80,7 +82,7 @@ private Set<Integer> previousMoves;
       return this.tower;
    }
    
-   private Tower[] dragonTowers;
+   
    
    public Tower[] getDragonTowers() {
       return this.dragonTowers;
@@ -106,7 +108,7 @@ private Set<Integer> previousMoves;
       throw new UnsupportedOperationException("not implemented");
    }
    
-	private Color[][] tiles;
+	
 	public Color[][] getTiles(){
 		return tiles;
 	}

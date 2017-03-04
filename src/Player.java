@@ -1,14 +1,10 @@
 import java.util.HashSet;
 import java.util.Set;
 public abstract class Player {
-/**
- * <pre>
- *           2..2     0..1
- * Player ------------------------- Config
- *           player        &lt;       config
- * </pre>
- */
+
 private Config config;
+private int score;
+private String name;
 
 public void setConfig(Config value) {
    this.config = value;
@@ -19,7 +15,7 @@ public Config getConfig() {
 }
 
 
-private int score;
+
 
 public void setScore(int value) {
    this.score = value;
@@ -28,7 +24,7 @@ public void setScore(int value) {
 public int getScore() {
    return this.score;
 }
-	private String name;
+	
 	
 	public void move(){
 		dragonTowers[finishI][finishJ] = dragonTowers[startI][startJ];
