@@ -8,7 +8,7 @@ public class Board {
 	private Player lastPlayer;
 	private Tower[] dragonTowers;
 	private Color[][] tiles;
-   
+
    public Tower getTower(int x, int y) {
 	   // TODO implement this operation
 	   throw new UnsupportedOperationException("not implemented");
