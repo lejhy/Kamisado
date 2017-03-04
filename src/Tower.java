@@ -9,11 +9,11 @@ public class Tower {
 	private int positionY;    
 	   
    public void setPositionX(int value) {
-      positionX = value;
+      this.positionX = value;
    }
   
    public void setPositionY(int value) {
-      positionY = value;
+      this.positionY = value;
    }
    
    public Color getColor() {

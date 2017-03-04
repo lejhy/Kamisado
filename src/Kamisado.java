@@ -67,8 +67,9 @@ public class Kamisado {
       throw new UnsupportedOperationException("not implemented");
    }
    
-   public void exit() {
-      // TODO implement this operation
+   public void exit(Data data) {
+	   data.saveDataToFile(fileName);
+	   exit();
       throw new UnsupportedOperationException("not implemented");
    }
    
