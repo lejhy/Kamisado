@@ -4,7 +4,7 @@ import java.util.Set;
 
 
 public class Board {
-	private Set<Integer> previousMoves;
+	private List<Integer> previousMoves;
 	private Color lastColor;
 	private Color lastPlayerColor;
 	private List<Tower> towers;
@@ -34,14 +34,36 @@ public class Board {
 		lastPlayerColor = Color.black;
 		lastColor = null;
 	}
-
-	public Color[][] getTiles(){
+	
+	public Board (Board board) {
+		this.tiles = new Color[8][8];
+		for (int i = 0; i < 8; i++){
+			for (int j = 0; j < 8; j++){
+				this.tiles = board.tiles;
+			}
+		}
+		
+		this.towers = new ArrayList<Tower>();
+		for (Tower tower: board.towers){
+			this.towers.add(new Tower(tower));
+		}
+		
+		this.lastPlayerColor = board.lastPlayerColor;
+		this.lastColor = board.lastColor;
+	}
+	
+	// delete before finishing
+	
+	public Color[][] getTiles() {
 		return tiles;
 	}
 	
-	public List<Tower> getTowers(){
+	public List<Tower> getTowers() {
 		return towers;
 	}
+	
+	
+	// delete before finishing
 	
 	public Color getTile(int x, int y) {
 		return tiles[x][y];
@@ -59,153 +81,33 @@ public class Board {
 		return towers.get(i).getPlayerColor();
 	}
 	
-	public int getTowerPosX (int i) {
+	public int getTower (int i) {
 		return towers.get(i).getPositionX();
 	}
+	
+	public Tower getTower(int x, int y){
+	   for (Tower tower: towers){
+		   if (tower.getPositionX() == x && tower.getPositionY() == y) {
+			   return tower;
+		   }
+	   }
+	   return null;
+   }
 	
 	public int getTowerPosY (int i) {
 		return towers.get(i).getPositionY();
 	}
-   
-   public boolean isValidTower(int x, int y) {
-	   Tower tower = getTower(x, y);
-	   if (tower == null){
-		   return false;
-	   } else {
-		   if (tower.getPlayerColor() == lastPlayerColor) {
-			   return false;
-		   } else {
-			   if (tower.getColor() == lastColor || lastColor == null){
-				   return true;
-			   } else {
-				   return false;
-			   }
-		   }
-	   }
-   }
-   
-   public boolean isValidMove(int towerPosX, int towerPosY, int x, int y) {
-	   System.out.println("Valid move");
-      if (isValidTower(towerPosX, towerPosY) == false) {
-    	  System.out.println("Valid move invalid tower");
-    	  return false;
-      } else if (towerPosX == x && towerPosY == y){
-    	  System.out.println("Valid move same pos");
-    	  return false;
-      } else{
-    	  System.out.println("Valid move picking player");
-    	  if (lastPlayerColor == Color.black) {
-    		  System.out.println("Valid move black");
-    		  return isValidWhite(towerPosX, towerPosY, x, y);
-    	  } else {
-    		  return isValidBlack(towerPosX, towerPosY, x, y);
-    	  }
-      }
-   }
-   
-   private boolean isValidWhite(int towerPosX, int towerPosY, int x, int y) {
-	   System.out.println("Valid white");
-	   if (isValidWhiteStraight(towerPosX, towerPosY, x, y)) {
-		   return true;
-	   } else if (isValidWhiteDiagonal(towerPosX, towerPosY, x, y)) {
-		   return true;
-	   }
-	   return false;
-   }
-   
-   private boolean isValidBlack(int towerPosX, int towerPosY, int x, int y) {
-	   if (isValidBlackStraight(towerPosX, towerPosY, x, y)) {
-		   return true;
-	   } else if (isValidBlackDiagonal( towerPosX, towerPosY, x, y)) {
-		   return true;
-	   }
-	   return false;
-   }
-   
-   private boolean isValidWhiteStraight(int towerPosX, int towerPosY, int x, int y) {
-	   System.out.println("Valid white straight");
-	   if (towerPosX == x && towerPosY > y) {
-		   System.out.println("Valid white straight inside");
-		   	for (int i = y; i < towerPosY; i++) {
-		   		System.out.println("Valid white straight loop");
-		   		if (getTower(x, i) != null){
-		   			return false;
-		   		}
-		   	}
-		   	return true;
-	   } else {
-		   return false;
-	   }
-   }
-   
-   private boolean isValidWhiteDiagonal(int towerPosX, int towerPosY, int x, int y) {
-	   System.out.println("Valid white diagonal");
-	   int xDiff = towerPosX - x;
-	   int yDiff = towerPosY - y;
-	   if (xDiff == yDiff && towerPosX > x && towerPosY > y){
-		   System.out.println("Valid white diagonal +");
-		   	for (int i = xDiff; i > 0; i--) {
-		   		System.out.println("Valid white diagonal loop");
-		   		if (getTower(towerPosX-i, towerPosY-i) != null){
-		   			System.out.println("Valid white diagonal loop fail at" + towerPosX + towerPosY + i);
-		   			return false;
-		   		}
-		   	}
-		   	System.out.println("Valid white diagonal true");
-		   	return true;
-	   } else if (-xDiff == yDiff && towerPosX < x && towerPosY > y){
-		   System.out.println("Valid white diagonal -");
-		   for (int i = -xDiff; i > 0; i--) {
-			   System.out.println("Valid white diagonal loop");
-		   		if (getTower(towerPosX+i, towerPosY-i) != null){
-		   			System.out.println("Valid white diagonal loop fail at" + towerPosX + towerPosY + i);
-		   			return false;
-		   		}
-		   	}
-		   	System.out.println("Valid white diagonal true");
-		   	return true;
-	   } else {
-		   return false;
-	   }   
-   }
-   
-   private boolean isValidBlackStraight(int towerPosX, int towerPosY, int x, int y) {
-	   if (towerPosX == x && towerPosY < y) {
-		   	for (int i = y; i > towerPosY; i--) {
-		   		if (getTower(x, i) != null){
-		   			return false;
-		   		}
-		   	}
-		   	return true;
-	   } else {
-		   return false;
-	   }
-   }
-   
-   private boolean isValidBlackDiagonal(int towerPosX, int towerPosY, int x, int y) {
-	   int xDiff = towerPosX - x;
-	   int yDiff = towerPosY - y;
-	   if (xDiff == yDiff && towerPosX < x && towerPosY < y){
-		   	for (int i = xDiff; i > 0; i--) {
-		   		if (getTower(towerPosX+i, towerPosY+i) != null){
-		   			return false;
-		   		}
-		   	}
-		   	return true;
-	   } else if (-xDiff == yDiff && towerPosX > x && towerPosY < y){
-		   for (int i = -xDiff; i > 0; i--) {
-		   		if (getTower(towerPosX-i, towerPosY+i) != null){
-		   			return false;
-		   		}
-		   	}
-		   	return true;
-	   } else {
-		   return false;
-	   }   
-   }
+	
+	public Color getLastColor () {
+		return lastColor;
+	}
+	
+	public Color getLastPlayerColor () {
+		return lastPlayerColor;
+	}
    
    public boolean performMove(int towerPosX, int towerPosY, int x, int y) {
-      if (isValidMove(towerPosX, towerPosY, x, y)){
+      if (GameLogic.isValidMove(this, towerPosX, towerPosY, x, y)){
     	  Tower tower = getTower(towerPosX, towerPosY);
     	  tower.setPositionX(x);
     	  tower.setPositionY(y);
@@ -232,14 +134,5 @@ public class Board {
    public boolean undoLastMove() {
       // TODO implement this operation
       throw new UnsupportedOperationException("not implemented");
-   }
-   
-   private Tower getTower(int x, int y){
-	   for (Tower tower: towers){
-		   if (tower.getPositionX() == x && tower.getPositionY() == y) {
-			   return tower;
-		   }
-	   }
-	   return null;
    }
 }

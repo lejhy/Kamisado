@@ -38,4 +38,11 @@ public class Tower {
       this.positionX = positionX;
       this.positionY = positionY;
    }
+   
+   public Tower(Tower tower){
+	   this.color = tower.getColor();
+	   this.playerColor = tower.getPlayerColor();
+	   this.positionX = tower.getPositionX();
+	   this.positionY = tower.getPositionY();
+   }
 }
