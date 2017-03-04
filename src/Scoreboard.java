@@ -21,7 +21,11 @@ public class Scoreboard {
       return this.score[i];
    }
    
-   
+   public void resetScore(){
+	   score = null;
+	   playerName = null;
+	   time = null;
+   }
    
    public void setPlayerName(String value,int i) {
       this.playerName[i] = value;
@@ -40,5 +44,7 @@ public class Scoreboard {
    public int getTime(int i) {
       return this.time[i];
    }
+   
+   
    
    }
