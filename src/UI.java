@@ -1,43 +1,59 @@
+import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.HashSet;
 
 public class UI {
+	private Scanner scanner;
+	
+	public UI (){
+		scanner = new Scanner(System.in);
+	}
    
-   public void menu(String[] choice){
+   public String menu(String[] choice){
 	   for (int i = 0; i < choice.length; i++){
 		   System.out.println("(" + i + ") - " + choice[i]);
 	   }
+	   return scanner.nextLine();
    }
    
-   public void displayBoard(Color[][] tiles, int[][]){
+   public String prompt(String string) {
+	   System.out.print(string);
+	   return scanner.nextLine();
+   }
+   
+   public void displayBoard(Color[][] tiles, List<Tower> towers){
 	 
 	   System.out.println();
-	   System.out.print("col");
-	   for (int col = 0; col < 7 ; col++){
-		   System.out.print( col + 1);
-		   if(col < 7){
+	   System.out.print("x:  ");
+	   for (int x = 0; x < 7 ; x++){
+		   System.out.print( x + 1);
+		   if(x < 7){
 			   System.out.print(":");
 		   }
-		   System.out.println();
+	   }
+	   System.out.println();
+	   System.out.println();
+	   
+	   for( int y = 0; y < 7; y++){
+		   System.out.print("y" + (y+1) + ": ");
+		   	 for(int x = 0; x < 7; x++){
+		   		System.out.print(tiles[x][y]);
+		   		if (y < 7){
+		   			System.out.print("|");
+		   		}
+		   	}
+		   	System.out.println();
+	   }
+	   System.out.println();
+	   
+	   for(Tower tower: towers){
+		   System.out.print(tower.getColor());
+		   System.out.print(tower.getPlayerColor());
+		   System.out.print(tower.getPositionX());
+		   System.out.print(tower.getPositionY());
 		   System.out.println();
 	   }
-	   
-	   for(int row = 0; row < 7; row++){
-		   System.out.print("row" + (row+1) + ":");
-	   	for( int col = 0; col < 7; col++){
-	   		System.out.print(Color[row][collum]);
-	   	}
-   
-	   	if (col < 7){
-	   		System.out.print("|");
-	   	}
-	   	if(row < 7){
-	   		System.out.println("\n			-----");
-	   	}
-	   	else 
-	   		System.out.println();
-   }
-   
    }
 
 

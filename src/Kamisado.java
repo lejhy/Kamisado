@@ -1,4 +1,5 @@
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -10,30 +11,45 @@ public class Kamisado {
 	private Data data;
 	private UI ui;
 	private Game game;
+	private String fileName;
+	private Status status;
 	
 	public Kamisado(){
-		this.data = new Data("Kamisado.data");
+		this.data = new Data(fileName);
 		this.ui = new UI();
 		this.game = null;
+		this.status = Status.menu;
 	}
 	
-	public void run(){
-		String[] menu = {"New Game", "Load Game", "Display Score", "Exit"};
-		this.ui.menu(menu);
-		String input = System.console().readLine();
-		switch (input){
-			case "0":
-				newGame();
-				break;
-			case "1":
-				loadGame();
-				break;
-			case "2":
-				displayScore();
-				break;
-			case "3":
-				exit();
-				break;
+	public void loop(){
+		switch (status){
+		case menu:
+			String[] menu = {"New Game", "Load Game", "Display Score", "Exit"};
+			String input = ui.menu(menu);;
+			switch (input){
+				case "0":
+					newGame();
+					status = Status.game;
+					break;
+				case "1":
+					loadGame();
+					break;
+				case "2":
+					displayScore();
+					break;
+				case "3":
+					exit();
+					break;
+			}
+			break;
+		case game:
+			Color[][] tiles = game.getTiles();
+			List<Tower> towers = game.getTowers();
+			ui.displayBoard(tiles, towers);
+			int x = Integer.parseInt(ui.prompt("X: "));
+			int y = Integer.parseInt(ui.prompt("Y: "));
+			game.processMove(x, y);
+			break;
 		}
 	}
 	
@@ -67,15 +83,16 @@ public class Kamisado {
       throw new UnsupportedOperationException("not implemented");
    }
    
-   public void exit(Data data) {
+   public void exit() {
 	   data.saveDataToFile(fileName);
-	   exit();
-      throw new UnsupportedOperationException("not implemented");
+	   System.exit(0);
    }
    
 
 	public static void main(String[] args) {
 		Kamisado kamisado = new Kamisado();
-		kamisado.run();
+		while(true){
+			kamisado.loop();
+		}
 	}
 }

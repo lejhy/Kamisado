@@ -1,6 +1,5 @@
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Scanner;
+import java.util.List;
+
 
 public class Game {
 
@@ -16,6 +15,7 @@ public class Game {
 	   if (!gameOver) {
 	      if (selectedTowerPosX == -1){
 	    	  if (board.isValidTower(x, y)){
+	    		  System.out.println("Valid Tower");
 	    		  selectedTowerPosX = x;
 	    		  selectedTowerPosY = y;
 	    		  return 0;
@@ -24,7 +24,10 @@ public class Game {
 	    	  }
 	      } else {
 	    	  if (board.isValidMove(selectedTowerPosX, selectedTowerPosY, x, y)) {
+	    		  System.out.println("Valid Move game");
 	    		  board.performMove(selectedTowerPosX, selectedTowerPosY, x, y);
+	    		  selectedTowerPosX = -1;
+	    		  selectedTowerPosY = -1;
 	    		  round++;
 	    		  if (board.isGameOver()){
 	    			  gameOver = true;
@@ -69,6 +72,14 @@ public class Game {
     	  config.setPlayer2Name(value);
     	  break;
       }
+   }
+   
+   public List<Tower> getTowers(){
+	   return board.getTowers();
+   }
+   
+   public Color[][] getTiles(){
+	   return board.getTiles();
    }
    
    public void getScore() {
