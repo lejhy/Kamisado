@@ -2,14 +2,13 @@ import java.util.Set;
 import java.util.HashSet;
 
 public class Config {
-   /**
-    * <pre>
-    *           0..1     2..2
-    * Config ------------------------- Player
-    *           config        &gt;       player
-    * </pre>
-    */
+   
    private Set<Player> player;
+   private Game game;
+   private int difficulty;
+   private int speed;
+   private Player player1;
+   private Player player2;
    
    public Set<Player> getPlayer() {
       if (this.player == null) {
@@ -18,15 +17,7 @@ public class Config {
       return this.player;
    }
    
-   /**
-    * <pre>
-    *           0..*     0..1
-    * Config ------------------------- Game
-    *           config        &lt;       game
-    * </pre>
-    */
-   private Game game;
-   
+    
    public void setGame(Game value) {
       this.game = value;
    }
@@ -35,7 +26,7 @@ public class Config {
       return this.game;
    }
    
-   private int difficulty;
+ 
    
    public void setDifficulty(int value) {
       this.difficulty = value;
@@ -45,7 +36,7 @@ public class Config {
       return this.difficulty;
    }
    
-   private int speed;
+  
    
    public void setSpeed(int value) {
       this.speed = value;
@@ -55,7 +46,7 @@ public class Config {
       return this.speed;
    }
    
-   private Player player1;
+   
    
    public void setPlayer1(Player value) {
       this.player1 = value;
@@ -65,7 +56,7 @@ public class Config {
       return this.player1;
    }
    
-   private Player player2;
+   
    
    public void setPlayer2(Player value) {
       this.player2 = value;

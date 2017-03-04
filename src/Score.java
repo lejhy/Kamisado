@@ -1,13 +1,10 @@
 
 public class Score {
-   /**
-    * <pre>
-    *           0..*     0..1
-    * Score ------------------------- Data
-    *           score        &lt;       data
-    * </pre>
-    */
+   
+   private int score;
    private Data data;
+   private String playerName;
+   private int time;
    
    public void setData(Data value) {
       this.data = value;
@@ -17,7 +14,7 @@ public class Score {
       return this.data;
    }
    
-   private int score;
+  
    
    public void setScore(int value) {
       this.score = value;
@@ -27,7 +24,7 @@ public class Score {
       return this.score;
    }
    
-   private String playerName;
+   
    
    public void setPlayerName(String value) {
       this.playerName = value;
@@ -37,7 +34,7 @@ public class Score {
       return this.playerName;
    }
    
-   private int time;
+   
    
    public void setTime(int value) {
       this.time = value;
