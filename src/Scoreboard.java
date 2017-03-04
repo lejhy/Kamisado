@@ -1,9 +1,11 @@
+import java.util.ArrayList;
 
 public class Scoreboard {
    
    private int[] score;
    private String[] playerName;
    private int[] time;
+   
    
    public Scoreboard(int[] score , String[] playerName, int[] time) {
 	   score = this.score;
@@ -19,6 +21,10 @@ public class Scoreboard {
    
    public int getScore(int i) {
       return this.score[i];
+   }
+   
+   public int getScoreboardSize(Scoreboard scoreboard){
+	   return scoreboard.score.length;
    }
    
    public void resetScore(){

@@ -28,19 +28,19 @@ private int positionY;
   
    
    public void setPositionX(int value) {
-      positionX = value;
+      this.positionX = value;
    }
   
    public void setPositionY(int value) {
-      positionY = value;
+      this.positionY = value;
    }
    
    public int getPositionY() {
-      return positionY;
+      return this.positionY;
    }
    
    public int getPositionX() {
-      return positionX;
+      return this.positionX;
    }
  
    
