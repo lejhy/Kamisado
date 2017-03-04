@@ -7,7 +7,35 @@ import java.util.Set;
  */
 
 public class Kamisado {
-   
+	private Data data;
+	private UI ui;
+	private Game game;
+	
+	public Kamisado(){
+		this.data = new Data("Kamisado.data");
+		this.ui = new UI();
+	}
+	
+	public void run(){
+		String[] menu = {"New Game", "Load Game", "Display Score", "Exit"};
+		this.ui.menu(menu);
+		String input = System.console().readLine();
+		switch (input){
+			case "0":
+				newGame();
+				break;
+			case "1":
+				loadGame();
+				break;
+			case "2":
+				displayScore();
+				break;
+			case "3":
+				exit();
+				break;
+		}
+	}
+	
    public void newGame() {
       // TODO implement this operation
       throw new UnsupportedOperationException("not implemented");
@@ -21,6 +49,11 @@ public class Kamisado {
    public void loadGame() {
       // TODO implement this operation
       throw new UnsupportedOperationException("not implemented");
+   }
+   
+   public void displayScore() {
+	   // TODO implement this operation
+	   throw new UnsupportedOperationException("not implemented");
    }
    
    public void makeMove(int x, int y) {
@@ -41,8 +74,7 @@ public class Kamisado {
    
 
 	public static void main(String[] args) {
-		Data data = new Data("Kamisado.data");
-		UI ui = new UI();
-		ui.displayMenu();
+		Kamisado kamisado = new Kamisado();
+		kamisado.run();
 	}
 }

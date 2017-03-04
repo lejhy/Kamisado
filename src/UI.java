@@ -3,8 +3,9 @@ import java.util.HashSet;
 
 public class UI {
    
-   public void ui.displayMenu(){
-	   System.out.println("New Game");
-	   System.out.println("New Game");
+   public void menu(String[] choice){
+	   for (int i = 0; i < choice.length; i++){
+		   System.out.println("(" + i + ") - " + choice[i]);
+	   }
    }
 }
