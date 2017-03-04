@@ -14,6 +14,7 @@ public class Kamisado {
 	public Kamisado(){
 		this.data = new Data("Kamisado.data");
 		this.ui = new UI();
+		this.game = null;
 	}
 	
 	public void run(){
@@ -37,8 +38,7 @@ public class Kamisado {
 	}
 	
    public void newGame() {
-      // TODO implement this operation
-      throw new UnsupportedOperationException("not implemented");
+      this.game = new Game();
    }
    
    public void saveGame() {
