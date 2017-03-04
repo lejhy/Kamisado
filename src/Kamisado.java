@@ -43,8 +43,8 @@ public class Kamisado {
 			}
 			break;
 		case game:
-			Color[][] tiles = game.getTiles();
-			List<Tower> towers = game.getTowers();
+			Color[][] tiles = game.getBoard().getTiles();
+			List<Tower> towers = game.getBoard().getTowers();
 			ui.displayBoard(tiles, towers);
 			int x = Integer.parseInt(ui.prompt("X: "));
 			int y = Integer.parseInt(ui.prompt("Y: "));

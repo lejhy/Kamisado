@@ -14,7 +14,7 @@ public class Game {
    public int processMove(int x, int y) {
 	   if (!gameOver) {
 	      if (selectedTowerPosX == -1){
-	    	  if (board.isValidTower(x, y)){
+	    	  if (GameLogic.isValidTower(board, x, y)){
 	    		  System.out.println("Valid Tower");
 	    		  selectedTowerPosX = x;
 	    		  selectedTowerPosY = y;
@@ -23,7 +23,7 @@ public class Game {
 	    		  return -1;
 	    	  }
 	      } else {
-	    	  if (board.isValidMove(selectedTowerPosX, selectedTowerPosY, x, y)) {
+	    	  if (GameLogic.isValidMove(board, selectedTowerPosX, selectedTowerPosY, x, y)) {
 	    		  System.out.println("Valid Move game");
 	    		  board.performMove(selectedTowerPosX, selectedTowerPosY, x, y);
 	    		  selectedTowerPosX = -1;
@@ -74,14 +74,6 @@ public class Game {
       }
    }
    
-   public List<Tower> getTowers(){
-	   return board.getTowers();
-   }
-   
-   public Color[][] getTiles(){
-	   return board.getTiles();
-   }
-   
    public void getScore() {
       // TODO implement this operation
       throw new UnsupportedOperationException("not implemented");
@@ -91,28 +83,8 @@ public class Game {
 	   return this.round;
 	}
 	
-	public Color getTile(int x, int y) {
-		return board.getTile(x, y);
-	}
-	
-	public int getNumOfTowers () {
-		return board.getNumOfTowers();
-	}
-	
-	public Color getTowerColor (int i) {
-		return board.getTowerColor(i);
-	}
-	
-	public Color getTowerPlayerColor (int i) {
-		return board.getTowerPlayerColor(i);
-	}
-	
-	public int getTowerPosX (int i) {
-		return board.getTowerPosX(i);
-	}
-	
-	public int getTowerPosY (int i) {
-		return board.getTowerPosY(i);
+	public Board getBoard(){
+		return board;
 	}
 	
 	public Game(){
