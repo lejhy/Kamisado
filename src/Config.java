@@ -3,30 +3,10 @@ import java.util.HashSet;
 
 public class Config {
    
-   private Set<Player> player;
-   private Game game;
    private int difficulty;
    private int speed;
    private Player player1;
    private Player player2;
-   
-   public Set<Player> getPlayer() {
-      if (this.player == null) {
-         this.player = new HashSet<Player>();
-      }
-      return this.player;
-   }
-   
-    
-   public void setGame(Game value) {
-      this.game = value;
-   }
-   
-   public Game getGame() {
-      return this.game;
-   }
-   
- 
    
    public void setDifficulty(int value) {
       this.difficulty = value;
@@ -36,34 +16,27 @@ public class Config {
       return this.difficulty;
    }
    
-  
-   
    public void setSpeed(int value) {
       this.speed = value;
    }
    
    public int getSpeed() {
       return this.speed;
-   }
+   }   
    
-   
-   
-   public void setPlayer1(Player value) {
-      this.player1 = value;
+   public void setPlayer1Name(String name) {
+      this.player1.setName(name);
    }
    
    public Player getPlayer1() {
       return this.player1;
    }
    
-   
-   
-   public void setPlayer2(Player value) {
-      this.player2 = value;
+   public void setPlayer2Name(String name) {
+	   this.player2.setName(name);
    }
    
    public Player getPlayer2() {
       return this.player2;
    }
-   
-   }
+}
