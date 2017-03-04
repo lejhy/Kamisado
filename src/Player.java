@@ -15,8 +15,6 @@ public Config getConfig() {
 }
 
 
-
-
 public void setScore(int value) {
    this.score = value;
 }

@@ -8,10 +8,9 @@ public class Easy implements AI {
 		return null;
 	}
 
-	@Override
-	public void makeMove() {
+	public void makeMove(Board board) {
 	
-		
+	int validMoves[] = board.getValidMoves(tower);	
 	}
 
 	
