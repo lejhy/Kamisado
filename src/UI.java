@@ -9,8 +9,6 @@ public class UI implements Observer {
 	
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		System.out.println("notified");
-		scanner.nextLine();
 		switch((Value)arg1) {
 		case MAIN_MENU:
 			String[] mainOptions = {"New Game", "Load Game", "Display Score", "Exit"};
@@ -28,11 +26,13 @@ public class UI implements Observer {
 			break;
 		case LOAD_MENU:
 			String[] loadData = kamisado.loadData();
-			kamisado.input(Value.LOAD_MENU, loadMenu(loadData));
+			loadMenu(loadData);
+			kamisado.input(Value.LOAD_MENU, getLine());
 			break;
 		case SCORE_MENU:
 			String[] scoreData = kamisado.scoreData();
-			kamisado.input(Value.SCORE_MENU, scoreMenu(scoreData));
+			scoreMenu(scoreData);
+			kamisado.input(Value.SCORE_MENU, getLine());
 			break;
 		case GAME:
 			displayBoard(game.getBoard());
@@ -43,6 +43,7 @@ public class UI implements Observer {
 		case GAME_OVER:
 			displayBoard(game.getBoard());
 			endGame(game);
+			getLine();
 			break;
 		default:
 			break;
@@ -55,11 +56,10 @@ public class UI implements Observer {
 		this.game = game;
 	}
    
-   public String mainMenu(String[] choice){
+   public void mainMenu(String[] choice){
 	   for (int i = 0; i < choice.length; i++){
 		   System.out.println("(" + i + ") - " + choice[i]);
 	   }
-	   return scanner.nextLine();
    }
    
    public String prompt(String string) {
@@ -67,7 +67,7 @@ public class UI implements Observer {
 	   return scanner.nextLine();
    }
    
-   public String displayBoard(Board board){
+   public void displayBoard(Board board){
 	   String[][] display = new String[8][8];
 	   for(Tower tower: board.getTowers()){
 		   String player;
@@ -106,44 +106,43 @@ public class UI implements Observer {
 		   	System.out.println();
 	   }
 	   System.out.println();
-	   return scanner.nextLine();
    }
 
    public void invalidInput(String input) {
 	   System.out.println("This input is invalid: " + input);
    }
    
-   public String endGame(Game game) {
+   public void endGame(Game game) {
 	   System.out.println("Round: " + game.getRound() + "; Winner: " + game.getBoard().getLastPlayerValue());
 	   System.out.println("Last move: " + game.getBoard().getLastMove().startX + game.getBoard().getLastMove().startY + game.getBoard().getLastMove().finishX + game.getBoard().getLastMove().finishY);
-	   return scanner.nextLine();
    }
    
-   public String displayScore(Scoreboard scoreboard){
+   public void displayScore(Scoreboard scoreboard){
 	  for(int i=0; i< scoreboard.size();i++){
 		  System.out.println("Name: " + scoreboard.getPlayerName(i));
 		  System.out.println("Score: " + scoreboard.getScore(i));
 	  }
-	  return scanner.nextLine();
    }
    
-   public String loadMenu(String[] games){
+   public void loadMenu(String[] games){
 	   for(int i=0; i < games.length; i++) {
 		   String game = games[i];
 		   System.out.println(game);
 	   }
-	   return scanner.nextLine();
    }     
    
-   public String scoreMenu(String[] scores){
+   public void scoreMenu(String[] scores){
 	   for(int i=0; i < scores.length; i++) {
 		   String score = scores[i];
 		   System.out.println(score);
 	   }
-	   return scanner.nextLine();
    }  
    
    public void setGame(Game game) {
 	    this.game = game;
+   }
+   
+   public String getLine(){
+	   return scanner.nextLine();
    }
 }
