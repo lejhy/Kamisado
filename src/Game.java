@@ -45,7 +45,7 @@ public class Game {
    public void setSpeed(int speed){
 	   this.speed = speed;
    }
-   
+
    public String getPlayer1Name() {
 	   return player1.getName();
    }

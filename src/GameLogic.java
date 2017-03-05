@@ -104,7 +104,7 @@ public final class GameLogic {
 			   }
 		   }
 	   }
-	   
+	  
 	   public static boolean isValidMove(Board board, Move move) {
 		   int towerPosX = move.startX;
 		   int towerPosY = move.startY;

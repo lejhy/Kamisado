@@ -48,7 +48,7 @@ public class Board {
 		for (Tower tower: board.towers){
 			this.towers.add(new Tower(tower));
 		}
-		
+
 		this.lastPlayer = board.lastPlayer;
 		this.lastColor = board.lastColor;
 		previousMoves = new ArrayList<Move>();
@@ -61,6 +61,9 @@ public class Board {
 	public List<Tower> getTowers() {
 		return towers;
 	}
+	
+	
+	// delete before finishing
 	
 	public Color getTile(int x, int y) {
 		return tiles[x][y];
