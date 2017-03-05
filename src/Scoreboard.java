@@ -23,8 +23,8 @@ public class Scoreboard {
       return this.score[i];
    }
    
-   public int getScoreboardSize(Scoreboard scoreboard){
-	   return scoreboard.score.length;
+   public int size(){
+	   return score.length;
    }
    
    public void resetScore(){
@@ -50,7 +50,4 @@ public class Scoreboard {
    public int getTime(int i) {
       return this.time[i];
    }
-   
-   
-   
-   }
+}

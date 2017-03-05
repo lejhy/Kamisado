@@ -3,75 +3,63 @@ import java.util.List;
 
 public class Game {
 
-   private Config config;
-   private AI ai;
    private Board board;
    private int round;
    private boolean gameOver;
-   private int selectedTowerPosX;
-   private int selectedTowerPosY;
+   private int difficulty;
+   private int speed;
+   private Player player1;
+   private Player player2;
+   private Kamisado controller;
    
-   public int processMove(int x, int y) {
-	   if (!gameOver) {
-	      if (selectedTowerPosX == -1){
-	    	  if (GameLogic.isValidTower(board, x, y)){
-	    		  System.out.println("Valid Tower");
-	    		  selectedTowerPosX = x;
-	    		  selectedTowerPosY = y;
-	    		  return 0;
-	    	  } else {
-	    		  return -1;
-	    	  }
-	      } else {
-	    	  if (GameLogic.isValidMove(board, selectedTowerPosX, selectedTowerPosY, x, y)) {
-	    		  System.out.println("Valid Move game");
-	    		  board.performMove(selectedTowerPosX, selectedTowerPosY, x, y);
-	    		  selectedTowerPosX = -1;
-	    		  selectedTowerPosY = -1;
-	    		  round++;
-	    		  if (board.isGameOver()){
-	    			  gameOver = true;
-	    			  return 1;
-	    		  }
-	    		  return 0;
-	    	  } else {
-	    		  return -2;
-	    	  }
-	      }
-	   } else {
-		   return -3;
+   public void nextTurn() {
+	   if (!gameOver){
+		   if (board.getLastPlayer() == player1.getValue()) {
+			   board.performMove(player2.getMove());
+		   } else {
+			   board.performMove(player1.getMove());
+		   }
+		   round++;
+	   }
+	   if (GameLogic.isGameOver(board)) {
+		   gameOver = true;
 	   }
    }
    
-   public void changeConfig(Option option, String value) {
-      switch (option) {
-      case difficulty:
-    	  switch (value) {
-    	  case "easy":
-    		  config.setDifficulty(0);
-    		  break;
-    	  case "hard":
-    		  config.setDifficulty(1);
-    		  break;
-    	  }
-    	  break;
-      case speed:
-    	  switch (value) {
-    	  case "slow":
-    		  config.setSpeed(0);
-    		  break;
-    	  case "fast":
-    		  config.setSpeed(1);
-    		  break;
-    	  }
-    	  break;
-      case player1Name:
-    	  config.setPlayer1Name(value);
-    	  break;
-      case player2Name:
-    	  config.setPlayer2Name(value);
-    	  break;
-      }
+   public boolean isGameOver() {
+	   return gameOver;
+   }
+   
+   public int getDifficulty(){
+	   return difficulty;
+   }
+   
+   public void setDifficulty(int difficulty){
+	   this.difficulty = difficulty;
+   }
+   
+   public int getSpeed(){
+	   return speed;
+   }
+   
+   public void setSpeed(int speed){
+	   this.speed = speed;
+   }
+   
+   public String getPlayer1Name() {
+	   return player1.getName();
+   }
+   
+   public void setPlayer1Name(String name) {
+	   player1.setName(name);
+   }
+   
+   public String getPlayer2Name() {
+	   return player2.getName();
+   }
+   
+   public void setPlayer2Name(String name) {
+	   player2.setName(name);
    }
    
    public void getScore() {
@@ -88,12 +76,12 @@ public class Game {
 	}
 	
 	public Game(){
-		config = new Config();
 		board = new Board();
 		gameOver = false;
-		ai = null;
 		round = 0;
-		selectedTowerPosX = -1;
-		selectedTowerPosY = -1;
+		difficulty = 0;
+		speed = 0;
+		player1 = new ComputerEasy(true, board);
+		player2 = new ComputerEasy(false, board);
 	}
 }

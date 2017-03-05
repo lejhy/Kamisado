@@ -3,7 +3,7 @@ import java.util.Set;
 
 public class Tower {
 	
-	private Color playerColor;
+	private boolean player;
 	private Color color;
 	private int positionX;
 	private int positionY;    
@@ -20,8 +20,8 @@ public class Tower {
 	   return color;
    }
    
-   public Color getPlayerColor() {
-	   return playerColor;
+   public boolean getPlayer() {
+	   return player;
    }
    
    public int getPositionY() {
@@ -32,16 +32,16 @@ public class Tower {
       return positionX;
    }
    
-   public Tower (Color color, Color playerColor, int positionX, int positionY) {
+   public Tower (Color color, boolean player, int positionX, int positionY) {
       this.color = color;
-      this.playerColor = playerColor;
+      this.player = player;
       this.positionX = positionX;
       this.positionY = positionY;
    }
    
    public Tower(Tower tower){
 	   this.color = tower.getColor();
-	   this.playerColor = tower.getPlayerColor();
+	   this.player = tower.getPlayer();
 	   this.positionX = tower.getPositionX();
 	   this.positionY = tower.getPositionY();
    }

@@ -1,9 +1,18 @@
-import java.util.HashSet;
-import java.util.Set;
 public abstract class Player {
 
-	private int score;
-	private String name;
+	protected int score;
+	protected String name;
+	protected boolean value;
+	
+	public abstract Move getMove();
+	
+	public void setValue(boolean value) {
+		this.value = value;
+	}
+	
+	public boolean getValue () {
+		return value;
+	}
 	
 	public void setScore(int value) {
 	   this.score = value;
@@ -19,5 +28,10 @@ public abstract class Player {
 
 	public void setName(String position) {
 		this.name = position;
+	}
+	
+	public Player(String name, boolean value){
+		this.name = name;
+		this.value = value;
 	}
 }

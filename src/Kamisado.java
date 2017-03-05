@@ -18,39 +18,68 @@ public class Kamisado {
 		this.data = new Data(fileName);
 		this.ui = new UI();
 		this.game = null;
-		this.status = Status.menu;
+		this.status = Status.mainMenu;
 	}
 	
 	public void loop(){
+		String input;
 		switch (status){
-		case menu:
+		case mainMenu:
 			String[] menu = {"New Game", "Load Game", "Display Score", "Exit"};
-			String input = ui.menu(menu);;
+			input = ui.menu(menu);;
 			switch (input){
 				case "0":
 					newGame();
 					status = Status.game;
 					break;
 				case "1":
-					loadGame();
+					status = Status.loadMenu;
 					break;
 				case "2":
-					displayScore();
+					status = Status.scoreMenu;
 					break;
 				case "3":
 					exit();
 					break;
 			}
 			break;
+		case loadMenu:
+			input = ui.loadMenu(data.getGames());
+			switch (input){
+			case "back":
+				status = Status.mainMenu;
+				break;
+			default:
+				game = data.getGame(Integer.parseInt(input));
+				if (game != null) {
+					status = Status.game;
+				} else {
+					ui.invalidInput(input);
+				}
+			}
+			break;
+		case scoreMenu:
+			input = ui.displayScore(data.getScore());
+			break;
 		case game:
 			Color[][] tiles = game.getBoard().getTiles();
 			List<Tower> towers = game.getBoard().getTowers();
 			ui.displayBoard(tiles, towers);
-			int x = Integer.parseInt(ui.prompt("X: "));
-			int y = Integer.parseInt(ui.prompt("Y: "));
-			game.processMove(x, y);
+			if (game.isGameOver() == false){
+				game.nextTurn();
+			} else {
+				input = ui.endGame(game);
+			}
 			break;
 		}
+	}
+	
+	public Move getMove() {
+		int startX = Integer.parseInt(ui.prompt("StartX: "));
+		int startY = Integer.parseInt(ui.prompt("StartY: "));
+		int finishX = Integer.parseInt(ui.prompt("FinishX: "));
+		int finishY = Integer.parseInt(ui.prompt("FinishY: "));
+		return new Move(startX, startY, finishX, finishY);
 	}
 	
    public void newGame() {
@@ -58,18 +87,9 @@ public class Kamisado {
    }
    
    public void saveGame() {
-      // TODO implement this operation
-      throw new UnsupportedOperationException("not implemented");
-   }
-   
-   public void loadGame() {
-      // TODO implement this operation
-      throw new UnsupportedOperationException("not implemented");
-   }
-   
-   public void displayScore() {
-	   // TODO implement this operation
-	   throw new UnsupportedOperationException("not implemented");
+	   if (game != null){
+		   data.addGame(game);
+	   }
    }
    
    public void makeMove(int x, int y) {
@@ -77,17 +97,14 @@ public class Kamisado {
       throw new UnsupportedOperationException("not implemented");
    }
    
-   
-   public void updateView() {
-      // TODO implement this operation
-      throw new UnsupportedOperationException("not implemented");
-   }
-   
    public void exit() {
+	   String input = ui.prompt("Save current game? (y/n)");
+	   if (input == "y" && game != null) {
+		   data.addGame(game);
+	   } 
 	   data.saveDataToFile(fileName);
 	   System.exit(0);
    }
-   
 
 	public static void main(String[] args) {
 		Kamisado kamisado = new Kamisado();

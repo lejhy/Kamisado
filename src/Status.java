@@ -1,3 +1,3 @@
 public enum Status {
-	menu, game;
+	mainMenu, loadMenu, scoreMenu, game;
 }

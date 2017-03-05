@@ -4,35 +4,36 @@ import java.util.Set;
 
 
 public class Board {
-	private List<Integer> previousMoves;
+	private List<Move> previousMoves;
 	private Color lastColor;
-	private Color lastPlayerColor;
+	private boolean lastPlayer;
 	private List<Tower> towers;
 	private Color[][] tiles;
 	
 	public Board () {
 		Color[][] tiles = {
-				{Color.orange, 	Color.blue, 	Color.purple, 	Color.pink, 	Color.yellow, 	Color.red, 		Color.green, 	Color.brown},
-				{Color.red, 	Color.orange,	Color.pink, 	Color.green, 	Color.blue, 	Color.yellow, 	Color.brown, 	Color.purple},
-				{Color.green, 	Color.pink, 	Color.orange, 	Color.red, 		Color.purple, 	Color.brown, 	Color.yellow, 	Color.blue},
-				{Color.pink, 	Color.purple, 	Color.blue, 	Color.orange, 	Color.brown, 	Color.green, 	Color.red, 		Color.yellow},
-				{Color.yellow, 	Color.red, 		Color.green, 	Color.brown, 	Color.orange, 	Color.blue, 	Color.purple, 	Color.pink},
-				{Color.blue, 	Color.yellow, 	Color.brown, 	Color.purple, 	Color.red, 		Color.orange, 	Color.pink, 	Color.green},
-				{Color.purple, 	Color.brown, 	Color.yellow, 	Color.blue, 	Color.green, 	Color.pink, 	Color.orange, 	Color.red},
-				{Color.brown, 	Color.green,	Color.red, 		Color.yellow,	Color.pink, 	Color.purple, 	Color.blue, 	Color.orange} 
+				{Color.orange,	Color.red, 		Color.green, 	Color.pink,		Color.yellow,	Color.blue, 	Color.purple,	Color.brown},
+				{Color.blue,	Color.orange,	Color.pink, 	Color.purple, 	Color.red, 		Color.yellow, 	Color.brown, 	Color.green},
+				{Color.purple,	Color.pink,		Color.orange, 	Color.blue,		Color.green, 	Color.brown, 	Color.yellow, 	Color.red},
+				{Color.pink,	Color.green,	Color.red, 		Color.orange,	Color.brown,	Color.purple, 	Color.blue, 	Color.yellow},
+				{Color.yellow, 	Color.blue,		Color.purple, 	Color.brown,	Color.orange,	Color.red,		Color.green,	Color.pink},
+				{Color.red, 	Color.yellow,	Color.brown, 	Color.green,	Color.blue, 	Color.orange,	Color.pink, 	Color.purple},
+				{Color.green, 	Color.brown,	Color.yellow,	Color.red, 		Color.purple,	Color.pink, 	Color.orange,	Color.blue},
+				{Color.brown,	Color.purple,	Color.blue,		Color.yellow, 	Color.pink,		Color.green,	Color.red,		Color.orange}					 
 		};
 		this.tiles = tiles;
 		
 		towers = new ArrayList<Tower>();
 		for (int i = 0; i < 8; i++){
-			towers.add(new Tower(tiles[i][0], Color.black, i, 0));
+			towers.add(new Tower(tiles[i][0], false, i, 0));
 		}
 		for (int i = 0; i < 8; i++){
-			towers.add(new Tower(tiles[i][7], Color.white, i, 7));
+			towers.add(new Tower(tiles[i][7], true, i, 7));
 		}
 		
-		lastPlayerColor = Color.black;
+		lastPlayer = false;
 		lastColor = null;
+		previousMoves = new ArrayList<Move>();
 	}
 	
 	public Board (Board board) {
@@ -48,11 +49,10 @@ public class Board {
 			this.towers.add(new Tower(tower));
 		}
 		
-		this.lastPlayerColor = board.lastPlayerColor;
+		this.lastPlayer = board.lastPlayer;
 		this.lastColor = board.lastColor;
+		previousMoves = new ArrayList<Move>();
 	}
-	
-	// delete before finishing
 	
 	public Color[][] getTiles() {
 		return tiles;
@@ -61,9 +61,6 @@ public class Board {
 	public List<Tower> getTowers() {
 		return towers;
 	}
-	
-	
-	// delete before finishing
 	
 	public Color getTile(int x, int y) {
 		return tiles[x][y];
@@ -77,12 +74,21 @@ public class Board {
 		return towers.get(i).getColor();
 	}
 	
-	public Color getTowerPlayerColor (int i) {
-		return towers.get(i).getPlayerColor();
+	public boolean getTowerPlayer (int i) {
+		return towers.get(i).getPlayer();
 	}
 	
-	public int getTower (int i) {
-		return towers.get(i).getPositionX();
+	public Tower getTower (int i) {
+		return towers.get(i);
+	}
+	
+	public Tower getTower(boolean player, Color color) {
+		for (Tower tower: towers){
+		   if (tower.getColor() == color && tower.getPlayer() == player) {
+			   return tower;
+		   }
+	   }
+	   return null;
 	}
 	
 	public Tower getTower(int x, int y){
@@ -102,33 +108,30 @@ public class Board {
 		return lastColor;
 	}
 	
-	public Color getLastPlayerColor () {
-		return lastPlayerColor;
+	public boolean getLastPlayer () {
+		return lastPlayer;
+	}
+	
+	public Move getLastMove () {
+		return new Move(previousMoves.get(previousMoves.size() - 1));
 	}
    
-   public boolean performMove(int towerPosX, int towerPosY, int x, int y) {
-      if (GameLogic.isValidMove(this, towerPosX, towerPosY, x, y)){
-    	  Tower tower = getTower(towerPosX, towerPosY);
-    	  tower.setPositionX(x);
-    	  tower.setPositionY(y);
-    	  lastColor = tiles[x][y];
-    	  nextPlayer();
-    	  return true;
-      } else {
-    	  return false;
-      }
+   public void performMove(Move move) {
+      Tower tower = getTower(move.startX, move.startY);
+	  tower.setPositionX(move.finishX);
+	  tower.setPositionY(move.finishY);
+	  lastColor = tiles[move.finishX][move.finishY];
+	  Move lastMove = new Move(move);
+	  previousMoves.add(lastMove);
+	  nextPlayer();
    }
    
    public void nextPlayer(){
-	   if (lastPlayerColor == Color.black){
-		   lastPlayerColor = Color.white;
+	   if (lastPlayer){
+		   lastPlayer = false;
 	   } else {
-		   lastPlayerColor = Color.black;
+		   lastPlayer = true;
 	   }
-   }
-   
-   public boolean isGameOver() {
-      return false;
    }
    
    public boolean undoLastMove() {

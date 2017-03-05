@@ -1,55 +1,40 @@
 import java.util.Set;
 import java.util.HashSet;
+import java.util.List;
 
 public class Data {
    
-   private Kamisado kamisado;
-   private Game game;
-   private String score[];
+   private List<Game> games;
+   private Scoreboard scoreboard;
    private String fileName;
    
    public Data(String fileName){
 	   this.fileName = fileName;
+	   this.init();
+   }
+   
+   private void init () {
 	   
    }
    
-   public void setKamisado(Kamisado value) {
-      this.kamisado = value;
+   public Scoreboard getScore() {
+      return scoreboard;
+   } 
+   
+   public void addGame(Game game) {
+      games.add(game);
    }
    
-   public Kamisado getKamisado() {
-      return this.kamisado;
+   public Game getGame(int i) {
+      return games.get(i);
    }
    
-  
-
-   
-   public Game getGame() {
-      if (this.game == null) {
-         this.game = new Game();
-      }
-      return this.game;
+   public List<Game> getGames() {
+      return games;
    }
-   
-   
-   public int[] getScore() {
-      if (this.score == null) {
-         this.score = new HashSet<Score>();
-      }
-      return this.score;
-   }
-   
-   
-   
-   public void addGame() {
-      // TODO implement this operation
-      throw new UnsupportedOperationException("not implemented");
-   }
-   
-   
    
    public void saveDataToFile(String fileName) {
-      
+	// TODO implement this operation
       throw new UnsupportedOperationException("not implemented");
    }
    
@@ -58,6 +43,4 @@ public class Data {
       throw new UnsupportedOperationException("not implemented");
    }
    
-  
-   
-   }
+}
