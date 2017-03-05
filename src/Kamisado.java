@@ -33,28 +33,78 @@ public class Kamisado extends Observable{
 	
 	public void input (Value value, String string) {
 		switch(value) {
-		case NEW_GAME:
+		case NEW_TWO_PLAYERS:
 			if (game == null) {
-				newGame();
+				new2PGame(value, string);
+			}
+			break;
+		case NEW_PLAYER_EASY:
+			if (game == null) {
+				newPvEGame(value, string);
+			}
+			break;
+		case NEW_EASY_EASY:
+			if (game == null) {
+				newEvEGame(value, string);
 			}
 			break;
 		case LOAD_GAME:
 			break;
 		case EXIT:
 			break;
+		case BACK:
+			break;
 		default:
 			break;
 		}
 	}
 	
-   public void newGame() {
-      this.game = new Game(new ComputerEasy(true), new ComputerEasy(false));
+   public void newGame(Player player1, Player player2) {
+      this.game = new Game(player1, player2);
       ui.setGame(game);
       game.addObserver(ui);
       this.status = Value.GAME;
       setChanged();
       notifyObservers(Value.GAME);
    }
+   
+   public void new2PGame(Value value, String string){
+		Player player1;
+		Player player2;
+		String[] names = string.split(" ");
+		if (names[0] != null) {
+			player1 = new Human(names[0], true, ui);
+		} else {
+			player1 = new Human("player1", true, ui);
+		}
+		if (names[1] != null) {
+			player2 = new Human(names[1], false, ui);
+		} else {
+			player2 = new Human("player2", false, ui);
+		}
+		newGame(player1, player2);
+	}
+	
+	public void newPvEGame(Value value, String string){
+		Player player1;
+		Player player2;
+		String[] names = string.split(" ");
+		if (names[0] != null) {
+			player1 = new Human(names[0], true, ui);
+		} else {
+			player1 = new Human("player1", true, ui);
+		}
+		player2 = new ComputerEasy(false);
+		newGame(player1, player2);
+	}
+	
+	public void newEvEGame(Value value, String string){
+		Player player1;
+		Player player2;
+		player1 = new ComputerEasy(true);
+		player2 = new ComputerEasy(false);
+		newGame(player1, player2);
+	}
    
    public void saveGame() {
 	   if (game != null){

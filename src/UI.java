@@ -12,10 +12,10 @@ public class UI implements Observer {
 		switch((Value)arg1) {
 		case MAIN_MENU:
 			String[] mainOptions = {"New Game", "Load Game", "Display Score", "Exit"};
-			mainMenu(mainOptions);
+			menu(mainOptions);
 			switch(scanner.nextLine()){
 			case "0":
-				kamisado.input(Value.NEW_GAME, "");
+				kamisado.input(newGameOptions(), "");
 				break;
 			case "1":
 				kamisado.input(Value.LOAD_MENU, "");
@@ -56,9 +56,24 @@ public class UI implements Observer {
 		this.game = game;
 	}
    
-   public void mainMenu(String[] choice){
+   public void menu(String[] choice){
 	   for (int i = 0; i < choice.length; i++){
 		   System.out.println("(" + i + ") - " + choice[i]);
+	   }
+   }
+   
+   public Value newGameOptions() {
+	   String[] options = {"2 Players", "Player vs AI", "AI vs AI"};
+	   menu(options);
+	   switch(getLine()){
+	   case "0":
+		   return Value.NEW_TWO_PLAYERS;
+	   case "1":
+		   return Value.NEW_PLAYER_EASY;
+	   case "2":
+		   return Value.NEW_EASY_EASY;
+	   default:
+		   return Value.BACK;		   
 	   }
    }
    
