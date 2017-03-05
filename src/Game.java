@@ -1,49 +1,42 @@
 import java.util.List;
+import java.util.Observable;
 
 
-public class Game {
+public class Game extends Observable{
 
    private Board board;
-   private int round;
-   private boolean gameOver;
-   private int difficulty;
-   private int speed;
    private Player player1;
    private Player player2;
-   private Kamisado controller;
+   private boolean gameOver;
+   private int round;
    
    public void nextTurn() {
 	   if (!gameOver){
-		   if (board.getLastPlayer() == player1.getValue()) {
-			   board.performMove(player2.getMove());
-		   } else {
-			   board.performMove(player1.getMove());
+		   Move move = getNextMove();
+		   if (GameLogic.isValidMove(board, move)){
+			   board.performMove(move);
+			   setChanged();
+			   notifyObservers(Value.NEXT_TURN);
+			   round++;
+			   if (GameLogic.isGameOver(board)) {
+				   gameOver = true;
+				   setChanged();
+				   notifyObservers(Value.GAME_OVER);
+			   }
 		   }
-		   round++;
 	   }
-	   if (GameLogic.isGameOver(board)) {
-		   gameOver = true;
+   }
+   
+   public Move getNextMove() {
+	   if (board.getLastPlayerValue() == player1.getValue()) {
+		   return player2.getMove(new Board(board));
+	   } else {
+		   return player1.getMove(new Board(board));
 	   }
    }
    
    public boolean isGameOver() {
 	   return gameOver;
-   }
-   
-   public int getDifficulty(){
-	   return difficulty;
-   }
-   
-   public void setDifficulty(int difficulty){
-	   this.difficulty = difficulty;
-   }
-   
-   public int getSpeed(){
-	   return speed;
-   }
-   
-   public void setSpeed(int speed){
-	   this.speed = speed;
    }
 
    public String getPlayer1Name() {
@@ -75,13 +68,11 @@ public class Game {
 		return board;
 	}
 	
-	public Game(){
+	public Game(Player player1, Player player2){
 		board = new Board();
 		gameOver = false;
 		round = 0;
-		difficulty = 0;
-		speed = 0;
-		player1 = new ComputerEasy(true, board);
-		player2 = new ComputerEasy(false, board);
+		this.player1 = player1;
+		this.player2 = player2;
 	}
 }

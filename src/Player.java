@@ -4,7 +4,7 @@ public abstract class Player {
 	protected String name;
 	protected boolean value;
 	
-	public abstract Move getMove();
+	public abstract Move getMove(Board board);
 	
 	public void setValue(boolean value) {
 		this.value = value;

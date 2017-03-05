@@ -46,11 +46,11 @@ public final class AI {
 		   Board newBoard;
 		   List<Move> moves = GameLogic.getValidMoves(board);
 		   for (Move move: moves){
-			   newBoard = new Board(board);
-			   newBoard.performMove(move);
-			   if(GameLogic.isGameOver(newBoard)) {
+			   if(GameLogic.isWinningMove(!board.getLastPlayerValue(), move)) {
 				   return -100*depth;
 			   } else {
+				   newBoard = new Board(board);
+				   newBoard.performMove(move);
 				   value = MaxAB(newBoard, depth - 1, a, b);
 				   
 				   if (value <= a) {
@@ -74,11 +74,12 @@ public final class AI {
 		   Board newBoard;
 		   List<Move> moves = GameLogic.getValidMoves(board);
 		   for (Move move: moves){
-			   newBoard = new Board(board);
-			   newBoard.performMove(move);
-			   if(GameLogic.isGameOver(newBoard)) {
+			   
+			   if(GameLogic.isWinningMove(!board.getLastPlayerValue(), move)) {
 				   return 100*depth;
 			   } else {
+				   newBoard = new Board(board);
+				   newBoard.performMove(move);
 				   value = MinAB(newBoard, depth - 1, a, b);
 				   
 				   if (value >= b) {

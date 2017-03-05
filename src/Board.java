@@ -1,12 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
 
 public class Board {
 	private List<Move> previousMoves;
 	private Color lastColor;
-	private boolean lastPlayer;
+	private boolean lastPlayerValue;
 	private List<Tower> towers;
 	private Color[][] tiles;
 	
@@ -31,7 +29,7 @@ public class Board {
 			towers.add(new Tower(tiles[i][7], true, i, 7));
 		}
 		
-		lastPlayer = false;
+		lastPlayerValue = false;
 		lastColor = null;
 		previousMoves = new ArrayList<Move>();
 	}
@@ -49,7 +47,7 @@ public class Board {
 			this.towers.add(new Tower(tower));
 		}
 
-		this.lastPlayer = board.lastPlayer;
+		this.lastPlayerValue = board.lastPlayerValue;
 		this.lastColor = board.lastColor;
 		previousMoves = new ArrayList<Move>();
 	}
@@ -111,8 +109,8 @@ public class Board {
 		return lastColor;
 	}
 	
-	public boolean getLastPlayer () {
-		return lastPlayer;
+	public boolean getLastPlayerValue () {
+		return lastPlayerValue;
 	}
 	
 	public Move getLastMove () {
@@ -130,10 +128,10 @@ public class Board {
    }
    
    public void nextPlayer(){
-	   if (lastPlayer){
-		   lastPlayer = false;
+	   if (lastPlayerValue){
+		   lastPlayerValue = false;
 	   } else {
-		   lastPlayer = true;
+		   lastPlayerValue = true;
 	   }
    }
    

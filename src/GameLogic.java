@@ -4,20 +4,29 @@ import java.util.List;
 public final class GameLogic {
 	
 	public static boolean isGameOver(Board board) {
-      Move lastMove = board.getLastMove();
-      if (board.getLastPlayer() == false && lastMove.finishY == 7){
-    	  return true;
-      } else if (board.getLastPlayer() == true && lastMove.finishY == 0) {
-    	  return true;
-      }
-      return false;
-   }
+		Move lastMove = board.getLastMove();
+		if (board.getLastPlayerValue() == false && lastMove.finishY == 7){
+			return true;
+		} else if (board.getLastPlayerValue() == true && lastMove.finishY == 0) {
+			return true;
+		}
+		return false;
+	}
+	
+	public static boolean isWinningMove(boolean playerValue, Move move) {
+		if (playerValue == false && move.finishY == 7){
+			return true;
+		} else if (playerValue == true && move.finishY == 0) {
+			return true;
+		}
+		return false;
+	}
 	
 	public static List<Move> getValidMoves (Board board) {
 		List<Move> moves = new ArrayList<Move>();
 		Move move;
 		Tower tower;
-		if (board.getLastPlayer() == false) {
+		if (board.getLastPlayerValue() == false) {
 			// white
 			// getTower
 			if (board.getLastColor() == null) {
@@ -93,7 +102,7 @@ public final class GameLogic {
 		   if (tower == null){
 			   return false;
 		   } else {
-			   if (tower.getPlayer() == board.getLastPlayer()) {
+			   if (tower.getPlayer() == board.getLastPlayerValue()) {
 				   return false;
 			   } else {
 				   if (tower.getColor() == board.getLastColor() || board.getLastColor() == null){
@@ -117,7 +126,7 @@ public final class GameLogic {
 	      } else if (x < 0 || x >= 8 || y < 0 || y >= 8) {
 	    	  return false;
 	      } else{
-	    	  if (board.getLastPlayer() == false) {
+	    	  if (board.getLastPlayerValue() == false) {
 	    		  return isValidWhite(board, towerPosX, towerPosY, x, y);
 	    	  } else {
 	    		  return isValidBlack(board, towerPosX, towerPosY, x, y);

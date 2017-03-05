@@ -1,5 +1,6 @@
 import java.util.HashSet;
 import java.util.List;
+import java.util.Observable;
 import java.util.Set;
 
 /**
@@ -7,83 +8,52 @@ import java.util.Set;
  * Fraser Steel 
  */
 
-public class Kamisado {
+public class Kamisado extends Observable{
+	private UI  ui;
 	private Data data;
-	private UI ui;
 	private Game game;
 	private String fileName;
-	private Status status;
+	private Value status;
 	
 	public Kamisado(){
 		this.data = new Data(fileName);
-		this.ui = new UI();
 		this.game = null;
-		this.status = Status.mainMenu;
+		this.ui = new UI (this, game);
+		this.addObserver(ui);
+		this.status = Value.MAIN_MENU;
+		setChanged();
+		notifyObservers(Value.MAIN_MENU);
 	}
 	
-	public void loop(){
-		String input;
-		switch (status){
-		case mainMenu:
-			String[] menu = {"New Game", "Load Game", "Display Score", "Exit"};
-			input = ui.menu(menu);;
-			switch (input){
-				case "0":
-					newGame();
-					status = Status.game;
-					break;
-				case "1":
-					status = Status.loadMenu;
-					break;
-				case "2":
-					status = Status.scoreMenu;
-					break;
-				case "3":
-					exit();
-					break;
+	public void loop (){
+		if (status == Value.GAME && game != null && game.isGameOver() == false) {
+			game.nextTurn();
+		}
+	}
+	
+	public void input (Value value, String string) {
+		switch(value) {
+		case NEW_GAME:
+			if (game == null) {
+				newGame();
 			}
 			break;
-		case loadMenu:
-			input = ui.loadMenu(data.getGames());
-			switch (input){
-			case "back":
-				status = Status.mainMenu;
-				break;
-			default:
-				game = data.getGame(Integer.parseInt(input));
-				if (game != null) {
-					status = Status.game;
-				} else {
-					ui.invalidInput(input);
-				}
-			}
+		case LOAD_GAME:
 			break;
-		case scoreMenu:
-			input = ui.displayScore(data.getScore());
+		case EXIT:
 			break;
-		case game:
-			Color[][] tiles = game.getBoard().getTiles();
-			List<Tower> towers = game.getBoard().getTowers();
-			ui.displayBoard(tiles, towers);
-			if (game.isGameOver() == false){
-				game.nextTurn();
-			} else {
-				input = ui.endGame(game);
-			}
+		default:
 			break;
 		}
 	}
 	
-	public Move getMove() {
-		int startX = Integer.parseInt(ui.prompt("StartX: "));
-		int startY = Integer.parseInt(ui.prompt("StartY: "));
-		int finishX = Integer.parseInt(ui.prompt("FinishX: "));
-		int finishY = Integer.parseInt(ui.prompt("FinishY: "));
-		return new Move(startX, startY, finishX, finishY);
-	}
-	
    public void newGame() {
-      this.game = new Game();
+      this.game = new Game(new ComputerEasy(true), new ComputerEasy(false));
+      ui.setGame(game);
+      game.addObserver(ui);
+      this.status = Value.GAME;
+      setChanged();
+      notifyObservers(Value.GAME);
    }
    
    public void saveGame() {
@@ -105,10 +75,20 @@ public class Kamisado {
 	   data.saveDataToFile(fileName);
 	   System.exit(0);
    }
+   
+   public String[] loadData () {
+	   String[] load = {"load"};
+	   return load;
+   }
+   
+   public String[] scoreData () {
+	   String[] score = {"score"};
+	   return score;
+   }
 
 	public static void main(String[] args) {
 		Kamisado kamisado = new Kamisado();
-		while(true){
+		while(true) {
 			kamisado.loop();
 		}
 	}

@@ -1,16 +1,61 @@
-import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Scanner;
-import java.util.Set;
-import java.util.HashSet;
 
-public class UI {
+public class UI implements Observer {
 	private Scanner scanner;
+	private Kamisado kamisado;
+	private Game game;
 	
-	public UI (){
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		System.out.println("notified");
+		scanner.nextLine();
+		switch((Value)arg1) {
+		case MAIN_MENU:
+			String[] mainOptions = {"New Game", "Load Game", "Display Score", "Exit"};
+			mainMenu(mainOptions);
+			switch(scanner.nextLine()){
+			case "0":
+				kamisado.input(Value.NEW_GAME, "");
+				break;
+			case "1":
+				kamisado.input(Value.LOAD_MENU, "");
+				break;
+			default:
+				break;
+			}
+			break;
+		case LOAD_MENU:
+			String[] loadData = kamisado.loadData();
+			kamisado.input(Value.LOAD_MENU, loadMenu(loadData));
+			break;
+		case SCORE_MENU:
+			String[] scoreData = kamisado.scoreData();
+			kamisado.input(Value.SCORE_MENU, scoreMenu(scoreData));
+			break;
+		case GAME:
+			displayBoard(game.getBoard());
+			break;
+		case NEXT_TURN:
+			displayBoard(game.getBoard());
+			break;
+		case GAME_OVER:
+			displayBoard(game.getBoard());
+			endGame(game);
+			break;
+		default:
+			break;
+		}
+	}
+
+	public UI (Kamisado kamisado, Game game){
 		scanner = new Scanner(System.in);
+		this.kamisado = kamisado;
+		this.game = game;
 	}
    
-   public String menu(String[] choice){
+   public String mainMenu(String[] choice){
 	   for (int i = 0; i < choice.length; i++){
 		   System.out.println("(" + i + ") - " + choice[i]);
 	   }
@@ -22,10 +67,9 @@ public class UI {
 	   return scanner.nextLine();
    }
    
-   public void displayBoard(Color[][] tiles, List<Tower> towers){
-	   
+   public String displayBoard(Board board){
 	   String[][] display = new String[8][8];
-	   for(Tower tower: towers){
+	   for(Tower tower: board.getTowers()){
 		   String player;
 		   if (tower.getPlayer() == false)
 			   player = "B";
@@ -54,7 +98,7 @@ public class UI {
 		   System.out.print("y" + (y+1) + ": ");
 		   	 for(int x = 0; x < 8; x++){
 		   		System.out.print(display[x][y]);
-		   		System.out.print(tiles[x][y]);
+		   		System.out.print(board.getTiles()[x][y]);
 		   		if (y < 8){
 		   			System.out.print("\t|");
 		   		}
@@ -62,6 +106,7 @@ public class UI {
 		   	System.out.println();
 	   }
 	   System.out.println();
+	   return scanner.nextLine();
    }
 
    public void invalidInput(String input) {
@@ -69,7 +114,7 @@ public class UI {
    }
    
    public String endGame(Game game) {
-	   System.out.println("Round: " + game.getRound() + "; Winner: " + game.getBoard().getLastPlayer());
+	   System.out.println("Round: " + game.getRound() + "; Winner: " + game.getBoard().getLastPlayerValue());
 	   System.out.println("Last move: " + game.getBoard().getLastMove().startX + game.getBoard().getLastMove().startY + game.getBoard().getLastMove().finishX + game.getBoard().getLastMove().finishY);
 	   return scanner.nextLine();
    }
@@ -82,15 +127,23 @@ public class UI {
 	  return scanner.nextLine();
    }
    
-   public String loadMenu(List<Game> games){
-	   for(int i=0; i < games.size(); i++) {
-		   Game game = games.get(i);
-		   System.out.println("Game: " + i + "; Round: " + game.getRound() + "; Difficulty: " + game.getDifficulty() + "; Speed: " + game.getSpeed());
-		   System.out.println("Player1: " + game.getPlayer1Name());
-		   System.out.println("Player2: " + game.getPlayer2Name());
+   public String loadMenu(String[] games){
+	   for(int i=0; i < games.length; i++) {
+		   String game = games[i];
+		   System.out.println(game);
 	   }
 	   return scanner.nextLine();
-   }
+   }     
    
-      
+   public String scoreMenu(String[] scores){
+	   for(int i=0; i < scores.length; i++) {
+		   String score = scores[i];
+		   System.out.println(score);
+	   }
+	   return scanner.nextLine();
+   }  
+   
+   public void setGame(Game game) {
+	    this.game = game;
+   }
 }

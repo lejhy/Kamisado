@@ -1,13 +1,10 @@
 
 public class ComputerEasy extends Player{	
-	Board board;
-	
-	public Move getMove(){
-		return AI.MiniMaxAB(board, 3, value);
+	public Move getMove(Board board){
+		return AI.MiniMaxAB(board, 5, value);
 	}
 	
-	public ComputerEasy (boolean value, Board board) {
+	public ComputerEasy (boolean value) {
 		super("ComputerEasy", value);
-		this.board = board;
 	}
 }

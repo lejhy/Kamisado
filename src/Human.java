@@ -1,13 +1,13 @@
 
 public class Human extends Player{
-	private Kamisado controller;
+	private UI ui;
 	
-	public Move getMove(){
-		return controller.getMove();
+	public Move getMove(Board board){
+		return ui.getMove();
 	}
 	
-	public Human(String name, boolean value, Kamisado controller){
+	public Human(String name, boolean value, UI ui){
 		super(name, value);
-		this.controller = controller;
+		this.ui = ui;
 	}
 }
