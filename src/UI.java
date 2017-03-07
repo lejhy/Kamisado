@@ -41,6 +41,7 @@ public class UI extends Application{
 	public Button score = new Button("Score");
 	public Button exit = new Button("Exit");
 	
+	
 	@Override
 	public void start(Stage primaryStage) {
 		controller = new Controller(this, "Kamisado.save");
