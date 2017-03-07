@@ -109,6 +109,7 @@ public class Kamisado extends Observable{
    public void saveGame() {
 	   if (game != null){
 		   data.addGame(game);
+		   data.saveDataToFile(fileName);
 	   }
    }
    
@@ -122,7 +123,7 @@ public class Kamisado extends Observable{
 	   if (input == "y" && game != null) {
 		   data.addGame(game);
 	   } 
-	   data.saveDataToFile(fileName);
+	   
 	   System.exit(0);
    }
    

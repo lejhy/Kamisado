@@ -7,6 +7,7 @@ public class UI implements Observer {
 	private Kamisado kamisado;
 	private Game game;
 	
+	
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		switch((Value)arg1) {
