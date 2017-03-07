@@ -1,4 +1,3 @@
-
 public class Move {
 	public int startX;
 	public int startY;

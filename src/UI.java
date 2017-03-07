@@ -1,163 +1,89 @@
-import java.util.Observable;
-import java.util.Observer;
-import java.util.Scanner;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.InvalidPropertiesFormatException;
+import java.util.List;
+import java.util.Properties;
+import java.util.TreeSet;
 
-public class UI implements Observer {
-	private Scanner scanner;
-	private Kamisado kamisado;
-	private Game game;
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
+
+public class UI extends Application{
+	private Properties properties;
+	private Stage primaryStage;
+	private Controller controller;
+	
+	public Button newGame = new Button("New Game");
+	public Button loadGame = new Button("Load Game");
+	public Button score = new Button("Score");
+	public Button exit = new Button("Exit");
 	
 	@Override
-	public void update(Observable arg0, Object arg1) {
-		switch((Value)arg1) {
-		case MAIN_MENU:
-			String[] mainOptions = {"New Game", "Load Game", "Display Score", "Exit"};
-			menu(mainOptions);
-			switch(scanner.nextLine()){
-			case "0":
-				kamisado.input(newGameOptions(), "");
-				break;
-			case "1":
-				kamisado.input(Value.LOAD_MENU, "");
-				break;
-			default:
-				break;
-			}
-			break;
-		case LOAD_MENU:
-			String[] loadData = kamisado.loadData();
-			loadMenu(loadData);
-			kamisado.input(Value.LOAD_MENU, getLine());
-			break;
-		case SCORE_MENU:
-			String[] scoreData = kamisado.scoreData();
-			scoreMenu(scoreData);
-			kamisado.input(Value.SCORE_MENU, getLine());
-			break;
-		case GAME:
-			displayBoard(game.getBoard());
-			break;
-		case NEXT_TURN:
-			displayBoard(game.getBoard());
-			break;
-		case GAME_OVER:
-			displayBoard(game.getBoard());
-			endGame(game);
-			getLine();
-			break;
-		default:
-			break;
-		}
+	public void start(Stage primaryStage) {
+		controller = new Controller(this, "Kamisado.save");
+		
+		this.primaryStage = primaryStage;
+		
+		VBox vbox = new VBox();
+		vbox.setAlignment(Pos.CENTER);
+		vbox.setPadding(new Insets(25, 25, 25, 25));
+
+		Scene scene = new Scene(vbox, 800, 600);
+		Text scenetitle = new Text("Main Menu");
+		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+		vbox.getChildren().add(scenetitle);
+
+		List<Button> buttons = new ArrayList<Button>();
+		buttons.add(newGame);
+		buttons.add(loadGame);
+		buttons.add(score);
+		buttons.add(exit);
+		vbox.getChildren().addAll(buttons);
+		
+		this.primaryStage.setScene(scene);
+		this.primaryStage.show();
 	}
 
-	public UI (Kamisado kamisado, Game game){
-		scanner = new Scanner(System.in);
-		this.kamisado = kamisado;
-		this.game = game;
+	public void addNewGameMainMenuHandler(EventHandler<ActionEvent> handler) {
+		newGame.setOnAction(handler);
 	}
-   
-   public void menu(String[] choice){
-	   for (int i = 0; i < choice.length; i++){
-		   System.out.println("(" + i + ") - " + choice[i]);
-	   }
-   }
-   
-   public Value newGameOptions() {
-	   String[] options = {"2 Players", "Player vs AI", "AI vs AI"};
-	   menu(options);
-	   switch(getLine()){
-	   case "0":
-		   return Value.NEW_TWO_PLAYERS;
-	   case "1":
-		   return Value.NEW_PLAYER_EASY;
-	   case "2":
-		   return Value.NEW_EASY_EASY;
-	   default:
-		   return Value.BACK;		   
-	   }
-   }
-   
-   public String prompt(String string) {
-	   System.out.print(string);
-	   return scanner.nextLine();
-   }
-   
-   public void displayBoard(Board board){
-	   String[][] display = new String[8][8];
-	   for(Tower tower: board.getTowers()){
-		   String player;
-		   if (tower.getPlayer() == false)
-			   player = "B";
-		   else 
-			   player = "W";
-		   
-		   String color;
-		   if (tower.getColor() == Color.orange)
-			   color = "oran";
-		   else
-			   color = tower.getColor().toString();
-		   display[tower.getPositionX()][tower.getPositionY()] = player + color;
-	   }
-	   System.out.println();
-	   System.out.print("x:  ");
-	   for (int x = 0; x < 8 ; x++){
-		   System.out.print( x + 1);
-		   if(x < 7){
-			   System.out.print(":");
-		   }
-	   }
-	   System.out.println();
-	   System.out.println();
-	   
-	   for( int y = 0; y < 8; y++){
-		   System.out.print("y" + (y+1) + ": ");
-		   	 for(int x = 0; x < 8; x++){
-		   		System.out.print(display[x][y]);
-		   		System.out.print(board.getTiles()[x][y]);
-		   		if (y < 8){
-		   			System.out.print("\t|");
-		   		}
-		   	}
-		   	System.out.println();
-	   }
-	   System.out.println();
-   }
+	
+	public void addLoadGameMainMenuHandler(EventHandler handler) {
+		
+	}
+	
+	public void addScoreMainMenuHandler(EventHandler handler) {
+		
+	}
+	
+	public void addExitMainMenuHandler(EventHandler handler) {
+		
+	}
 
-   public void invalidInput(String input) {
-	   System.out.println("This input is invalid: " + input);
-   }
-   
-   public void endGame(Game game) {
-	   System.out.println("Round: " + game.getRound() + "; Winner: " + game.getBoard().getLastPlayerValue());
-	   System.out.println("Last move: " + game.getBoard().getLastMove().startX + game.getBoard().getLastMove().startY + game.getBoard().getLastMove().finishX + game.getBoard().getLastMove().finishY);
-   }
-   
-   public void displayScore(Scoreboard scoreboard){
-	  for(int i=0; i< scoreboard.size();i++){
-		  System.out.println("Name: " + scoreboard.getPlayerName(i));
-		  System.out.println("Score: " + scoreboard.getScore(i));
-	  }
-   }
-   
-   public void loadMenu(String[] games){
-	   for(int i=0; i < games.length; i++) {
-		   String game = games[i];
-		   System.out.println(game);
-	   }
-   }     
-   
-   public void scoreMenu(String[] scores){
-	   for(int i=0; i < scores.length; i++) {
-		   String score = scores[i];
-		   System.out.println(score);
-	   }
-   }  
-   
-   public void setGame(Game game) {
-	    this.game = game;
-   }
-   
-   public String getLine(){
-	   return scanner.nextLine();
-   }
+	public static void main(String[] args) {
+		launch(args);
+	}
 }

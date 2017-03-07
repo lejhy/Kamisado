@@ -4,12 +4,9 @@ import java.util.List;
 public final class GameLogic {
 	
 	public static boolean isGameOver(Board board) {
+		boolean lastPlayervalue = board.getLastPlayerValue();
 		Move lastMove = board.getLastMove();
-		if (board.getLastPlayerValue() == false && lastMove.finishY == 7){
-			return true;
-		} else if (board.getLastPlayerValue() == true && lastMove.finishY == 0) {
-			return true;
-		}
+		isWinningMove(lastPlayervalue, lastMove);
 		return false;
 	}
 	
@@ -23,78 +20,95 @@ public final class GameLogic {
 	}
 	
 	public static List<Move> getValidMoves (Board board) {
-		List<Move> moves = new ArrayList<Move>();
-		Move move;
-		Tower tower;
 		if (board.getLastPlayerValue() == false) {
-			// white
-			// getTower
-			if (board.getLastColor() == null) {
-				tower = board.getTower(4, 7);
-			} else {
-				tower = board.getTower(true, board.getLastColor());
-			}
-			// getMoves
-			// straight
-			int i = 1;
-			move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX(), tower.getPositionY() - i);
-			while (isValidMove(board, move)) {
-				moves.add(move);
-				i++;
-				move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX(), tower.getPositionY() - i);
-			}
-			// diagonal +
-			i = 1;
-			move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX() + i, tower.getPositionY() - i);
-			while (isValidMove(board, move)) {
-				moves.add(move);
-				i++;
-				move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX() + i, tower.getPositionY() - i);
-			}
-			// diagonal -
-			i = 1;
-			move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX() - i, tower.getPositionY() - i);
-			while (isValidMove(board, move)) {
-				moves.add(move);
-				i++;
-				move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX() - i, tower.getPositionY() - i);
-			}
+			// Last was black, now it's white's turn
+			return getValidWhiteMoves (board);
 		} else {
-			// black
-			// getTower
-			if (board.getLastColor() == null) {
-				tower = board.getTower(4, 0);
-			} else {
-				tower = board.getTower(false, board.getLastColor());
-			}
-			// getMoves
-			// straight
-			int i = 1;
-			move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX(), tower.getPositionY() + i);
-			while (isValidMove(board, move)) {
-				moves.add(move);
-				i++;
-				move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX(), tower.getPositionY() + i);
-			}
-			// diagonal +
-			i = 1;
-			move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX() + i, tower.getPositionY() + i);
-			while (isValidMove(board, move)) {
-				moves.add(move);
-				i++;
-				move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX() + i, tower.getPositionY() + i);
-			}
-			// diagonal -
-			i = 1;
-			move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX() - i, tower.getPositionY() + i);
-			while (isValidMove(board, move)) {
-				moves.add(move);
-				i++;
-				move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX() - i, tower.getPositionY() + i);
-			}
+			// Last was white, now it's black's turn
+			return getValidBlackMoves (board);
+		}
+	}
+	
+	public static List<Move> getValidWhiteMoves (Board board) {
+		List <Move> moves = new ArrayList<Move>();
+		Move move;
+		Tower tower = getValidWhiteTower(board);
+		int i = 1;
+		
+		// straight
+		move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX(), tower.getPositionY() - i);
+		while (isValidMove(board, move)) {
+			moves.add(move);
+			i++;
+			move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX(), tower.getPositionY() - i);
 		}
 		
+		// diagonal
+		i = 1;
+		move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX() + i, tower.getPositionY() - i);
+		while (isValidMove(board, move)) {
+			moves.add(move);
+			i++;
+			move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX() + i, tower.getPositionY() - i);
+		}
+		i = 1;
+		move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX() - i, tower.getPositionY() - i);
+		while (isValidMove(board, move)) {
+			moves.add(move);
+			i++;
+			move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX() - i, tower.getPositionY() - i);
+		}
 		return moves;
+	}
+	
+	public static List<Move> getValidBlackMoves (Board board) {
+		List <Move> moves = new ArrayList<Move>();
+		Move move;
+		Tower tower = getValidBlackTower(board);
+		int i = 1;
+		
+		// straight
+		move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX(), tower.getPositionY() + i);
+		while (isValidMove(board, move)) {
+			moves.add(move);
+			i++;
+			move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX(), tower.getPositionY() + i);
+		}
+		
+		// diagonal
+		i = 1;
+		move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX() + i, tower.getPositionY() + i);
+		while (isValidMove(board, move)) {
+			moves.add(move);
+			i++;
+			move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX() + i, tower.getPositionY() + i);
+		}
+		i = 1;
+		move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX() - i, tower.getPositionY() + i);
+		while (isValidMove(board, move)) {
+			moves.add(move);
+			i++;
+			move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX() - i, tower.getPositionY() + i);
+		}
+		return moves;
+	}
+	
+	public static Tower getValidWhiteTower(Board board) {
+		if (board.getLastColor() == null) {
+			int zeroToSeven = (int) (Math.random()*7);
+			return board.getTower(zeroToSeven, 7);
+		} else {
+			return  board.getTower(true, board.getLastColor());
+		}		
+	}
+	
+	public static Tower getValidBlackTower(Board board) {
+		if (board.getLastColor() == null) {
+			int zeroToSeven = (int) (Math.random()*7);
+			return board.getTower(zeroToSeven, 0);
+		} else {
+			return board.getTower(true, board.getLastColor());
+		}
 	}
 	
 	public static boolean isValidTower(Board board, int x, int y) {
@@ -119,19 +133,18 @@ public final class GameLogic {
 		   int towerPosY = move.startY;
 		   int x = move.finishX;
 		   int y = move.finishY;
-	      if (isValidTower(board, towerPosX, towerPosY) == false) {
-	    	  return false;
-	      } else if (towerPosX == x && towerPosY == y){
-	    	  return false;
-	      } else if (x < 0 || x >= 8 || y < 0 || y >= 8) {
-	    	  return false;
-	      } else{
-	    	  if (board.getLastPlayerValue() == false) {
-	    		  return isValidWhite(board, towerPosX, towerPosY, x, y);
-	    	  } else {
-	    		  return isValidBlack(board, towerPosX, towerPosY, x, y);
-	    	  }
-	      }
+		   if (isValidTower(board, towerPosX, towerPosY)) {
+			   if (towerPosX != x || towerPosY != y){
+				   if (x >= 0 && x < 8 && y >= 0 && y < 8) {
+					   if (board.getLastPlayerValue() == false) {
+						   return isValidWhite(board, towerPosX, towerPosY, x, y);
+					   } else {
+						   return isValidBlack(board, towerPosX, towerPosY, x, y);
+					   }
+				   }
+			   }
+		   }
+		   return false;
 	   }
 	   
 	   private static boolean isValidWhite(Board board, int towerPosX, int towerPosY, int x, int y) {

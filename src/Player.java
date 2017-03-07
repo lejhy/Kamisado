@@ -1,37 +1,25 @@
-public abstract class Player {
+import java.util.Observable;
 
+public class Player extends Observable{
 	protected int score;
 	protected String name;
-	protected boolean value;
-	
-	public abstract Move getMove(Board board);
-	
-	public void setValue(boolean value) {
-		this.value = value;
-	}
-	
-	public boolean getValue () {
-		return value;
-	}
 	
 	public void setScore(int value) {
-	   this.score = value;
+		this.score = value;
+		hasChanged();
+		notifyObservers();
 	}
 	
 	public int getScore() {
-	   return this.score;
+		return this.score;
 	}
 
 	public String getName() {
 		return name;
 	}
-
-	public void setName(String position) {
-		this.name = position;
-	}
 	
-	public Player(String name, boolean value){
+	public Player(String name){
 		this.name = name;
-		this.value = value;
+		this.score = 0;
 	}
 }

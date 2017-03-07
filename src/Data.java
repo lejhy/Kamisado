@@ -13,7 +13,11 @@ public class Data {
 	   this.init();
    }
    
-   private void init () {
+   public Data() {
+	// TODO Auto-generated constructor stub
+}
+
+private void init () {
 	   
    }
    
@@ -42,5 +46,15 @@ public class Data {
       // TODO implement this operation
       throw new UnsupportedOperationException("not implemented");
    }
+
+public String getFileName() {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+public void saveDataToFile() {
+	// TODO Auto-generated method stub
+	
+}
    
 }
