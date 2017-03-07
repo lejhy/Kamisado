@@ -71,8 +71,8 @@ public class Data {
       throw new UnsupportedOperationException("not implemented");
    }
    
-   public void removeGame() {
-      // TODO implement this operation
+   public void removeGame(Game game) {
+      this.games = null;
       throw new UnsupportedOperationException("not implemented");
    }
    
