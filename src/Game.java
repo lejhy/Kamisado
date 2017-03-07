@@ -3,17 +3,19 @@ import java.util.Observable;
 public class Game extends Observable{
 	private Player player1;
 	private Player player2;
+	private Player currentPlayer;
 	private Board board;
    	private boolean gameOver;
    	private int round;
    
-   	public void nextTurn(Move move) {
+   	public void nextTurn(Move move, Value type) {
    		if (!gameOver){
-		   	if (GameLogic.isValidMove(board, move)){
+		   	if (GameLogic.isValidMove(board, move) && currentPlayer.getType() == type){
 			   	board.performMove(move);
+			   	switchPlayer();
+			  	round++;
 			   	setChanged();
 			   	notifyObservers(Value.NEXT_TURN);
-			  	round++;
 			   	if (GameLogic.isGameOver(board)) {
 				   gameOver = true;
 				   setChanged();
@@ -22,7 +24,19 @@ public class Game extends Observable{
 		  	}
 	   	}
    	}
+   	
+   	public Player getCurrentPlayer() {
+   		return new Player(currentPlayer);
+   	}
    
+   	private void switchPlayer() {
+   		if (currentPlayer == player1) {
+   			currentPlayer = player2;
+   		} else {
+   			currentPlayer = player2;
+   		}
+   	}
+   	
    	public boolean isGameOver() {
    		return gameOver;
    	}
