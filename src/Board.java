@@ -3,16 +3,16 @@ import java.util.List;
 
 public class Board {
 	private List<Move> previousMoves;
-	private Color lastColor;
+	private Value lastColor;
 	private boolean lastPlayerValue;
 	private List<Tower> towers;
-	private Color[][] tiles;
+	private Value[][] tiles;
 	
 	public List<Tower> getTowers() {
 		return towers;
 	}
 	
-	public Color[][] getTiles() {
+	public Value[][] getTiles() {
 		return tiles;
 	}
 	
@@ -33,21 +33,21 @@ public class Board {
 	}
 	
 	private void initTiles() {
-		Color[][] tiles = {
-				{Color.orange,	Color.red, 		Color.green, 	Color.pink,		Color.yellow,	Color.blue, 	Color.purple,	Color.brown},
-				{Color.blue,	Color.orange,	Color.pink, 	Color.purple, 	Color.red, 		Color.yellow, 	Color.brown, 	Color.green},
-				{Color.purple,	Color.pink,		Color.orange, 	Color.blue,		Color.green, 	Color.brown, 	Color.yellow, 	Color.red},
-				{Color.pink,	Color.green,	Color.red, 		Color.orange,	Color.brown,	Color.purple, 	Color.blue, 	Color.yellow},
-				{Color.yellow, 	Color.blue,		Color.purple, 	Color.brown,	Color.orange,	Color.red,		Color.green,	Color.pink},
-				{Color.red, 	Color.yellow,	Color.brown, 	Color.green,	Color.blue, 	Color.orange,	Color.pink, 	Color.purple},
-				{Color.green, 	Color.brown,	Color.yellow,	Color.red, 		Color.purple,	Color.pink, 	Color.orange,	Color.blue},
-				{Color.brown,	Color.purple,	Color.blue,		Color.yellow, 	Color.pink,		Color.green,	Color.red,		Color.orange}					 
+		Value[][] tiles = {
+				{Value.ORANGE,	Value.RED, 		Value.GREEN, 	Value.PINK,		Value.YELLOW,	Value.BLUE, 	Value.PURPLE,	Value.BROWN},
+				{Value.BLUE,	Value.ORANGE,	Value.PINK, 	Value.PURPLE, 	Value.RED, 		Value.YELLOW, 	Value.BROWN, 	Value.GREEN},
+				{Value.PURPLE,	Value.PINK,		Value.ORANGE, 	Value.BLUE,		Value.GREEN, 	Value.BROWN, 	Value.YELLOW, 	Value.RED},
+				{Value.PINK,	Value.GREEN,	Value.RED, 		Value.ORANGE,	Value.BROWN,	Value.PURPLE, 	Value.BLUE, 	Value.YELLOW},
+				{Value.YELLOW, 	Value.BLUE,		Value.PURPLE, 	Value.BROWN,	Value.ORANGE,	Value.RED,		Value.GREEN,	Value.PINK},
+				{Value.RED, 	Value.YELLOW,	Value.BROWN, 	Value.GREEN,	Value.BLUE, 	Value.ORANGE,	Value.PINK, 	Value.PURPLE},
+				{Value.GREEN, 	Value.BROWN,	Value.YELLOW,	Value.RED, 		Value.PURPLE,	Value.PINK, 	Value.ORANGE,	Value.BLUE},
+				{Value.BROWN,	Value.PURPLE,	Value.BLUE,		Value.YELLOW, 	Value.PINK,		Value.GREEN,	Value.RED,		Value.ORANGE}					 
 		};
 		this.tiles = tiles;
 	}
 	
-	private void initTiles(Color[][] tiles) {
-		this.tiles = new Color[8][8];
+	private void initTiles(Value[][] tiles) {
+		this.tiles = new Value[8][8];
 		for (int i = 0; i < 8; i++){
 			for (int j = 0; j < 8; j++){
 				this.tiles = tiles;
@@ -72,7 +72,7 @@ public class Board {
 		}
 	}
 	
-	public Color getTile(int x, int y) {
+	public Value getTile(int x, int y) {
 		return tiles[x][y];
 	}
 	
@@ -80,7 +80,7 @@ public class Board {
 		return towers.size();
 	}
 	
-	public Color getTowerColor (int i) {
+	public Value getTowerColor (int i) {
 		return towers.get(i).getColor();
 	}
 	
@@ -96,7 +96,7 @@ public class Board {
 		return towers.get(i).getPositionY();
 	}
 	
-	public Tower getTower(boolean playerValue, Color color) {
+	public Tower getTower(boolean playerValue, Value color) {
 		Tower tower = findTower(playerValue, color);
 		if (tower == null) {
 			return null;
@@ -114,7 +114,7 @@ public class Board {
 		}
 	}
 	
-	public Tower findTower(boolean playerValue, Color color) {
+	public Tower findTower(boolean playerValue, Value color) {
 		for (Tower tower: towers) {
 			if (tower.getPlayer() == playerValue && tower.getColor() == color) {
 				return tower;
@@ -132,7 +132,7 @@ public class Board {
 	   	return null;
 	}
 	
-	public Color getLastColor () {
+	public Value getLastColor () {
 		return lastColor;
 	}
 	

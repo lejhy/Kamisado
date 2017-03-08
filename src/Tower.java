@@ -1,7 +1,7 @@
 public class Tower {
 	
 	private boolean player;
-	private Color color;
+	private Value color;
 	private int positionX;
 	private int positionY;    
 	   
@@ -13,7 +13,7 @@ public class Tower {
       this.positionY = value;
    }
    
-   public Color getColor() {
+   public Value getColor() {
 	   return color;
    }
    
@@ -29,7 +29,7 @@ public class Tower {
       return positionX;
    }
    
-   public Tower (Color color, boolean player, int positionX, int positionY) {
+   public Tower (Value color, boolean player, int positionX, int positionY) {
       this.color = color;
       this.player = player;
       this.positionX = positionX;

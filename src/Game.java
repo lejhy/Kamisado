@@ -55,5 +55,6 @@ public class Game extends Observable{
 		board = new Board();
 		gameOver = false;
 		round = 0;
+		System.out.println("newGameCreated");
 	}
 }
