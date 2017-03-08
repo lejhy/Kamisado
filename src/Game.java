@@ -15,6 +15,7 @@ public class Game extends Observable{
 			   	switchPlayer();
 			  	round++;
 			   	if (GameLogic.isGameOver(board)) {
+			   		System.out.println("game over game");
 				   gameOver = true;
 			   	}
 			   	setChanged();

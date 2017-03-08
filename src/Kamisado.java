@@ -14,14 +14,14 @@ import javafx.stage.Stage;
 public class Kamisado extends Application{
 	private Controller controller;
 	private Stage window;
-	public Parent mainMenu, newGame, loadGame, score, game;
+	public Scene mainMenu, newGame, loadGame, score, game;
 	
 	@Override
 	public void start(Stage primaryStage) {
 		this.window = primaryStage;
 		controller = new Controller(this);
 		load();
-		this.window.setScene(new Scene(mainMenu));
+		this.window.setScene(mainMenu);
 		this.window.show();
 	}
 	
@@ -30,18 +30,25 @@ public class Kamisado extends Application{
 			FXMLLoader loader;
 			loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
 			loader.setController(controller);
-			mainMenu = loader.load();
+			mainMenu = new Scene(loader.load());
+			loader = new FXMLLoader(getClass().getResource("NewGame.fxml"));
+			loader.setController(controller);
+			newGame = new Scene(loader.load());
 			loader = new FXMLLoader(getClass().getResource("game.fxml"));
 			loader.setController(controller);
-			game = loader.load();
+			game = new Scene(loader.load());
 		} catch (IOException e) {
 			System.out.println("Error loading fxml files");
 			System.err.println();
 		}
 	}
 	
+	public void displayNewGame() {
+		this.window.setScene(newGame);
+	}
+	
 	public void displayGame() {
-		this.window.setScene(new Scene(game));
+		this.window.setScene(game);
 	}
 
 	public static void main(String[] args) {

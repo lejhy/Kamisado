@@ -9,6 +9,10 @@ import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -22,6 +26,18 @@ public class Controller implements Observer{
 	
 	@FXML
     private Canvas gameView;
+	
+	@FXML
+    private TextField player1Name;
+	 
+    @FXML
+    private ToggleGroup player1Type;
+    
+    @FXML
+    private TextField player2Name;
+
+    @FXML
+    private ToggleGroup player2Type;
 	
 	public Controller (Kamisado kamisado) {
 		this.kamisado = kamisado;
@@ -47,9 +63,19 @@ public class Controller implements Observer{
 
     @FXML
     void newGame(Event event) {
-    	this.game = new Game(new Player("test", Value.AI), new Player("test2", Value.AI));
+    	Value p1Value = getRBSelectionValue (player1Type);
+    	Value p2Value = getRBSelectionValue (player2Type);
+    	
+    	String p1Name = player1Name.getText();
+    	String p2Name = player2Name.getText();
+    	
+    	Player player1 = new Player (p1Name, p1Value);
+    	Player player2 = new Player (p2Name, p2Value);
+    	
+    	this.game = new Game(player1, player2);
     	game.addObserver(this);
     	initGame();
+    	
     	kamisado.displayGame();
     	this.update(game, null);
     }
@@ -80,6 +106,11 @@ public class Controller implements Observer{
     			game.nextTurn(new Move(selectionX, selectionY, squareX, squareY), Value.HUMAN);
     		}
     	}
+    }
+    
+    @FXML
+    void newGameMenu(ActionEvent event) {
+    	kamisado.displayNewGame();
     }
     
     public void initGame () {
@@ -214,19 +245,52 @@ public class Controller implements Observer{
 	public void update (Observable observable, Object argument) {
 		if (observable instanceof Game) {
 			updateGame();
-			if (game.getCurrentPlayer().getType() == Value.AI) {
-				Thread thread = new Thread(new Runnable() {
-					public void run() {
-						game.nextTurn(AI.MiniMaxAB(game.getBoard(), 11), Value.AI);
-					}
-				});
-				thread.setDaemon(true);
-				thread.start();
+			System.out.println("update");
+			if (game.isGameOver()) {
+				gameOver();
+			} else {
+				checkForAI();
 			}
 		}
-		// if game changed, check for current player AI
-		// update the view as well
 	}
+	
+	public void gameOver() {
+		System.out.println("game over cont");
+		GraphicsContext gc = gameView.getGraphicsContext2D();
+		Image GAME_OVER = new Image("img/GAME_OVER.png");
+		gc.drawImage(GAME_OVER, 0, 0, gameView.getWidth(), gameView.getHeight());
+	}
+	
+	public void checkForAI() {
+		if (game.getCurrentPlayer().getType() == Value.AI) {
+			Thread thread = new Thread(new Runnable() {
+				public void run() {
+					game.nextTurn(AI.MiniMaxAB(game.getBoard(), 8), Value.AI);
+				}
+			});
+			thread.setDaemon(true);
+			thread.start();
+		}
+	}
+	
+	public Value getRBSelectionValue (ToggleGroup toggleGroup) {
+    	RadioButton radioButton = (RadioButton)toggleGroup.getSelectedToggle();
+    	String string = radioButton.getText();
+    	Value value;
+    	switch (string) {
+    	case "Human":
+    		value = Value.HUMAN;
+    		break;
+    	case "AI":
+    		value = Value.AI;
+    		break;
+		default:
+			value = Value.HUMAN;
+    		break;
+    	}
+    	
+    	return value;
+    }
 	
 	public void towerSelected(Tower tower) {
 		// highlight moves
