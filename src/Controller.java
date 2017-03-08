@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
@@ -38,6 +39,9 @@ public class Controller implements Observer{
 
     @FXML
     private ToggleGroup player2Type;
+    
+    @FXML
+    private TableView<?> loadGameTable;
 	
 	public Controller (Kamisado kamisado) {
 		this.kamisado = kamisado;
@@ -52,13 +56,28 @@ public class Controller implements Observer{
 	}
 	
 	@FXML
-    void exit(Event event) {
-
+    void mainMenu(ActionEvent event) {
+    	kamisado.displayMainMenu();
     }
-
-    @FXML
-    void loadGame(Event event) {
-
+	
+	@FXML
+    void newGameMenu(ActionEvent event) {
+    	kamisado.displayNewGame();
+    }
+	
+	@FXML
+    void loadGameMenu(ActionEvent event) {
+    	kamisado.displayLoadGame();
+    }
+	
+	@FXML
+    void score(ActionEvent event) {
+    	kamisado.displayScore();
+    }
+	
+	@FXML
+    void exit(Event event) {
+		System.exit(0);
     }
 
     @FXML
@@ -78,6 +97,11 @@ public class Controller implements Observer{
     	
     	kamisado.displayGame();
     	this.update(game, null);
+    }
+    
+    @FXML
+    void loadGame(Event event) {
+
     }
 
     @FXML
@@ -106,11 +130,6 @@ public class Controller implements Observer{
     			game.nextTurn(new Move(selectionX, selectionY, squareX, squareY), Value.HUMAN);
     		}
     	}
-    }
-    
-    @FXML
-    void newGameMenu(ActionEvent event) {
-    	kamisado.displayNewGame();
     }
     
     public void initGame () {

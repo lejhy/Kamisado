@@ -34,6 +34,12 @@ public class Kamisado extends Application{
 			loader = new FXMLLoader(getClass().getResource("NewGame.fxml"));
 			loader.setController(controller);
 			newGame = new Scene(loader.load());
+			loader = new FXMLLoader(getClass().getResource("LoadGame.fxml"));
+			loader.setController(controller);
+			loadGame = new Scene(loader.load());
+			loader = new FXMLLoader(getClass().getResource("Score.fxml"));
+			loader.setController(controller);
+			score = new Scene(loader.load());
 			loader = new FXMLLoader(getClass().getResource("game.fxml"));
 			loader.setController(controller);
 			game = new Scene(loader.load());
@@ -43,8 +49,20 @@ public class Kamisado extends Application{
 		}
 	}
 	
+	public void displayMainMenu() {
+		this.window.setScene(mainMenu);
+	}
+	
 	public void displayNewGame() {
 		this.window.setScene(newGame);
+	}
+	
+	public void displayLoadGame() {
+		this.window.setScene(loadGame);
+	}
+	
+	public void displayScore() {
+		this.window.setScene(score);
 	}
 	
 	public void displayGame() {
