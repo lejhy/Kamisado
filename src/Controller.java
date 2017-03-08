@@ -9,6 +9,7 @@ import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
@@ -16,6 +17,8 @@ public class Controller implements Observer{
 	private Kamisado kamisado;
 	private Game game;
 	private Data data;
+	private int squareSize;
+	private int selectionX, selectionY;
 	
 	@FXML
     private Canvas gameView;
@@ -45,8 +48,8 @@ public class Controller implements Observer{
     @FXML
     void newGame(Event event) {
     	this.game = new Game(new Player("test", Value.HUMAN), new Player("test2", Value.HUMAN));
+    	initGame();
     	kamisado.displayGame();
-    	event.consume();
     }
 
     @FXML
@@ -55,29 +58,155 @@ public class Controller implements Observer{
     }
     
     @FXML
-    void updateGame(Event event) {
-    	System.out.println("Updating the game view");
-    	GraphicsContext gc = gameView.getGraphicsContext2D();
-    	gc.setFill(Color.DARKCYAN);
-    	gc.fillOval(110, 30, 50, 50);
+    void updateGame() {
+    	initGame();
     }
     
     @FXML
     void gameInput(Event event) {
     	if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
-    		System.out.println("X: " + ((MouseEvent)event).getSceneX() + "Y: " + ((MouseEvent)event).getSceneY());
+    		double x = ((MouseEvent)event).getSceneX();
+    		double y = ((MouseEvent)event).getSceneY();
+    		System.out.println("X: " + x + "Y: " + y);
+    		int squareX = ((int)x)/squareSize;
+    		int squareY = ((int)y)/squareSize;
+    		Tower tower = game.getBoard().getTower(squareX, squareY);
+    		if (tower != null) {
+    			selectionX = squareX;
+    			selectionY = squareY;
+    		} else {
+    			game.nextTurn(new Move(selectionX, selectionY, squareX, squareY), Value.HUMAN);
+    		}
+    		updateGame();
     	}
     }
     
     public void initGame () {
     	System.out.println("Init game view");
     	GraphicsContext gc = gameView.getGraphicsContext2D();
-    	for (Value[] row: game.getBoard().getTiles()) {
-    		for (Value tile: row) {
+    	
+    	Image ORANGE = new Image("img/ORANGE.png");
+    	Image BLUE = new Image("img/BLUE.png");
+    	Image PURPLE = new Image("img/PURPLE.png");
+    	Image PINK = new Image("img/PINK.png");
+    	Image YELLOW = new Image("img/YELLOW.png");
+    	Image RED = new Image("img/RED.png");
+    	Image GREEN = new Image("img/GREEN.png");
+    	System.out.println("debug");
+    	Image BROWN = new Image("img/BROWN.png");
+    	System.out.println("debug");
+    	Image ORANGE_WHITE = new Image("img/ORANGE_WHITE.png");
+    	System.out.println("debug");
+    	Image BLUE_WHITE = new Image("img/BLUE_WHITE.png");
+    	Image PURPLE_WHITE = new Image("img/PURPLE_WHITE.png");
+    	Image PINK_WHITE = new Image("img/PINK_WHITE.png");
+    	Image YELLOW_WHITE = new Image("img/YELLOW_WHITE.png");
+    	System.out.println("debug");
+    	Image RED_WHITE = new Image("img/RED_WHITE.png");
+    	Image GREEN_WHITE = new Image("img/GREEN_WHITE.png");
+    	Image BROWN_WHITE = new Image("img/BROWN_WHITE.png");
+    	System.out.println("debug");
+    	Image ORANGE_BLACK = new Image("img/ORANGE_BLACK.png");
+    	Image BLUE_BLACK = new Image("img/BLUE_BLACK.png");
+    	Image PURPLE_BLACK = new Image("img/PURPLE_BLACK.png");
+    	Image PINK_BLACK = new Image("img/PINK_BLACK.png");
+    	Image YELLOW_BLACK = new Image("img/YELLOW_BLACK.png");
+    	Image RED_BLACK = new Image("img/RED_BLACK.png");
+    	Image GREEN_BLACK = new Image("img/GREEN_BLACK.png");
+    	Image BROWN_BLACK = new Image("img/BROWN_BLACK.png");
+    	
+    	squareSize = (int)(gameView.getWidth()/8);
+    	int row = 0;
+    	int column = 0;
+    	
+    	for (Value[] tiles: game.getBoard().getTiles()) {
+    		column = 0;
+    		for (Value tile: tiles) {
     			switch(tile){
+    			case ORANGE:
+    				gc.drawImage(ORANGE, row*squareSize, column*squareSize, squareSize, squareSize);
+    				break;
     			case BLUE:
-    			case
+    				gc.drawImage(BLUE, row*squareSize, column*squareSize, squareSize, squareSize);
+    				break;
+    			case PURPLE:
+    				gc.drawImage(PURPLE, row*squareSize, column*squareSize, squareSize, squareSize);
+    				break;
+    			case PINK:
+    				gc.drawImage(PINK, row*squareSize, column*squareSize, squareSize, squareSize);
+    				break;
+    			case YELLOW:
+    				gc.drawImage(YELLOW, row*squareSize, column*squareSize, squareSize, squareSize);
+    				break;
+    			case RED:
+    				gc.drawImage(RED, row*squareSize, column*squareSize, squareSize, squareSize);
+    				break;
+				case GREEN:
+					gc.drawImage(GREEN, row*squareSize, column*squareSize, squareSize, squareSize);
+    				break;
+				case BROWN:
+					gc.drawImage(BROWN, row*squareSize, column*squareSize, squareSize, squareSize);
+    				break;
+				default:
+    				break;
     			}
+    			column++;
+    		}
+    		row++;
+    	}
+    	
+    	for (Tower tower: game.getBoard().getTowers()) {
+    		switch(tower.getColor()) {
+    		case ORANGE:
+    			if (tower.getPlayer())
+    				gc.drawImage(ORANGE_WHITE, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
+    			else
+    				gc.drawImage(ORANGE_BLACK, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
+				break;
+			case BLUE:
+				if (tower.getPlayer())
+    				gc.drawImage(BLUE_WHITE, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
+    			else
+    				gc.drawImage(BLUE_BLACK, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
+				break;
+			case PURPLE:
+				if (tower.getPlayer())
+    				gc.drawImage(PURPLE_WHITE, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
+    			else
+    				gc.drawImage(PURPLE_BLACK, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
+				break;
+			case PINK:
+				if (tower.getPlayer())
+    				gc.drawImage(PINK_WHITE, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
+    			else
+    				gc.drawImage(PINK_BLACK, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
+				break;
+			case YELLOW:
+				if (tower.getPlayer())
+    				gc.drawImage(YELLOW_WHITE, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
+    			else
+    				gc.drawImage(YELLOW_BLACK, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
+				break;
+			case RED:
+				if (tower.getPlayer())
+    				gc.drawImage(RED_WHITE, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
+    			else
+    				gc.drawImage(RED_BLACK, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
+				break;
+			case GREEN:
+				if (tower.getPlayer())
+    				gc.drawImage(GREEN_WHITE, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
+    			else
+    				gc.drawImage(GREEN_BLACK, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
+				break;
+			case BROWN:
+				if (tower.getPlayer())
+    				gc.drawImage(BROWN_WHITE, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
+    			else
+    				gc.drawImage(BROWN_BLACK, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
+				break;
+			default:
+				break;
     		}
     	}
     }
