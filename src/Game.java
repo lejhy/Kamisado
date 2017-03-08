@@ -14,13 +14,11 @@ public class Game extends Observable{
 			   	board.performMove(move);
 			   	switchPlayer();
 			  	round++;
-			   	setChanged();
-			   	notifyObservers(Value.NEXT_TURN);
 			   	if (GameLogic.isGameOver(board)) {
 				   gameOver = true;
-				   setChanged();
-				   notifyObservers(Value.GAME_OVER);
 			   	}
+			   	setChanged();
+			   	notifyObservers(Value.NEXT_TURN);
 		  	}
 	   	}
    	}
@@ -33,7 +31,7 @@ public class Game extends Observable{
    		if (currentPlayer == player1) {
    			currentPlayer = player2;
    		} else {
-   			currentPlayer = player2;
+   			currentPlayer = player1;
    		}
    	}
    	

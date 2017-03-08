@@ -6,8 +6,7 @@ public final class GameLogic {
 	public static boolean isGameOver(Board board) {
 		boolean lastPlayervalue = board.getLastPlayerValue();
 		Move lastMove = board.getLastMove();
-		isWinningMove(lastPlayervalue, lastMove);
-		return false;
+		return isWinningMove(lastPlayervalue, lastMove);
 	}
 	
 	public static boolean isWinningMove(boolean playerValue, Move move) {
@@ -65,6 +64,7 @@ public final class GameLogic {
 		List <Move> moves = new ArrayList<Move>();
 		Move move;
 		Tower tower = getValidBlackTower(board);
+		System.out.println(tower.getPositionY());
 		int i = 1;
 		
 		// straight
@@ -107,7 +107,7 @@ public final class GameLogic {
 			int zeroToSeven = (int) (Math.random()*7);
 			return board.getTower(zeroToSeven, 0);
 		} else {
-			return board.getTower(true, board.getLastColor());
+			return board.getTower(false, board.getLastColor());
 		}
 	}
 	

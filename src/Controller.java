@@ -47,9 +47,11 @@ public class Controller implements Observer{
 
     @FXML
     void newGame(Event event) {
-    	this.game = new Game(new Player("test", Value.HUMAN), new Player("test2", Value.HUMAN));
+    	this.game = new Game(new Player("test", Value.AI), new Player("test2", Value.AI));
+    	game.addObserver(this);
     	initGame();
     	kamisado.displayGame();
+    	this.update(game, null);
     }
 
     @FXML
@@ -77,7 +79,6 @@ public class Controller implements Observer{
     		} else {
     			game.nextTurn(new Move(selectionX, selectionY, squareX, squareY), Value.HUMAN);
     		}
-    		updateGame();
     	}
     }
     
@@ -92,20 +93,17 @@ public class Controller implements Observer{
     	Image YELLOW = new Image("img/YELLOW.png");
     	Image RED = new Image("img/RED.png");
     	Image GREEN = new Image("img/GREEN.png");
-    	System.out.println("debug");
     	Image BROWN = new Image("img/BROWN.png");
-    	System.out.println("debug");
+
     	Image ORANGE_WHITE = new Image("img/ORANGE_WHITE.png");
-    	System.out.println("debug");
     	Image BLUE_WHITE = new Image("img/BLUE_WHITE.png");
     	Image PURPLE_WHITE = new Image("img/PURPLE_WHITE.png");
     	Image PINK_WHITE = new Image("img/PINK_WHITE.png");
     	Image YELLOW_WHITE = new Image("img/YELLOW_WHITE.png");
-    	System.out.println("debug");
     	Image RED_WHITE = new Image("img/RED_WHITE.png");
     	Image GREEN_WHITE = new Image("img/GREEN_WHITE.png");
     	Image BROWN_WHITE = new Image("img/BROWN_WHITE.png");
-    	System.out.println("debug");
+    	
     	Image ORANGE_BLACK = new Image("img/ORANGE_BLACK.png");
     	Image BLUE_BLACK = new Image("img/BLUE_BLACK.png");
     	Image PURPLE_BLACK = new Image("img/PURPLE_BLACK.png");
@@ -214,6 +212,18 @@ public class Controller implements Observer{
 	
 	@Override
 	public void update (Observable observable, Object argument) {
+		if (observable instanceof Game) {
+			updateGame();
+			if (game.getCurrentPlayer().getType() == Value.AI) {
+				Thread thread = new Thread(new Runnable() {
+					public void run() {
+						game.nextTurn(AI.MiniMaxAB(game.getBoard(), 11), Value.AI);
+					}
+				});
+				thread.setDaemon(true);
+				thread.start();
+			}
+		}
 		// if game changed, check for current player AI
 		// update the view as well
 	}

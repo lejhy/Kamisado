@@ -1,7 +1,6 @@
 import java.util.List;
-
 public final class AI {
-   public static Move MiniMaxAB(Board board, int depth, boolean playerValue){
+   public static Move MiniMaxAB(Board board, int depth){
 	   int a = -100;
 	   int b = 100;
 	   int value;
@@ -18,19 +17,12 @@ public final class AI {
 			   if(GameLogic.isGameOver(newBoard)) {
 				   return move;
 			   } else {
-				   if (playerValue){
-					   value = MinAB(newBoard, depth - 1, a, b);
-					   if (value < b) {
-						   b = value;
-						   bestMove = move;
-					   }
-				   } else {
-					   value = MaxAB(newBoard, depth - 1, a, b);
-					   if (value > a) {
-						   a = value;
-						   bestMove = move;
-					   }
+				   value = MinAB(newBoard, depth - 1, a, b);
+				   if (value > a) {
+					   a = value;
+					   bestMove = move;
 				   }
+				  
 			   }
 		   }
 	   }
@@ -45,11 +37,11 @@ public final class AI {
 		   Board newBoard;
 		   List<Move> moves = GameLogic.getValidMoves(board);
 		   for (Move move: moves){
-			   if(GameLogic.isWinningMove(!board.getLastPlayerValue(), move)) {
-				   return -100*depth;
+			   newBoard = new Board(board);
+			   newBoard.performMove(move);
+			   if(GameLogic.isWinningMove(newBoard.getLastPlayerValue(), move)) {
+				   return -10*depth;
 			   } else {
-				   newBoard = new Board(board);
-				   newBoard.performMove(move);
 				   value = MaxAB(newBoard, depth - 1, a, b);
 				   
 				   if (value <= a) {
@@ -73,12 +65,11 @@ public final class AI {
 		   Board newBoard;
 		   List<Move> moves = GameLogic.getValidMoves(board);
 		   for (Move move: moves){
-			   
-			   if(GameLogic.isWinningMove(!board.getLastPlayerValue(), move)) {
-				   return 100*depth;
+			   newBoard = new Board(board);
+			   newBoard.performMove(move);
+			   if(GameLogic.isWinningMove(newBoard.getLastPlayerValue(), move)) {
+				   return 10*depth;
 			   } else {
-				   newBoard = new Board(board);
-				   newBoard.performMove(move);
 				   value = MinAB(newBoard, depth - 1, a, b);
 				   
 				   if (value >= b) {
