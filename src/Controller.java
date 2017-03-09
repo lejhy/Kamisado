@@ -164,15 +164,17 @@ public class Controller implements Observer{
     		if (GameLogic.isValidTower(game.getBoard(), squareX, squareY)) {
     			selectionX = squareX;
     			selectionY = squareY;
-    			showValidMoves();
+    			Tower tower = game.getBoard().getTower(selectionX, selectionY);
+    			showValidMoves(tower);
     		} else {
     			game.nextTurn(new Move(selectionX, selectionY, squareX, squareY), Value.HUMAN);
     		}
     	}
     }
     
-    public void showValidMoves() {
-    	List<Move> moves = GameLogic.getValidMoves(game.getBoard());
+    public void showValidMoves(Tower tower) {
+    	updateGame();
+    	List<Move> moves = GameLogic.getValidMoves(game.getBoard(), tower);
     	GraphicsContext gc = gameView.getGraphicsContext2D();
     	Image HIGHLIGHT = new Image("img/HIGHLIGHT.png");
     	for (Move move: moves) {

@@ -42,20 +42,31 @@ public final class GameLogic {
 		return new Move(x, y, x, y);
 	}
 	
-	public static List<Move> getValidMoves (Board board) {
+	public static List<Move> getValidMoves (Board board, Tower tower) {
 		if (board.getLastPlayerValue() == false) {
 			// Last was black, now it's white's turn
-			return getValidWhiteMoves (board);
+			return getValidWhiteMoves (board, tower);
 		} else {
 			// Last was white, now it's black's turn
-			return getValidBlackMoves (board);
+			return getValidBlackMoves (board, tower);
 		}
 	}
 	
-	public static List<Move> getValidWhiteMoves (Board board) {
+	public static List<Move> getValidMoves (Board board) {
+		if (board.getLastPlayerValue() == false) {
+			// Last was black, now it's white's turn
+			Tower tower = getValidWhiteTower(board);
+			return getValidWhiteMoves (board, tower);
+		} else {
+			// Last was white, now it's black's turn
+			Tower tower = getValidBlackTower(board);
+			return getValidBlackMoves (board, tower);
+		}
+	}
+	
+	public static List<Move> getValidWhiteMoves (Board board, Tower tower) {
 		List <Move> moves = new ArrayList<Move>();
 		Move move;
-		Tower tower = getValidWhiteTower(board);
 		int i = 1;
 		
 		// straight
@@ -84,10 +95,9 @@ public final class GameLogic {
 		return moves;
 	}
 	
-	public static List<Move> getValidBlackMoves (Board board) {
+	public static List<Move> getValidBlackMoves (Board board, Tower tower) {
 		List <Move> moves = new ArrayList<Move>();
 		Move move;
-		Tower tower = getValidBlackTower(board);
 		int i = 1;
 		
 		// straight
