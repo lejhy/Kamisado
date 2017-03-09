@@ -1,11 +1,11 @@
 import java.util.Observable;
 
 public class Game extends Observable{
-	private Player player1;
-	private Player player2;
-	private Player currentPlayer;
+	protected Player player1;
+	protected Player player2;
+	protected Player currentPlayer;
 	private Board board;
-   	private boolean gameOver;
+	protected boolean gameOver;
    	private int round;
    
    	public void nextTurn(Move move, Value type) {
@@ -24,10 +24,14 @@ public class Game extends Observable{
 				   		switchPlayer();
 				   	}
 			   	}
-			   	setChanged();
-			   	notifyObservers(Value.NEXT_TURN);
+			   	change();
 		  	}
 	   	}
+   	}
+   	
+   	public void change() {
+   		setChanged();
+	   	notifyObservers();
    	}
    	
    	public Player getCurrentPlayer() {
@@ -42,7 +46,7 @@ public class Game extends Observable{
    		return player2;
    	}
    
-   	private void switchPlayer() {
+   	protected void switchPlayer() {
    		if (currentPlayer == player1) {
    			currentPlayer = player2;
    		} else {

@@ -50,6 +50,9 @@ public class Controller implements Observer{
     private Label player2Name;
     
     @FXML
+    private ToggleGroup gameMode;
+    
+    @FXML
     private TextField player2NameInput;
 
     @FXML
@@ -117,6 +120,7 @@ public class Controller implements Observer{
     void newGame(Event event) {
     	Value p1Value = getRBSelectionValue (player1Type);
     	Value p2Value = getRBSelectionValue (player2Type);
+    	Value gameModeValue = getRBSelectionValue (gameMode);
     	
     	String p1Name = player1NameInput.getText();
     	if (p1Name.equals("")){
@@ -130,7 +134,11 @@ public class Controller implements Observer{
     	Player player1 = new Player (p1Name, p1Value);
     	Player player2 = new Player (p2Name, p2Value);
     	
-    	this.game = new Game(player1, player2);
+    	if (gameModeValue == Value.SPEED_MODE){
+    		this.game = new SpeedGame(player1, player2);
+    	} else {
+    		this.game = new Game(player1, player2);
+    	}
     	game.addObserver(this);
     	initGame();
     	
@@ -316,14 +324,12 @@ public class Controller implements Observer{
 	
 	@Override
 	public void update (Observable observable, Object argument) {
-		if (observable instanceof Game) {
-			updateGame();
-			System.out.println("update");
-			if (game.isGameOver()) {
-				gameOver();
-			} else {
-				checkForAI();
-			}
+		updateGame();
+		System.out.println("update");
+		if (game.isGameOver()) {
+			gameOver();
+		} else {
+			checkForAI();
 		}
 	}
 	
@@ -373,8 +379,14 @@ public class Controller implements Observer{
     	case "AI":
     		value = Value.AI;
     		break;
+    	case "Normal":
+    		value = Value.NORMAL;
+    		break;
+    	case "Speed Mode":
+    		value = Value.SPEED_MODE;
+    		break;
 		default:
-			value = Value.HUMAN;
+			value = Value.DEFAULT;
     		break;
     	}
     	
