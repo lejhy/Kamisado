@@ -7,6 +7,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
+import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -20,6 +21,8 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 
 public class Controller implements Observer{
 	private Kamisado kamisado;
@@ -116,7 +119,13 @@ public class Controller implements Observer{
     	Value p2Value = getRBSelectionValue (player2Type);
     	
     	String p1Name = player1NameInput.getText();
+    	if (p1Name.equals("")){
+    		p1Name = "Player 1";
+    	}
     	String p2Name = player2NameInput.getText();
+    	if (p2Name.equals("")){
+    		p2Name = "Player 2";
+    	}
     	
     	Player player1 = new Player (p1Name, p1Value);
     	Player player2 = new Player (p2Name, p2Value);
@@ -152,18 +161,31 @@ public class Controller implements Observer{
     		System.out.println("X: " + x + "Y: " + y);
     		int squareX = ((int)x)/squareSize;
     		int squareY = ((int)y)/squareSize;
-    		Tower tower = game.getBoard().getTower(squareX, squareY);
-    		if (tower != null) {
+    		if (GameLogic.isValidTower(game.getBoard(), squareX, squareY)) {
     			selectionX = squareX;
     			selectionY = squareY;
+    			showValidMoves();
     		} else {
     			game.nextTurn(new Move(selectionX, selectionY, squareX, squareY), Value.HUMAN);
     		}
     	}
     }
     
+    public void showValidMoves() {
+    	List<Move> moves = GameLogic.getValidMoves(game.getBoard());
+    	GraphicsContext gc = gameView.getGraphicsContext2D();
+    	Image HIGHLIGHT = new Image("img/HIGHLIGHT.png");
+    	for (Move move: moves) {
+    		gc.drawImage(HIGHLIGHT, move.finishX*squareSize, move.finishY*squareSize, squareSize, squareSize);
+    	}
+    }
+    
     public void initGame () {
     	System.out.println("Init game view");
+    	
+    	player1Name.setText(game.getPlayer1().getName());
+    	player2Name.setText(game.getPlayer2().getName());
+    	
     	GraphicsContext gc = gameView.getGraphicsContext2D();
     	
     	Image ORANGE = new Image("img/ORANGE.png");
@@ -236,49 +258,49 @@ public class Controller implements Observer{
     	for (Tower tower: game.getBoard().getTowers()) {
     		switch(tower.getColor()) {
     		case ORANGE:
-    			if (tower.getPlayer())
+    			if (tower.getPlayerValue())
     				gc.drawImage(ORANGE_WHITE, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
     			else
     				gc.drawImage(ORANGE_BLACK, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
 				break;
 			case BLUE:
-				if (tower.getPlayer())
+				if (tower.getPlayerValue())
     				gc.drawImage(BLUE_WHITE, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
     			else
     				gc.drawImage(BLUE_BLACK, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
 				break;
 			case PURPLE:
-				if (tower.getPlayer())
+				if (tower.getPlayerValue())
     				gc.drawImage(PURPLE_WHITE, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
     			else
     				gc.drawImage(PURPLE_BLACK, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
 				break;
 			case PINK:
-				if (tower.getPlayer())
+				if (tower.getPlayerValue())
     				gc.drawImage(PINK_WHITE, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
     			else
     				gc.drawImage(PINK_BLACK, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
 				break;
 			case YELLOW:
-				if (tower.getPlayer())
+				if (tower.getPlayerValue())
     				gc.drawImage(YELLOW_WHITE, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
     			else
     				gc.drawImage(YELLOW_BLACK, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
 				break;
 			case RED:
-				if (tower.getPlayer())
+				if (tower.getPlayerValue())
     				gc.drawImage(RED_WHITE, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
     			else
     				gc.drawImage(RED_BLACK, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
 				break;
 			case GREEN:
-				if (tower.getPlayer())
+				if (tower.getPlayerValue())
     				gc.drawImage(GREEN_WHITE, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
     			else
     				gc.drawImage(GREEN_BLACK, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
 				break;
 			case BROWN:
-				if (tower.getPlayer())
+				if (tower.getPlayerValue())
     				gc.drawImage(BROWN_WHITE, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
     			else
     				gc.drawImage(BROWN_BLACK, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
@@ -304,10 +326,24 @@ public class Controller implements Observer{
 	}
 	
 	public void gameOver() {
-		System.out.println("game over cont");
+		System.out.println("game over");
 		GraphicsContext gc = gameView.getGraphicsContext2D();
 		Image GAME_OVER = new Image("img/GAME_OVER.png");
 		gc.drawImage(GAME_OVER, 0, 0, gameView.getWidth(), gameView.getHeight());
+		gc.setTextAlign(TextAlignment.CENTER);
+		gc.setTextBaseline(VPos.CENTER);
+		gc.setFont(new Font(squareSize));
+		gc.fillText(
+				"GAME OVER", 
+				gameView.getWidth()/2, 
+				(gameView.getHeight() - squareSize)/2
+		);
+		gc.setFont(new Font(squareSize/2));
+		gc.fillText(
+				game.getCurrentPlayer().getName() + " is the Winner!", 
+				gameView.getWidth()/2, 
+				(gameView.getHeight() + squareSize)/2
+		);
 	}
 	
 	public void checkForAI() {
@@ -315,7 +351,7 @@ public class Controller implements Observer{
 			Thread thread = new Thread(new Runnable() {
 				public void run() {
 					loading.setVisible(true);
-					game.nextTurn(AI.MiniMaxAB(game.getBoard(), 8), Value.AI);
+					game.nextTurn(AI.MiniMaxAB(game.getBoard(), 10), Value.AI);
 					loading.setVisible(false);
 				}
 			});

@@ -139,7 +139,7 @@ public final class GameLogic {
 		   if (tower == null){
 			   return false;
 		   } else {
-			   if (tower.getPlayer() == board.getLastPlayerValue()) {
+			   if (tower.getPlayerValue() == board.getLastPlayerValue()) {
 				   return false;
 			   } else {
 				   if (tower.getColor() == board.getLastColor() || board.getLastColor() == null){

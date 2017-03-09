@@ -12,16 +12,17 @@ public class Game extends Observable{
    		if (!gameOver){
 		   	if (GameLogic.isValidMove(board, move) && currentPlayer.getType() == type){
 			   	board.performMove(move);
-			   	switchPlayer();
-			  	round++;
+			   	round++;
 			   	if (GameLogic.isGameOver(board)) {
 			   		System.out.println("game over game");
-				   gameOver = true;
-			   	}
-			   	if (GameLogic.isDeadLock(board)) {
-			   		board.performMove(GameLogic.getZeroMove(board));
-			   		switchPlayer();
-			   		round++;
+			   		gameOver = true;
+			   	} else {
+				   	switchPlayer();
+				   	if (GameLogic.isDeadLock(board)) {
+				   		board.performMove(GameLogic.getZeroMove(board));
+				   		round++;
+				   		switchPlayer();
+				   	}
 			   	}
 			   	setChanged();
 			   	notifyObservers(Value.NEXT_TURN);
@@ -31,6 +32,14 @@ public class Game extends Observable{
    	
    	public Player getCurrentPlayer() {
    		return new Player(currentPlayer);
+   	}
+   	
+   	public Player getPlayer1() {
+   		return player1;
+   	}
+   	
+   	public Player getPlayer2() {
+   		return player2;
    	}
    
    	private void switchPlayer() {

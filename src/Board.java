@@ -85,7 +85,7 @@ public class Board {
 	}
 	
 	public boolean getTowerPlayer (int i) {
-		return towers.get(i).getPlayer();
+		return towers.get(i).getPlayerValue();
 	}
 	
 	public int getTowerPosX (int i) {
@@ -116,7 +116,7 @@ public class Board {
 	
 	public Tower findTower(boolean playerValue, Value color) {
 		for (Tower tower: towers) {
-			if (tower.getPlayer() == playerValue && tower.getColor() == color) {
+			if (tower.getPlayerValue() == playerValue && tower.getColor() == color) {
 				return tower;
 			}
 		}
