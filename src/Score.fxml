@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label text="Label">
@@ -19,9 +18,9 @@
             <Insets bottom="30.0" />
          </VBox.margin>
       </Label>
-      <TableView focusTraversable="false" prefHeight="204.0" prefWidth="600.0">
+      <TableView fx:id="scoreTable" focusTraversable="false" prefHeight="204.0" prefWidth="600.0">
         <columns>
-          <TableColumn fx:id="scoreTable" editable="false" minWidth="-1.0" prefWidth="274.6666259765625" sortType="DESCENDING" sortable="false" text="Score" />
+          <TableColumn editable="false" minWidth="-1.0" prefWidth="274.6666259765625" sortType="DESCENDING" sortable="false" text="Score" />
           <TableColumn editable="false" minWidth="-1.0" prefWidth="324.3333740234375" sortType="DESCENDING" sortable="false" text="Player" />
         </columns>
          <columnResizePolicy>

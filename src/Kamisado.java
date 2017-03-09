@@ -13,16 +13,17 @@ import javafx.stage.Stage;
 
 public class Kamisado extends Application{
 	private Controller controller;
-	private Stage window;
+	private Stage stage;
 	public Scene mainMenu, newGame, loadGame, score, game;
 	
 	@Override
 	public void start(Stage primaryStage) {
-		this.window = primaryStage;
+		this.stage = primaryStage;
+		this.stage.setResizable(false);
 		controller = new Controller(this);
 		load();
-		this.window.setScene(mainMenu);
-		this.window.show();
+		this.stage.setScene(mainMenu);
+		this.stage.show();
 	}
 	
 	private void load () {
@@ -50,23 +51,23 @@ public class Kamisado extends Application{
 	}
 	
 	public void displayMainMenu() {
-		this.window.setScene(mainMenu);
+		this.stage.setScene(mainMenu);
 	}
 	
 	public void displayNewGame() {
-		this.window.setScene(newGame);
+		this.stage.setScene(newGame);
 	}
 	
 	public void displayLoadGame() {
-		this.window.setScene(loadGame);
+		this.stage.setScene(loadGame);
 	}
 	
 	public void displayScore() {
-		this.window.setScene(score);
+		this.stage.setScene(score);
 	}
 	
 	public void displayGame() {
-		this.window.setScene(game);
+		this.stage.setScene(game);
 	}
 
 	public static void main(String[] args) {

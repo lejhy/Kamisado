@@ -4,9 +4,26 @@ import java.util.List;
 public final class GameLogic {
 	
 	public static boolean isGameOver(Board board) {
-		boolean lastPlayervalue = board.getLastPlayerValue();
+		boolean lastPlayerValue = board.getLastPlayerValue();
 		Move lastMove = board.getLastMove();
-		return isWinningMove(lastPlayervalue, lastMove);
+		if (isWinningMove(lastPlayerValue, lastMove)) {
+			return true;
+		} else if (isDeadLock(board)) {
+			Board newBoard = new Board(board);
+			newBoard.performMove(getZeroMove(board));
+			if (isDeadLock(newBoard)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static boolean isDeadLock(Board board) {
+		if (getValidMoves(board).isEmpty()) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	public static boolean isWinningMove(boolean playerValue, Move move) {
@@ -16,6 +33,13 @@ public final class GameLogic {
 			return true;
 		}
 		return false;
+	}
+	
+	public static Move getZeroMove (Board board) {
+		Tower tower = board.getTower(!board.getLastPlayerValue(), board.getLastColor());
+		int x = tower.getPositionX();
+		int y = tower.getPositionY();
+		return new Move(x, y, x, y);
 	}
 	
 	public static List<Move> getValidMoves (Board board) {
@@ -64,7 +88,6 @@ public final class GameLogic {
 		List <Move> moves = new ArrayList<Move>();
 		Move move;
 		Tower tower = getValidBlackTower(board);
-		System.out.println(tower.getPositionY());
 		int i = 1;
 		
 		// straight

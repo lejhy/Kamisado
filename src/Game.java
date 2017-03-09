@@ -18,6 +18,11 @@ public class Game extends Observable{
 			   		System.out.println("game over game");
 				   gameOver = true;
 			   	}
+			   	if (GameLogic.isDeadLock(board)) {
+			   		board.performMove(GameLogic.getZeroMove(board));
+			   		switchPlayer();
+			   		round++;
+			   	}
 			   	setChanged();
 			   	notifyObservers(Value.NEXT_TURN);
 		  	}

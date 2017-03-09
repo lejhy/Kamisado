@@ -9,6 +9,9 @@ import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -26,22 +29,37 @@ public class Controller implements Observer{
 	private int selectionX, selectionY;
 	
 	@FXML
+    private Button resume;
+	
+	@FXML
     private Canvas gameView;
 	
 	@FXML
-    private TextField player1Name;
+    private Label player1Name;
+	
+	@FXML
+    private TextField player1NameInput;
 	 
     @FXML
     private ToggleGroup player1Type;
     
     @FXML
-    private TextField player2Name;
+    private Label player2Name;
+    
+    @FXML
+    private TextField player2NameInput;
 
     @FXML
     private ToggleGroup player2Type;
     
     @FXML
+    private ProgressIndicator loading;
+    
+    @FXML
     private TableView<?> loadGameTable;
+    
+    @FXML
+    private TableView<?> scoreTable;
 	
 	public Controller (Kamisado kamisado) {
 		this.kamisado = kamisado;
@@ -58,6 +76,11 @@ public class Controller implements Observer{
 	@FXML
     void mainMenu(ActionEvent event) {
     	kamisado.displayMainMenu();
+    	if (game != null) {
+    		resume.setDisable(false);
+    	} else {
+    		resume.setDisable(true);
+    	}
     }
 	
 	@FXML
@@ -79,14 +102,21 @@ public class Controller implements Observer{
     void exit(Event event) {
 		System.exit(0);
     }
+	
+	@FXML
+	void resumeGame(ActionEvent event) {
+		if (game != null) {
+			kamisado.displayGame();
+		}
+	}
 
     @FXML
     void newGame(Event event) {
     	Value p1Value = getRBSelectionValue (player1Type);
     	Value p2Value = getRBSelectionValue (player2Type);
     	
-    	String p1Name = player1Name.getText();
-    	String p2Name = player2Name.getText();
+    	String p1Name = player1NameInput.getText();
+    	String p2Name = player2NameInput.getText();
     	
     	Player player1 = new Player (p1Name, p1Value);
     	Player player2 = new Player (p2Name, p2Value);
@@ -117,8 +147,8 @@ public class Controller implements Observer{
     @FXML
     void gameInput(Event event) {
     	if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
-    		double x = ((MouseEvent)event).getSceneX();
-    		double y = ((MouseEvent)event).getSceneY();
+    		double x = ((MouseEvent)event).getX();
+    		double y = ((MouseEvent)event).getY();
     		System.out.println("X: " + x + "Y: " + y);
     		int squareX = ((int)x)/squareSize;
     		int squareY = ((int)y)/squareSize;
@@ -284,7 +314,9 @@ public class Controller implements Observer{
 		if (game.getCurrentPlayer().getType() == Value.AI) {
 			Thread thread = new Thread(new Runnable() {
 				public void run() {
+					loading.setVisible(true);
 					game.nextTurn(AI.MiniMaxAB(game.getBoard(), 8), Value.AI);
+					loading.setVisible(false);
 				}
 			});
 			thread.setDaemon(true);

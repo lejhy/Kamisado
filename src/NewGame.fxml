@@ -19,7 +19,7 @@
             </RadioButton>
             <RadioButton layoutX="60.0" layoutY="200.0" mnemonicParsing="false" text="AI" toggleGroup="$player1Type" />
             <Label layoutX="82.0" layoutY="110.0" text="Player 1" />
-            <TextField fx:id="player1Name" layoutX="29.0" layoutY="127.0" />
+            <TextField fx:id="player1NameInput" layoutX="29.0" layoutY="127.0" />
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
@@ -35,7 +35,7 @@
             </RadioButton>
             <RadioButton layoutX="60.0" layoutY="200.0" mnemonicParsing="false" text="AI" toggleGroup="$player2Type" />
             <Label layoutX="82.0" layoutY="110.0" text="Player 2" />
-            <TextField fx:id="player2Name" layoutX="29.0" layoutY="127.0" />
+            <TextField fx:id="player2NameInput" layoutX="29.0" layoutY="127.0" />
          </children>
       </AnchorPane>
   </items>

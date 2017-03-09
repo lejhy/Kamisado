@@ -3,7 +3,7 @@ public final class AI {
    public static Move MiniMaxAB(Board board, int depth){
 	   int a = -100;
 	   int b = 100;
-	   int value;
+	   int value = 0;
 	   Board newBoard;
 	   Move bestMove = new Move(-1,-1,-1,-1);
 	   List<Move> moves = GameLogic.getValidMoves(board);
@@ -11,7 +11,8 @@ public final class AI {
 	   if (depth == 0) {
 		   return bestMove;
 	   } else {
-		   for (Move move: moves){
+		   for (int i = 0; i < moves.size(); i++){
+			   Move move = moves.get(i);
 			   newBoard = new Board(board);
 			   newBoard.performMove(move);
 			   if(GameLogic.isGameOver(newBoard)) {
@@ -26,6 +27,7 @@ public final class AI {
 			   }
 		   }
 	   }
+	   System.out.println(a);
 	   return bestMove;
    }
    
@@ -33,23 +35,28 @@ public final class AI {
 	   if (depth == 0) {
 		   return 0;
 	   } else {
-		   int value;
+		   int value = 0;
 		   Board newBoard;
 		   List<Move> moves = GameLogic.getValidMoves(board);
-		   for (Move move: moves){
-			   newBoard = new Board(board);
-			   newBoard.performMove(move);
-			   if(GameLogic.isWinningMove(newBoard.getLastPlayerValue(), move)) {
-				   return -10*depth;
-			   } else {
-				   value = MaxAB(newBoard, depth - 1, a, b);
-				   
-				   if (value <= a) {
-					   return a;
-				   }
-				   
-				   if (value < b) {
-					   b = value;
+		   if (moves.size() == 0) {
+			   return MaxAB(board, depth - 1, a, b);
+		   } else {
+			   for (int i = 0; i < moves.size(); i++){
+				   Move move = moves.get(i);
+				   newBoard = new Board(board);
+				   newBoard.performMove(move);
+				   if(GameLogic.isWinningMove(newBoard.getLastPlayerValue(), move)) {
+					   return -10*depth;
+				   } else {
+					   value = MaxAB(newBoard, depth - 1, a, b);
+					   
+					   if (value <= a) {
+						   return a;
+					   }
+					   
+					   if (value < b) {
+						   b = value;
+					   }
 				   }
 			   }
 		   }
@@ -61,23 +68,28 @@ public final class AI {
 	   if (depth == 0) {
 		   return 0;
 	   } else {
-		   int value;
+		   int value = 0;
 		   Board newBoard;
 		   List<Move> moves = GameLogic.getValidMoves(board);
-		   for (Move move: moves){
-			   newBoard = new Board(board);
-			   newBoard.performMove(move);
-			   if(GameLogic.isWinningMove(newBoard.getLastPlayerValue(), move)) {
-				   return 10*depth;
-			   } else {
-				   value = MinAB(newBoard, depth - 1, a, b);
-				   
-				   if (value >= b) {
-					   return b;
-				   }
-				   
-				   if (value > a) {
-					   a = value;
+		   if (moves.size() == 0) {
+			   return MaxAB(board, depth - 1, a, b);
+		   } else {
+			   for (int i = 0; i < moves.size(); i++){
+				   Move move = moves.get(i);
+				   newBoard = new Board(board);
+				   newBoard.performMove(move);
+				   if(GameLogic.isWinningMove(newBoard.getLastPlayerValue(), move)) {
+					   return 10*depth;
+				   } else {
+					   value = MinAB(newBoard, depth - 1, a, b);
+					   
+					   if (value >= b) {
+						   return b;
+					   }
+					   
+					   if (value > a) {
+						   a = value;
+					   }
 				   }
 			   }
 		   }
