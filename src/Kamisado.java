@@ -32,18 +32,23 @@ public class Kamisado extends Application{
 			loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
 			loader.setController(controller);
 			mainMenu = new Scene(loader.load());
+			mainMenu.getStylesheets().add("Kamisado.css");
 			loader = new FXMLLoader(getClass().getResource("NewGame.fxml"));
 			loader.setController(controller);
 			newGame = new Scene(loader.load());
+			newGame.getStylesheets().add("Kamisado.css");
 			loader = new FXMLLoader(getClass().getResource("LoadGame.fxml"));
 			loader.setController(controller);
 			loadGame = new Scene(loader.load());
+			loadGame.getStylesheets().add("Kamisado.css");
 			loader = new FXMLLoader(getClass().getResource("Score.fxml"));
 			loader.setController(controller);
 			score = new Scene(loader.load());
+			score.getStylesheets().add("Kamisado.css");
 			loader = new FXMLLoader(getClass().getResource("game.fxml"));
 			loader.setController(controller);
 			game = new Scene(loader.load());
+			game.getStylesheets().add("Kamisado.css");
 		} catch (IOException e) {
 			System.out.println("Error loading fxml files");
 			System.err.println();

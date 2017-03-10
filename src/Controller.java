@@ -247,13 +247,25 @@ public class Controller implements Observer{
 	}
 	
 	public void checkForAI() {
-		if (game.getCurrentPlayer().getType() == Value.AI) {
+		if (game.getCurrentPlayer().getType() == Value.EASY_AI) {
 			Thread thread = new Thread(new Runnable() {
 				public void run() {
 					if(!timer.isVisible()){
 						loading.setVisible(true);
 					}
-					game.nextTurn(AI.MiniMaxAB(game.getBoard(), 11), Value.AI);
+					game.nextTurn(AI.MiniMaxAB(game.getBoard(), 5), Value.EASY_AI);
+					loading.setVisible(false);
+				}
+			});
+			thread.setDaemon(true);
+			thread.start();
+		} else if (game.getCurrentPlayer().getType() == Value.HARD_AI) {
+			Thread thread = new Thread(new Runnable() {
+				public void run() {
+					if(!timer.isVisible()){
+						loading.setVisible(true);
+					}
+					game.nextTurn(AI.MiniMaxAB(game.getBoard(), 11), Value.HARD_AI);
 					loading.setVisible(false);
 				}
 			});
@@ -297,6 +309,8 @@ public class Controller implements Observer{
     	Image GREEN_BLACK = new Image("img/GREEN_BLACK.png");
     	Image BROWN_BLACK = new Image("img/BROWN_BLACK.png");
     	
+    	Image GRUDGE = new Image("img/GRUDGE.png");
+    	
     	squareSize = (int)(gameView.getWidth()/8);
     	int row = 0;
     	int column = 0;
@@ -336,6 +350,8 @@ public class Controller implements Observer{
     		}
     		row++;
     	}
+    	
+    	gc.drawImage(GRUDGE, 0, 0, squareSize*8, squareSize*8);
     	
     	for (Tower tower: game.getBoard().getTowers()) {
     		switch(tower.getColor()) {
@@ -401,8 +417,11 @@ public class Controller implements Observer{
     	case "Human":
     		value = Value.HUMAN;
     		break;
-    	case "AI":
-    		value = Value.AI;
+    	case "Easy AI":
+    		value = Value.EASY_AI;
+    		break;
+    	case "Hard AI":
+    		value = Value.HARD_AI;
     		break;
     	case "Normal":
     		value = Value.NORMAL;
