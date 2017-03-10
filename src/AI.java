@@ -39,7 +39,9 @@ public final class AI {
 		   Board newBoard;
 		   List<Move> moves = GameLogic.getValidMoves(board);
 		   if (moves.size() == 0) {
-			   return MaxAB(board, depth - 1, a, b);
+			   newBoard = new Board(board);
+			   newBoard.performMove(GameLogic.getDeadLockMove(newBoard));
+			   return MaxAB(newBoard, depth - 1, a, b);
 		   } else {
 			   for (int i = 0; i < moves.size(); i++){
 				   Move move = moves.get(i);
@@ -72,7 +74,9 @@ public final class AI {
 		   Board newBoard;
 		   List<Move> moves = GameLogic.getValidMoves(board);
 		   if (moves.size() == 0) {
-			   return MaxAB(board, depth - 1, a, b);
+			   newBoard = new Board(board);
+			   newBoard.performMove(GameLogic.getDeadLockMove(newBoard));
+			   return MinAB(newBoard, depth - 1, a, b);
 		   } else {
 			   for (int i = 0; i < moves.size(); i++){
 				   Move move = moves.get(i);

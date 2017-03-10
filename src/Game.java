@@ -1,41 +1,40 @@
 import java.util.Observable;
 
-public class Game extends Observable{
+public abstract class Game extends Observable{
 	protected Player player1;
 	protected Player player2;
-	protected Player currentPlayer;
-	private Board board;
+	protected Board board;
 	protected boolean gameOver;
-   	private int round;
+	protected int round;
    
-   	public void nextTurn(Move move, Value type) {
-   		if (!gameOver){
-		   	if (GameLogic.isValidMove(board, move) && currentPlayer.getType() == type){
-			   	board.performMove(move);
-			   	round++;
-			   	if (GameLogic.isGameOver(board)) {
-			   		System.out.println("game over game");
-			   		gameOver = true;
-			   	} else {
-				   	switchPlayer();
-				   	if (GameLogic.isDeadLock(board)) {
-				   		board.performMove(GameLogic.getZeroMove(board));
-				   		round++;
-				   		switchPlayer();
-				   	}
-			   	}
-			   	change();
-		  	}
-	   	}
-   	}
+   	public abstract void nextTurn(Move move, Value playerType);
+   	protected abstract void makeMove(Move move);
+   	protected abstract void gameOver();
    	
    	public void change() {
    		setChanged();
 	   	notifyObservers();
    	}
    	
+   	public void change(Value value) {
+   		setChanged();
+	   	notifyObservers(value);
+   	}
+   	
    	public Player getCurrentPlayer() {
-   		return new Player(currentPlayer);
+   		if (board.getLastPlayerValue()) {
+   			return new Player(player2);
+   		} else {
+   			return new Player(player1);
+   		}
+   	}
+   	
+   	public Player getLastPlayer() {
+   		if (board.getLastPlayerValue()) {
+   			return new Player(player1);
+   		} else {
+   			return new Player(player2);
+   		}
    	}
    	
    	public Player getPlayer1() {
@@ -45,17 +44,20 @@ public class Game extends Observable{
    	public Player getPlayer2() {
    		return player2;
    	}
-   
-   	protected void switchPlayer() {
-   		if (currentPlayer == player1) {
-   			currentPlayer = player2;
-   		} else {
-   			currentPlayer = player1;
-   		}
-   	}
    	
    	public boolean isGameOver() {
    		return gameOver;
+   	}
+   	
+   	public Player getWinner(){
+   		if (gameOver) {
+   			if (GameLogic.isDoubleDeadLock(board)){
+   				return getCurrentPlayer();
+   			} else {
+   				return getLastPlayer();
+   			}
+   		}
+   		else return null;
    	}
 	
 	public int getRound() {
@@ -69,7 +71,6 @@ public class Game extends Observable{
 	public Game(Player player1, Player player2){
 		this.player1 = player1;
 		this.player2 = player2;
-		currentPlayer = player1;
 		board = new Board();
 		gameOver = false;
 		round = 0;

@@ -2,6 +2,9 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -12,6 +15,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableView;
@@ -23,6 +27,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import javafx.util.Duration;
 
 public class Controller implements Observer{
 	private Kamisado kamisado;
@@ -30,42 +35,6 @@ public class Controller implements Observer{
 	private Data data;
 	private int squareSize;
 	private int selectionX, selectionY;
-	
-	@FXML
-    private Button resume;
-	
-	@FXML
-    private Canvas gameView;
-	
-	@FXML
-    private Label player1Name;
-	
-	@FXML
-    private TextField player1NameInput;
-	 
-    @FXML
-    private ToggleGroup player1Type;
-    
-    @FXML
-    private Label player2Name;
-    
-    @FXML
-    private ToggleGroup gameMode;
-    
-    @FXML
-    private TextField player2NameInput;
-
-    @FXML
-    private ToggleGroup player2Type;
-    
-    @FXML
-    private ProgressIndicator loading;
-    
-    @FXML
-    private TableView<?> loadGameTable;
-    
-    @FXML
-    private TableView<?> scoreTable;
 	
 	public Controller (Kamisado kamisado) {
 		this.kamisado = kamisado;
@@ -79,16 +48,43 @@ public class Controller implements Observer{
 		}
 	}
 	
-	@FXML
-    void mainMenu(ActionEvent event) {
-    	kamisado.displayMainMenu();
-    	if (game != null) {
-    		resume.setDisable(false);
-    	} else {
-    		resume.setDisable(true);
-    	}
-    }
+	@Override
+	public void update (Observable observable, Object argument) {
+		if (argument == Value.GAME_OVER) {
+			updateGame();
+			gameOver();
+		}
+		if (argument == Value.NEXT_TURN) {
+			updateGame();
+			System.out.println("update");
+			if (!game.isGameOver()) {
+				checkForAI();
+				if (game instanceof SpeedGame) {
+		    		timer.setVisible(true);
+		    		timer.setProgress(1.0);
+		    		Timeline timeline = new Timeline();
+		    		KeyValue keyValue = new KeyValue(timer.progressProperty(), 0.0);
+		    		KeyFrame keyFrame = new KeyFrame(new Duration(((SpeedGame) game).timeLimit), keyValue);
+		    		timeline.getKeyFrames().add(keyFrame);
+		    		timeline.play();
+		    	} else {
+		    		timer.setVisible(false);
+		    	}
+			}
+		}
+	}
 	
+	//Main Menu
+	@FXML
+    private Button resume;
+	
+	@FXML
+	void resumeGame(ActionEvent event) {
+		if (game != null) {
+			kamisado.displayGame();
+		}
+	}
+
 	@FXML
     void newGameMenu(ActionEvent event) {
     	kamisado.displayNewGame();
@@ -110,12 +106,31 @@ public class Controller implements Observer{
     }
 	
 	@FXML
-	void resumeGame(ActionEvent event) {
-		if (game != null) {
-			kamisado.displayGame();
-		}
-	}
+    void mainMenu(ActionEvent event) {
+    	kamisado.displayMainMenu();
+    	if (game != null) {
+    		resume.setDisable(false);
+    	} else {
+    		resume.setDisable(true);
+    	}
+    }
+	
+	// New Game
+	@FXML
+    private TextField player1NameInput;
+	 
+    @FXML
+    private ToggleGroup player1Type;
+	
+    @FXML
+    private TextField player2NameInput;
 
+    @FXML
+    private ToggleGroup player2Type;
+    
+    @FXML
+    private ToggleGroup gameMode;
+    
     @FXML
     void newGame(Event event) {
     	Value p1Value = getRBSelectionValue (player1Type);
@@ -137,25 +152,44 @@ public class Controller implements Observer{
     	if (gameModeValue == Value.SPEED_MODE){
     		this.game = new SpeedGame(player1, player2);
     	} else {
-    		this.game = new Game(player1, player2);
+    		this.game = new NormalGame(player1, player2);
     	}
     	game.addObserver(this);
     	initGame();
     	
     	kamisado.displayGame();
-    	this.update(game, null);
+    	this.update(game, Value.NEXT_TURN);
     }
+    
+	// Load game
+    @FXML
+    private TableView<?> loadGameTable;
     
     @FXML
     void loadGame(Event event) {
 
     }
-
-    @FXML
-    void scene(ActionEvent event) {
-    	
-    }
     
+    // Score
+    @FXML
+    private TableView<?> scoreTable;
+    
+    //Game
+	@FXML
+    private Canvas gameView;
+	
+	@FXML
+    private Label player1Name;
+    
+    @FXML
+    private Label player2Name;
+    
+    @FXML
+    private ProgressBar timer;
+    
+    @FXML
+    private ProgressIndicator loading;
+
     @FXML
     void updateGame() {
     	initGame();
@@ -189,7 +223,45 @@ public class Controller implements Observer{
     		gc.drawImage(HIGHLIGHT, move.finishX*squareSize, move.finishY*squareSize, squareSize, squareSize);
     	}
     }
-    
+	
+	public void gameOver() {
+		System.out.println("game over");
+		GraphicsContext gc = gameView.getGraphicsContext2D();
+		timer.setVisible(false);
+		Image GAME_OVER = new Image("img/GAME_OVER.png");
+		gc.drawImage(GAME_OVER, 0, 0, gameView.getWidth(), gameView.getHeight());
+		gc.setTextAlign(TextAlignment.CENTER);
+		gc.setTextBaseline(VPos.CENTER);
+		gc.setFont(new Font(squareSize));
+		gc.fillText(
+				"GAME OVER", 
+				gameView.getWidth()/2, 
+				(gameView.getHeight() - squareSize)/2
+		);
+		gc.setFont(new Font(squareSize/2));
+		gc.fillText(
+				game.getWinner().getName() + " is the Winner!", 
+				gameView.getWidth()/2, 
+				(gameView.getHeight() + squareSize)/2
+		);
+	}
+	
+	public void checkForAI() {
+		if (game.getCurrentPlayer().getType() == Value.AI) {
+			Thread thread = new Thread(new Runnable() {
+				public void run() {
+					if(!timer.isVisible()){
+						loading.setVisible(true);
+					}
+					game.nextTurn(AI.MiniMaxAB(game.getBoard(), 11), Value.AI);
+					loading.setVisible(false);
+				}
+			});
+			thread.setDaemon(true);
+			thread.start();
+		}
+	}
+	
     public void initGame () {
     	System.out.println("Init game view");
     	
@@ -320,53 +392,6 @@ public class Controller implements Observer{
     		}
     	}
     }
-
-	
-	@Override
-	public void update (Observable observable, Object argument) {
-		updateGame();
-		System.out.println("update");
-		if (game.isGameOver()) {
-			gameOver();
-		} else {
-			checkForAI();
-		}
-	}
-	
-	public void gameOver() {
-		System.out.println("game over");
-		GraphicsContext gc = gameView.getGraphicsContext2D();
-		Image GAME_OVER = new Image("img/GAME_OVER.png");
-		gc.drawImage(GAME_OVER, 0, 0, gameView.getWidth(), gameView.getHeight());
-		gc.setTextAlign(TextAlignment.CENTER);
-		gc.setTextBaseline(VPos.CENTER);
-		gc.setFont(new Font(squareSize));
-		gc.fillText(
-				"GAME OVER", 
-				gameView.getWidth()/2, 
-				(gameView.getHeight() - squareSize)/2
-		);
-		gc.setFont(new Font(squareSize/2));
-		gc.fillText(
-				game.getCurrentPlayer().getName() + " is the Winner!", 
-				gameView.getWidth()/2, 
-				(gameView.getHeight() + squareSize)/2
-		);
-	}
-	
-	public void checkForAI() {
-		if (game.getCurrentPlayer().getType() == Value.AI) {
-			Thread thread = new Thread(new Runnable() {
-				public void run() {
-					loading.setVisible(true);
-					game.nextTurn(AI.MiniMaxAB(game.getBoard(), 10), Value.AI);
-					loading.setVisible(false);
-				}
-			});
-			thread.setDaemon(true);
-			thread.start();
-		}
-	}
 	
 	public Value getRBSelectionValue (ToggleGroup toggleGroup) {
     	RadioButton radioButton = (RadioButton)toggleGroup.getSelectedToggle();
@@ -392,41 +417,4 @@ public class Controller implements Observer{
     	
     	return value;
     }
-	
-	public void towerSelected(Tower tower) {
-		// highlight moves
-	}
-	
-	public void makeMove(Move move, Value type) {
-		this.game.nextTurn(move, type);
-	}
-	
-	public void newGame(Player player1, Player player2){
-		this.game = new Game(player1, player2);
-	}
-	
-	public void saveGame() {
-		if (game != null){
-			data.addGame(game);
-		}
-	}
-   
-	public void exit() {
-		data.saveDataToFile();
-		System.exit(0);
-	}	
-   
-	public String[] loadData () {
-		String[] load = {"load"};
-		return load;
-	}	
-   
-	public String[] scoreData () {
-		String[] score = {"score"};
-		return score;
-	}	
-	
-	public Game getGame() {
-		return game;
-	}
 }
