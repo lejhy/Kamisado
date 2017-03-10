@@ -1,8 +1,8 @@
 import java.util.List;
 public final class AI {
    public static Move MiniMaxAB(Board board, int depth){
-	   int a = -100;
-	   int b = 100;
+	   int a = -10000;
+	   int b = 10000;
 	   int value = 0;
 	   Board newBoard;
 	   Move bestMove = new Move(-1,-1,-1,-1);

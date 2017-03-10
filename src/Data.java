@@ -1,20 +1,14 @@
-import java.util.Set;
-
-import javax.swing.JFileChooser;
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Scanner;
-
 
 public class Data {
    
    private List<Game> games;
    private Scoreboard scoreboard;
-   private String fileName;
+   @SuppressWarnings("unused")
+private String fileName;
    private List<Player> players;
    
    public Data(String fileName){

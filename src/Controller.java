@@ -7,8 +7,6 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
@@ -20,11 +18,9 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
@@ -32,6 +28,7 @@ import javafx.util.Duration;
 public class Controller implements Observer{
 	private Kamisado kamisado;
 	private Game game;
+	@SuppressWarnings("unused")
 	private Data data;
 	private int squareSize;
 	private int selectionX, selectionY;
