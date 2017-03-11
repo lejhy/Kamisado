@@ -1,5 +1,7 @@
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
 
@@ -44,7 +46,7 @@ private void init () {
       return games;
    }
    
-   public void saveDataToFile(String fileName) {
+   public void saveDataToFile(String fileName, Game game, Scoreboard scoreboard) {
 	   try {
 //		  JFileChooser chooser = new JFileChooser();
 //		  chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);;
@@ -55,16 +57,36 @@ private void init () {
 		   
 		   FileOutputStream fileOut = new FileOutputStream(fileName);
 		   ObjectOutputStream out = new ObjectOutputStream(fileOut);
-		   out.writeObject(games);
-		   out.writeObject(players);
+		   out.writeObject(game);
+		   out.writeObject(scoreboard);
 		   out.close();
 		   fileOut.close();
 		   System.out.println("Data is save in: " + fileName);
 	   
 	   }catch(IOException i){
 		   i.printStackTrace();
-	   }  
-	
+	   } 
+	   
+	   
+//	   public void loadFile(fileName){
+//			      game = null;
+//			      scoreboard = null;
+//			      try {
+//			         FileInputStream fileIn = new FileInputStream(fileName);
+//			         ObjectInputStream in = new ObjectInputStream(fileIn);
+//			         game = (Game) in.readObject();
+//			         scoreboard = (Scoreboard) in.readObject();
+//			         in.close();
+//			         fileIn.close();
+//			      }catch(IOException i) {
+//			         i.printStackTrace();
+//			         return;
+//			      }catch(ClassNotFoundException c) {
+//			         System.out.println("File was not found");
+//			         c.printStackTrace();
+//						      }
+//	   }
+//	
 	   // TODO implement this operation
       throw new UnsupportedOperationException("not implemented");
    }
@@ -79,9 +101,7 @@ public String getFileName() {
 	return null;
 }
 
-public void saveDataToFile() {
-	// TODO Auto-generated method stub
-	
-}
+
+
    
 }
