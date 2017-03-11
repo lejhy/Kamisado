@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.net.URL;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -28,23 +30,28 @@ public class Kamisado extends Application{
 	private void load () {
 		try {
 			FXMLLoader loader;
-			loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
+			loader = new FXMLLoader();
+			loader.setLocation(Kamisado.class.getResource("fxml/MainMenu.fxml"));
 			loader.setController(controller);
 			mainMenu = new Scene(loader.load());
 			mainMenu.getStylesheets().add("Kamisado.css");
-			loader = new FXMLLoader(getClass().getResource("NewGame.fxml"));
+			loader = new FXMLLoader();
+			loader.setLocation(Kamisado.class.getResource("fxml/NewGame.fxml"));
 			loader.setController(controller);
 			newGame = new Scene(loader.load());
 			newGame.getStylesheets().add("Kamisado.css");
-			loader = new FXMLLoader(getClass().getResource("LoadGame.fxml"));
+			loader = new FXMLLoader();
+			loader.setLocation(Kamisado.class.getResource("fxml/LoadGame.fxml"));
 			loader.setController(controller);
 			loadGame = new Scene(loader.load());
 			loadGame.getStylesheets().add("Kamisado.css");
-			loader = new FXMLLoader(getClass().getResource("Score.fxml"));
+			loader = new FXMLLoader();
+			loader.setLocation(Kamisado.class.getResource("fxml/Score.fxml"));
 			loader.setController(controller);
 			score = new Scene(loader.load());
 			score.getStylesheets().add("Kamisado.css");
-			loader = new FXMLLoader(getClass().getResource("game.fxml"));
+			loader = new FXMLLoader();
+			loader.setLocation(Kamisado.class.getResource("fxml/Game.fxml"));
 			loader.setController(controller);
 			game = new Scene(loader.load());
 			game.getStylesheets().add("Kamisado.css");
