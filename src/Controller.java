@@ -21,6 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
@@ -229,13 +230,14 @@ public class Controller implements Observer{
 		gc.drawImage(GAME_OVER, 0, 0, gameView.getWidth(), gameView.getHeight());
 		gc.setTextAlign(TextAlignment.CENTER);
 		gc.setTextBaseline(VPos.CENTER);
-		gc.setFont(new Font(squareSize));
+		gc.setFont(new Font("Courier New",squareSize));
+		gc.setFill(Color.WHITE);
 		gc.fillText(
 				"GAME OVER", 
 				gameView.getWidth()/2, 
 				(gameView.getHeight() - squareSize)/2
 		);
-		gc.setFont(new Font(squareSize/2));
+		gc.setFont(new Font("Avenir", squareSize/2));
 		gc.fillText(
 				game.getWinner().getName() + " is the Winner!", 
 				gameView.getWidth()/2, 
@@ -348,7 +350,7 @@ public class Controller implements Observer{
     		row++;
     	}
     	
-    	gc.drawImage(GRUDGE, 0, 0, squareSize*8, squareSize*8);
+    	
     	
     	for (Tower tower: game.getBoard().getTowers()) {
     		switch(tower.getColor()) {
@@ -404,6 +406,7 @@ public class Controller implements Observer{
 				break;
     		}
     	}
+    	gc.drawImage(GRUDGE, 0, 0, squareSize*8, squareSize*8);
     }
 	
 	public Value getRBSelectionValue (ToggleGroup toggleGroup) {
