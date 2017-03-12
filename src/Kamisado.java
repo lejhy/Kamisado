@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -20,6 +21,8 @@ public class Kamisado extends Application{
 		core.setGameViewController(view.loadFXML("fxml/GameView.fxml", "Kamisado.css"));
 		
 		primaryStage.setResizable(false);
+		primaryStage.setTitle("Kamisado");
+		primaryStage.getIcons().add(new Image("img/icon.png"));
 		primaryStage.show();
 	}
 	
