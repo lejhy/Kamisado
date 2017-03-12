@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.KeyEvent;
 
 public class NewGameViewController extends Controller{
 
@@ -29,14 +30,52 @@ public class NewGameViewController extends Controller{
 
     @FXML
     private ToggleGroup player2Type;
+    
+    @FXML
+    void keyboardInput(KeyEvent event) {
+    	switch(event.getCode()){
+    	case S:
+    		newGame();
+    		break;
+    	case M:
+    		RadioButton rb = (RadioButton)gameMode.getSelectedToggle();
+    		rb.requestFocus();
+    		break;
+    	case DIGIT1:
+    		player1NameInput.requestFocus();
+    		break;
+    	case DIGIT2:
+    		player2NameInput.requestFocus();
+    		break;
+    	case B:
+    		core.mainMenu();
+    		break;
+		default:
+			break;
+    	}
+    }
 
     @FXML
     void mainMenu(ActionEvent event) {
-
+    	core.mainMenu();
     }
 
     @FXML
     void newGame(ActionEvent event) {
+    	newGame();
+    }
+
+    @FXML
+    void initialize() {
+        assert player1NameInput != null : "fx:id=\"player1NameInput\" was not injected: check your FXML file 'NewGameView.fxml'.";
+        assert player1Type != null : "fx:id=\"player1Type\" was not injected: check your FXML file 'NewGameView.fxml'.";
+        assert gameMode != null : "fx:id=\"gameMode\" was not injected: check your FXML file 'NewGameView.fxml'.";
+        assert player2NameInput != null : "fx:id=\"player2NameInput\" was not injected: check your FXML file 'NewGameView.fxml'.";
+        assert player2Type != null : "fx:id=\"player2Type\" was not injected: check your FXML file 'NewGameView.fxml'.";
+
+    }
+    
+    private void newGame() {
     	Value player1TypeValue = getRBSelectionValue (player1Type);
     	Value player2TypeValue = getRBSelectionValue (player2Type);
     	Value gameModeValue = getRBSelectionValue (gameMode);
@@ -55,16 +94,6 @@ public class NewGameViewController extends Controller{
     	Player player2 = new Player (player2Name, player2TypeValue);
     	
     	core.newGame(player1, player2, gameModeValue);
-    }
-
-    @FXML
-    void initialize() {
-        assert player1NameInput != null : "fx:id=\"player1NameInput\" was not injected: check your FXML file 'NewGameView.fxml'.";
-        assert player1Type != null : "fx:id=\"player1Type\" was not injected: check your FXML file 'NewGameView.fxml'.";
-        assert gameMode != null : "fx:id=\"gameMode\" was not injected: check your FXML file 'NewGameView.fxml'.";
-        assert player2NameInput != null : "fx:id=\"player2NameInput\" was not injected: check your FXML file 'NewGameView.fxml'.";
-        assert player2Type != null : "fx:id=\"player2Type\" was not injected: check your FXML file 'NewGameView.fxml'.";
-
     }
     
     public Value getRBSelectionValue (ToggleGroup toggleGroup) {

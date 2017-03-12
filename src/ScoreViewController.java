@@ -4,6 +4,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
+import javafx.scene.input.KeyEvent;
 
 public class ScoreViewController extends Controller{
 
@@ -15,6 +16,17 @@ public class ScoreViewController extends Controller{
 
     @FXML
     private TableView<?> scoreTable;
+    
+    @FXML
+    void keyboardInput(KeyEvent event) {
+    	switch(event.getCode()){
+    	case B:
+    		core.mainMenu();
+    		break;
+		default:
+			break;
+    	}
+    }
 
     @FXML
     void mainMenu(ActionEvent event) {

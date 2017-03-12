@@ -4,6 +4,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
+import javafx.scene.input.KeyEvent;
 
 public class LoadGameViewController extends Controller{
 
@@ -15,6 +16,20 @@ public class LoadGameViewController extends Controller{
 
     @FXML
     private TableView<?> loadGameTable;
+    
+    @FXML
+    void keyboardInput(KeyEvent event) {
+    	switch(event.getCode()){
+    	case L:
+    		
+    		break;
+    	case B:
+    		core.mainMenu();
+    		break;
+		default:
+			break;
+    	}
+    }
 
     @FXML
     void loadGame(ActionEvent event) {

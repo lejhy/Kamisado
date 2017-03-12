@@ -37,28 +37,38 @@ public class Core implements Observer{
 		}
 	}
 	
-	public void gameInput(Position position) {
-		if (GameLogic.isValidTower(game.getBoard(), position.x, position.y)) {
-			selection = position;
-			Tower tower = game.getBoard().getTower(selection.x, selection.y);
-			showValidMoves(tower);
-		} else {
-			game.nextTurn(new Move(selection.x, selection.y, position.x, position.y), Value.HUMAN);
+	public void gameInput(Position position, Value inputType) {
+		if (inputType == Value.ACTION) {
+			if (GameLogic.isValidTower(game.getBoard(), position.x, position.y)) {
+				selection = position;
+			} else {
+				game.nextTurn(new Move(selection.x, selection.y, position.x, position.y), Value.HUMAN);
+			}
+		} else if (inputType == Value.HOVER){
+			
 		}
+		drawGame();
 	}
 	
-	private void updateGame() {
+	private void drawGame() {
 		gameViewController.drawBoard(game.getBoard());
 		if (game.isGameOver()) {
 			gameViewController.gameOver(game.getWinner().getName());
 		} else {
-			if (game instanceof SpeedGame) {
-				gameViewController.showTimer(((SpeedGame)game).getTimeLimit());
-			} else {
-				gameViewController.hideTimer();
-			}
-			checkForAI();
+			Tower tower = game.getBoard().getTower(selection.x, selection.y);
+			if (tower != null)
+				drawValidMoves(tower);
 		}
+	}
+	
+	private void updateGame() {
+		drawGame();
+		if (game instanceof SpeedGame) {
+			gameViewController.showTimer(((SpeedGame)game).getTimeLimit());
+		} else {
+			gameViewController.hideTimer();
+		}
+		checkForAI();
 	}
 	
 	public void resumeGame() {
@@ -101,7 +111,7 @@ public class Core implements Observer{
     }
     
     
-    public void showValidMoves(Tower tower) {
+    public void drawValidMoves(Tower tower) {
     	List<Move> moves = GameLogic.getValidMoves(game.getBoard(), tower);
     	List<Position> positions = new ArrayList<Position>();
     	for (Move move:moves) {

@@ -4,6 +4,8 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 public class MainMenuViewController extends Controller{
     @FXML
@@ -14,6 +16,29 @@ public class MainMenuViewController extends Controller{
 
     @FXML
     private Button resume;
+    
+    @FXML
+    void keyboardInput(KeyEvent event) {
+    	switch(event.getCode()){
+    	case R:
+    		core.resumeGame();
+    		break;
+    	case N:
+    		core.newGameMenu();
+    		break;
+    	case L:
+    		core.loadGameMenu();
+    		break;
+    	case S:
+    		core.scoreMenu();
+    		break;
+    	case E:
+    		core.exit();
+    		break;
+		default:
+			break;
+    	}
+    }
 
     @FXML
     void resumeGame(ActionEvent event) {

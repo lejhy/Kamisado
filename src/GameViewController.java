@@ -1,5 +1,6 @@
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -16,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -23,6 +25,8 @@ import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
 public class GameViewController extends Controller{
+	private Position position;
+	
 	private Image GAME_OVER;
 	private Image GRUDGE;
 	private Image HIGHLIGHT;
@@ -73,6 +77,52 @@ public class GameViewController extends Controller{
 
     @FXML
     private Canvas gameView;
+    
+    @FXML
+    void keyboardInput(KeyEvent event) {
+    	switch(event.getCode()){
+    	case UP:
+    		if (position == null)
+    			position = new Position(3,0);
+    		if (position.y > 0)
+    			position.y--;
+    		core.gameInput(new Position(position), Value.HOVER);
+    		break;
+    	case LEFT:
+    		if (position == null)
+    			position = new Position(0,3);
+    		if (position.x > 0)
+    			position.x--;
+    		core.gameInput(new Position(position), Value.HOVER);
+    		break;
+    	case DOWN:
+    		if (position == null)
+    			position = new Position(4,7);
+    		if (position.y < 7)
+    			position.y++;
+    		core.gameInput(new Position(position), Value.HOVER);
+    		break;
+    	case RIGHT:
+    		if (position == null)
+    			position = new Position(7,4);
+    		if (position.x < 7)
+    			position.x++;
+    		core.gameInput(new Position(position), Value.HOVER);
+    		break;
+    	case ENTER:
+    		core.gameInput(new Position(position), Value.ACTION);
+    		break;
+    	case ESCAPE:
+    		position = null;
+    		core.gameInput(new Position(position), Value.HOVER);
+    		break;
+    	case B:
+    		core.mainMenu();
+    		break;
+		default:
+			break;
+    	}
+    }
 
     @FXML
     void gameInput(MouseEvent event) {
@@ -85,7 +135,7 @@ public class GameViewController extends Controller{
     		int squareX = (int)(x/squareSize);
     		int squareY = (int)(y/squareSize);
     		
-    		core.gameInput(new Position(squareX, squareY));
+    		core.gameInput(new Position(squareX, squareY), Value.ACTION);
     	}
     }
 
@@ -209,6 +259,12 @@ public class GameViewController extends Controller{
     	GraphicsContext gc = gameView.getGraphicsContext2D();
     	double squareSize = gameView.getWidth()/8;
     	gc.drawImage(GRUDGE, 0, 0, squareSize*8, squareSize*8);
+    	
+    	if(position != null) {
+    		List<Position> positions = new ArrayList<Position>();
+    		positions.add(position);
+    		drawHighlights(positions);
+    	}
     }	
     	
 	public void drawTiles(Value[][] tiles){
