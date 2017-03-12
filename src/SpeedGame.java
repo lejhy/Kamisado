@@ -12,7 +12,10 @@ public class SpeedGame extends Game {
 		   	if (GameLogic.isValidMove(board, move) && getCurrentPlayer().getType() == type){
 		   		makeMove(move);
 			   	if (GameLogic.isGameOver(board)) {
-			   		gameOver();
+			   		if (GameLogic.isDoubleDeadLock(board))
+			   			gameOver(Value.DOUBLE_DEADLOCK);
+			   		else 
+			   			gameOver(Value.GAME_OVER);
 			   	} else {
 				   	if (GameLogic.isDeadLock(board)) {
 				   		makeMove(GameLogic.getDeadLockMove(board));
@@ -29,11 +32,12 @@ public class SpeedGame extends Game {
 	   	round++;
 	}
 	
-	protected void gameOver() {
+	protected void gameOver(Value cause) {
 		System.out.println("game over in speedGame");
    		gameOver = true;
+   		gameOverCause = cause;
    		cancelTimer();
-   		change(Value.GAME_OVER);
+   		change(cause);
 	}
 	
 	public int getTimeLimit() {
@@ -52,7 +56,7 @@ public class SpeedGame extends Game {
 	
 	class TimeIsUp extends TimerTask{
 		public void run() {
-			gameOver();
+			gameOver(Value.TIME_UP);
 		}
 	}
 

@@ -26,6 +26,8 @@ public class Core implements Observer{
 			// create a new file
 			data = new Data();
 		}
+		this.game = null;
+		this.selection = new Position(-1,-1);
 	}
 	
 	@Override
@@ -53,7 +55,7 @@ public class Core implements Observer{
 	private void drawGame() {
 		gameViewController.drawBoard(game.getBoard());
 		if (game.isGameOver()) {
-			gameViewController.gameOver(game.getWinner().getName());
+			gameViewController.gameOver(game.getGameOverCause(), game.getWinner().getName());
 		} else {
 			Tower tower = game.getBoard().getTower(selection.x, selection.y);
 			if (tower != null)
@@ -62,12 +64,13 @@ public class Core implements Observer{
 	}
 	
 	private void updateGame() {
-		drawGame();
-		if (game instanceof SpeedGame) {
+		System.out.println("updateGame");
+		if (game instanceof SpeedGame && !game.isGameOver()) {
 			gameViewController.showTimer(((SpeedGame)game).getTimeLimit());
 		} else {
 			gameViewController.hideTimer();
 		}
+		drawGame();
 		checkForAI();
 	}
 	

@@ -186,10 +186,17 @@ public class GameViewController extends Controller{
     	BROWN_BLACK = new Image("img/BROWN_BLACK.png");
     }
     
-    public void gameOver(String winner) {
+    public void gameOver(Value cause, String winner) {
     	if (timer.isVisible())
     		timer.setVisible(false);
 		
+    	String gameOverCause = "GAME OVER";
+    	if (cause == Value.TIME_UP)
+    		gameOverCause = "TIME IS UP!";
+    	if (cause == Value.DOUBLE_DEADLOCK)
+    		gameOverCause = "DEADLOCK";
+    	
+    	
     	double width = gameView.getWidth();
     	double height = gameView.getHeight();
     	double squareSize = gameView.getWidth()/8;
@@ -202,7 +209,7 @@ public class GameViewController extends Controller{
 		gc.setFont(new Font("Courier New",squareSize));
 		gc.setFill(Color.WHITE);
 		gc.fillText(
-				"GAME OVER", 
+				gameOverCause, 
 				width/2, 
 				(height - squareSize)/2
 		);

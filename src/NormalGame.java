@@ -6,7 +6,10 @@ public class NormalGame extends Game {
 		   	if (GameLogic.isValidMove(board, move) && getCurrentPlayer().getType() == type){
 		   		makeMove(move);
 			   	if (GameLogic.isGameOver(board)) {
-			   		gameOver();
+			   		if (GameLogic.isDoubleDeadLock(board))
+			   			gameOver(Value.DOUBLE_DEADLOCK);
+			   		else 
+			   			gameOver(Value.GAME_OVER);
 			   	} else {
 				   	if (GameLogic.isDeadLock(board)) {
 				   		makeMove(GameLogic.getDeadLockMove(board));
@@ -22,14 +25,14 @@ public class NormalGame extends Game {
 	   	round++;
 	}
 	
-	protected void gameOver() {
+	protected void gameOver(Value cause) {
 		System.out.println("game over in normalGame");
    		gameOver = true;
-   		change(Value.GAME_OVER);
+   		gameOverCause = cause;
+   		change(cause);
 	}
 
 	public NormalGame(Player player1, Player player2) {
 		super(player1, player2);
 	}
-
 }

@@ -5,11 +5,12 @@ public abstract class Game extends Observable{
 	protected Player player2;
 	protected Board board;
 	protected boolean gameOver;
+	protected Value gameOverCause;
 	protected int round;
    
    	public abstract void nextTurn(Move move, Value playerType);
    	protected abstract void makeMove(Move move);
-   	protected abstract void gameOver();
+   	protected abstract void gameOver(Value cause);
    	
    	public void change() {
    		setChanged();
@@ -47,6 +48,10 @@ public abstract class Game extends Observable{
    	
    	public boolean isGameOver() {
    		return gameOver;
+   	}
+   	
+   	public Value getGameOverCause() {
+   		return gameOverCause;
    	}
    	
    	public Player getWinner(){

@@ -23,7 +23,11 @@ public final class GameLogic {
 	}
 	
 	public static boolean isDoubleDeadLock(Board board) {
-		if (isDeadLock(board)) {
+		boolean lastPlayerValue = board.getLastPlayerValue();
+		Move lastMove = board.getLastMove();
+		if (isWinningMove(lastPlayerValue, lastMove)) {
+			return false;
+		} else if (isDeadLock(board)) {
 			Board newBoard = new Board(board);
 			newBoard.performMove(getDeadLockMove(board));
 			if (isDeadLock(newBoard)) {
