@@ -1,9 +1,4 @@
-import java.io.IOException;
-import java.net.URL;
-
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
@@ -11,75 +6,25 @@ import javafx.stage.Stage;
  * Fraser Steel 
  */
 
-
 public class Kamisado extends Application{
-	private Controller controller;
-	private Stage stage;
-	public Scene mainMenu, newGame, loadGame, score, game;
 	
 	@Override
 	public void start(Stage primaryStage) {
-		this.stage = primaryStage;
-		this.stage.setResizable(false);
-		controller = new Controller(this);
-		load();
-		this.stage.setScene(mainMenu);
-		this.stage.show();
+		Core core = new Core();
+		View view = new View(primaryStage);
+		core.setView(view);
+		core.setMainMenuViewController(view.loadFXML("fxml/MainMenuView.fxml", "Kamisado.css"));
+		core.setNewGameViewController(view.loadFXML("fxml/NewGameView.fxml", "Kamisado.css"));
+		core.setLoadGameViewController(view.loadFXML("fxml/LoadGameView.fxml", "Kamisado.css"));
+		core.setScoreViewController(view.loadFXML("fxml/ScoreView.fxml", "Kamisado.css"));
+		core.setGameViewController(view.loadFXML("fxml/GameView.fxml", "Kamisado.css"));
+		
+		primaryStage.setResizable(false);
+		primaryStage.show();
 	}
 	
-	private void load () {
-		try {
-			FXMLLoader loader;
-			loader = new FXMLLoader();
-			loader.setLocation(Kamisado.class.getResource("fxml/MainMenu.fxml"));
-			loader.setController(controller);
-			mainMenu = new Scene(loader.load());
-			mainMenu.getStylesheets().add("Kamisado.css");
-			loader = new FXMLLoader();
-			loader.setLocation(Kamisado.class.getResource("fxml/NewGame.fxml"));
-			loader.setController(controller);
-			newGame = new Scene(loader.load());
-			newGame.getStylesheets().add("Kamisado.css");
-			loader = new FXMLLoader();
-			loader.setLocation(Kamisado.class.getResource("fxml/LoadGame.fxml"));
-			loader.setController(controller);
-			loadGame = new Scene(loader.load());
-			loadGame.getStylesheets().add("Kamisado.css");
-			loader = new FXMLLoader();
-			loader.setLocation(Kamisado.class.getResource("fxml/Score.fxml"));
-			loader.setController(controller);
-			score = new Scene(loader.load());
-			score.getStylesheets().add("Kamisado.css");
-			loader = new FXMLLoader();
-			loader.setLocation(Kamisado.class.getResource("fxml/Game.fxml"));
-			loader.setController(controller);
-			game = new Scene(loader.load());
-			game.getStylesheets().add("Kamisado.css");
-		} catch (IOException e) {
-			System.out.println("Error loading fxml files");
-			System.err.println();
-		}
-	}
 	
-	public void displayMainMenu() {
-		this.stage.setScene(mainMenu);
-	}
 	
-	public void displayNewGame() {
-		this.stage.setScene(newGame);
-	}
-	
-	public void displayLoadGame() {
-		this.stage.setScene(loadGame);
-	}
-	
-	public void displayScore() {
-		this.stage.setScene(score);
-	}
-	
-	public void displayGame() {
-		this.stage.setScene(game);
-	}
 
 	public static void main(String[] args) {
 		launch(args);

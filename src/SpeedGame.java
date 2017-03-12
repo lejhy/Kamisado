@@ -36,6 +36,10 @@ public class SpeedGame extends Game {
    		change(Value.GAME_OVER);
 	}
 	
+	public int getTimeLimit() {
+		return timeLimit;
+	}
+	
 	private void resetTimer() {
 		timer.cancel();
    		timer = new Timer();
