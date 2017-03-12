@@ -141,7 +141,10 @@ public class Board {
 	}
 	
 	public Move getLastMove () {
-		return new Move(previousMoves.get(previousMoves.size() - 1));
+		if (previousMoves.isEmpty())
+			return null;
+		else
+			return new Move(previousMoves.get(previousMoves.size() - 1));
 	}
    
    public void performMove(Move move) {

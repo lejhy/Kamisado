@@ -6,7 +6,7 @@ public final class GameLogic {
 	public static boolean isGameOver(Board board) {
 		boolean lastPlayerValue = board.getLastPlayerValue();
 		Move lastMove = board.getLastMove();
-		if (isWinningMove(lastPlayerValue, lastMove)) {
+		if (lastMove != null && isWinningMove(lastPlayerValue, lastMove)) {
 			return true;
 		} else if (isDoubleDeadLock(board)) {
 			return true;
@@ -25,7 +25,7 @@ public final class GameLogic {
 	public static boolean isDoubleDeadLock(Board board) {
 		boolean lastPlayerValue = board.getLastPlayerValue();
 		Move lastMove = board.getLastMove();
-		if (isWinningMove(lastPlayerValue, lastMove)) {
+		if (lastMove != null && isWinningMove(lastPlayerValue, lastMove)) {
 			return false;
 		} else if (isDeadLock(board)) {
 			Board newBoard = new Board(board);
