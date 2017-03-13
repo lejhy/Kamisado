@@ -6,36 +6,36 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" onKeyReleased="#keyboardInput" prefHeight="500.0" prefWidth="700.0" style="-: #1d1d1d;" styleClass="background" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainMenuViewController">
+<VBox alignment="CENTER" onKeyReleased="#keyboardInput" prefHeight="800.0" prefWidth="1200.0" style="-: #1d1d1d;" styleClass="background" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainMenuViewController">
    <children>
       <Label styleClass="header" text="Main Menu">
          <VBox.margin>
-            <Insets bottom="30.0" />
+            <Insets bottom="50.0" />
          </VBox.margin>
          <font>
             <Font size="42.0" />
          </font>
       </Label>
-      <Button fx:id="resume" disable="true" mnemonicParsing="false" onAction="#resumeGame" prefHeight="38.0" prefWidth="185.0" text="Resume Game">
+      <Button fx:id="resume" disable="true" minHeight="50.0" minWidth="250.0" mnemonicParsing="false" onAction="#resumeGame" text="Resume Game">
          <VBox.margin>
             <Insets bottom="20.0" />
          </VBox.margin>
       </Button>
-      <Button mnemonicParsing="false" onAction="#newGameMenu" prefHeight="33.0" prefWidth="156.0" text="New Game">
+      <Button minHeight="50.0" minWidth="250.0" mnemonicParsing="false" onAction="#newGameMenu" text="New Game">
          <VBox.margin>
             <Insets bottom="20.0" />
          </VBox.margin>
       </Button>
-      <Button mnemonicParsing="false" onAction="#loadGameMenu" prefHeight="33.0" prefWidth="133.0" text="Load Game">
+      <Button minHeight="50.0" minWidth="250.0" mnemonicParsing="false" onAction="#loadGameMenu" text="Load Game">
          <VBox.margin>
             <Insets bottom="20.0" />
          </VBox.margin>
       </Button>
-      <Button mnemonicParsing="false" onAction="#score" prefHeight="33.0" prefWidth="103.0" text="Score">
+      <Button minHeight="50.0" minWidth="250.0" mnemonicParsing="false" onAction="#score" text="Score">
          <VBox.margin>
             <Insets bottom="20.0" />
          </VBox.margin>
       </Button>
-      <Button mnemonicParsing="false" onAction="#exit" prefHeight="33.0" prefWidth="103.0" text="Exit" />
+      <Button minHeight="50.0" minWidth="250.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
    </children>
 </VBox>
