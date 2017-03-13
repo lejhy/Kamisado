@@ -12,10 +12,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane onKeyReleased="#keyboardInput" prefHeight="500.0" prefWidth="700.0" styleClass="background" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameViewController">
+<GridPane onKeyReleased="#keyboardInput" prefHeight="800.0" prefWidth="1200.0" styleClass="background" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameViewController">
    <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="400.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="800.0" />
    </columnConstraints>
    <rowConstraints>
       <RowConstraints minHeight="10.0" prefHeight="400.0" vgrow="SOMETIMES" />
@@ -23,26 +23,29 @@
    <children>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
          <children>
-            <Label fx:id="player2Name" alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="200.0" styleClass="title" text="Player1">
+            <Label fx:id="player2Name" alignment="CENTER" contentDisplay="CENTER" styleClass="title" text="Player1">
                <VBox.margin>
-                  <Insets top="50.0" />
+                  <Insets top="100.0" />
                </VBox.margin>
             </Label>
-            <Label fx:id="player2Name1" alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="200.0" styleClass="subtitle" text="vs.">
+            <Label fx:id="player2Name1" alignment="CENTER" contentDisplay="CENTER" styleClass="subtitle" text="vs.">
                <font>
                   <Font size="21.0" />
                </font>
+               <VBox.margin>
+                  <Insets bottom="20.0" top="20.0" />
+               </VBox.margin>
             </Label>
-            <Label fx:id="player1Name" alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="200.0" styleClass="title" text="Player2" />
+            <Label fx:id="player1Name" alignment="CENTER" contentDisplay="CENTER" styleClass="title" text="Player2" />
             <ProgressIndicator fx:id="loading" visible="false" />
             <ProgressBar fx:id="timer" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="176.0" progress="0.43" visible="false" />
             <Button mnemonicParsing="false" onAction="#mainMenu" text="Back">
                <VBox.margin>
-                  <Insets top="50.0" />
+                  <Insets top="100.0" />
                </VBox.margin>
             </Button>
          </children>
       </VBox>
-      <Canvas fx:id="gameView" height="400.0" onMouseClicked="#gameInput" width="400.0" GridPane.columnIndex="1" />
+      <Canvas fx:id="gameView" height="800.0" onMouseClicked="#gameInput" width="800.0" GridPane.columnIndex="1" />
    </children>
 </GridPane>
