@@ -6,7 +6,7 @@ import java.util.Observer;
 
 public class Core implements Observer{
 	@SuppressWarnings("unused")
-	private Data data;
+	private FileData data;
 	private Game game;
 	private Position selection;
 	
@@ -21,10 +21,10 @@ public class Core implements Observer{
 	public Core () {
 		try {
 			// try opening an existing file
-			data = new Data("Kamisado.save");
+			data = new FileData();
 		} catch (Exception e) {
 			// create a new file
-			data = new Data();
+			data = new FileData();
 		}
 		this.game = null;
 		this.selection = new Position(-1,-1);
