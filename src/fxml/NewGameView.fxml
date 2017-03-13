@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane onKeyReleased="#keyboardInput" prefHeight="400.0" prefWidth="600.0" styleClass="background" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NewGameViewController">
+<GridPane onKeyReleased="#keyboardInput" prefHeight="500.0" prefWidth="700.0" styleClass="background" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NewGameViewController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
@@ -35,7 +35,7 @@
                   <Insets bottom="20.0" />
                </VBox.margin>
             </TextField>
-            <RadioButton mnemonicParsing="false" prefHeight="20.0" prefWidth="70.0" selected="true" text="Human">
+            <RadioButton mnemonicParsing="false" prefHeight="20.0" prefWidth="80.0" selected="true" text="Human">
                <toggleGroup>
                   <ToggleGroup fx:id="player1Type" />
                </toggleGroup>
@@ -43,12 +43,12 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </RadioButton>
-            <RadioButton mnemonicParsing="false" prefHeight="20.0" prefWidth="70.0" text="Hard AI" toggleGroup="$player1Type">
+            <RadioButton mnemonicParsing="false" prefHeight="20.0" prefWidth="80.0" text="Hard AI" toggleGroup="$player1Type">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
             </RadioButton>
-            <RadioButton mnemonicParsing="false" prefHeight="20.0" prefWidth="70.0" text="Easy AI" toggleGroup="$player1Type">
+            <RadioButton mnemonicParsing="false" prefHeight="20.0" prefWidth="80.0" text="Easy AI" toggleGroup="$player1Type">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
@@ -62,7 +62,7 @@
                   <Insets bottom="20.0" top="100.0" />
                </VBox.margin>
             </Button>
-            <RadioButton mnemonicParsing="false" prefHeight="22.0" prefWidth="95.0" selected="true" text="Normal">
+            <RadioButton mnemonicParsing="false" prefHeight="22.0" prefWidth="110.0" selected="true" text="Normal">
                <toggleGroup>
                   <ToggleGroup fx:id="gameMode" />
                </toggleGroup>
@@ -70,7 +70,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </RadioButton>
-            <RadioButton mnemonicParsing="false" prefHeight="22.0" prefWidth="95.0" text="Speed Mode" toggleGroup="$gameMode">
+            <RadioButton mnemonicParsing="false" prefHeight="22.0" prefWidth="110.0" text="Speed Mode" toggleGroup="$gameMode">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -94,7 +94,7 @@
                   <Insets bottom="20.0" />
                </VBox.margin>
             </TextField>
-            <RadioButton mnemonicParsing="false" prefHeight="22.0" prefWidth="70.0" selected="true" text="Human">
+            <RadioButton mnemonicParsing="false" prefHeight="22.0" prefWidth="80.0" selected="true" text="Human">
                <toggleGroup>
                   <ToggleGroup fx:id="player2Type" />
                </toggleGroup>
@@ -102,12 +102,12 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </RadioButton>
-            <RadioButton mnemonicParsing="false" prefHeight="22.0" prefWidth="70.0" text="Hard AI" toggleGroup="$player2Type">
+            <RadioButton mnemonicParsing="false" prefHeight="22.0" prefWidth="80.0" text="Hard AI" toggleGroup="$player2Type">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
             </RadioButton>
-            <RadioButton mnemonicParsing="false" prefHeight="22.0" prefWidth="70.0" text="Easy AI" toggleGroup="$player2Type">
+            <RadioButton mnemonicParsing="false" prefHeight="22.0" prefWidth="80.0" text="Easy AI" toggleGroup="$player2Type">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>

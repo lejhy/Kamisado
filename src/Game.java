@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.Observable;
 
-public abstract class Game extends Observable{
+public abstract class Game extends Observable implements Serializable{
 	protected Player player1;
 	protected Player player2;
 	protected Board board;

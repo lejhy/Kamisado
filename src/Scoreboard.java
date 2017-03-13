@@ -1,5 +1,6 @@
+import java.io.Serializable;
 
-public class Scoreboard {
+public class Scoreboard implements Serializable{
    
    private int[] score;
    private String[] playerName;
