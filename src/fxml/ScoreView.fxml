@@ -8,17 +8,17 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyReleased="#keyboardInput" prefHeight="500.0" prefWidth="700.0" styleClass="background" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ScoreViewController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyReleased="#keyboardInput" prefHeight="800.0" prefWidth="1200.0" styleClass="background" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ScoreViewController">
    <children>
       <Label styleClass="header" text="Label">
          <font>
             <Font size="26.0" />
          </font>
          <VBox.margin>
-            <Insets />
+            <Insets bottom="50.0" />
          </VBox.margin>
       </Label>
-      <TableView fx:id="scoreTable" focusTraversable="false" prefHeight="200.0" prefWidth="600.0">
+      <TableView fx:id="scoreTable" focusTraversable="false" prefHeight="400.0" prefWidth="1200.0">
         <columns>
           <TableColumn editable="false" minWidth="-1.0" prefWidth="300.0" sortType="DESCENDING" text="Score" />
           <TableColumn editable="false" minWidth="-1.0" prefWidth="300.0" sortType="DESCENDING" text="Player" />
@@ -27,7 +27,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button mnemonicParsing="false" onAction="#mainMenu" text="Back">
+      <Button minHeight="50.0" minWidth="200.0" mnemonicParsing="false" onAction="#mainMenu" text="Back">
          <VBox.margin>
             <Insets top="20.0" />
          </VBox.margin>

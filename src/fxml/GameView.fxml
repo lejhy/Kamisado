@@ -39,7 +39,7 @@
             <Label fx:id="player1Name" alignment="CENTER" contentDisplay="CENTER" styleClass="title" text="Player2" />
             <ProgressIndicator fx:id="loading" visible="false" />
             <ProgressBar fx:id="timer" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="176.0" progress="0.43" visible="false" />
-            <Button mnemonicParsing="false" onAction="#mainMenu" text="Back">
+            <Button minHeight="50.0" minWidth="200.0" mnemonicParsing="false" onAction="#mainMenu" text="Back">
                <VBox.margin>
                   <Insets top="100.0" />
                </VBox.margin>
