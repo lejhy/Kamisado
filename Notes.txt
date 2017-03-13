@@ -1,0 +1,5 @@
+Controller observes Board
+Controller asks Game if its the valid move
+Add observer, then initialise
+Ideally specific view part observes specific parts of the model
+Core only sets everything up and wire evrything up

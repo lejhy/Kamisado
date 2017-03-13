@@ -35,20 +35,25 @@ public class NewGameViewController extends Controller{
     void keyboardInput(KeyEvent event) {
     	switch(event.getCode()){
     	case S:
-    		newGame();
+    		if (!player1NameInput.isFocused() && !player2NameInput.isFocused())
+    			newGame();
     		break;
     	case M:
     		RadioButton rb = (RadioButton)gameMode.getSelectedToggle();
-    		rb.requestFocus();
+    		if (!player1NameInput.isFocused() && !player2NameInput.isFocused())
+    			rb.requestFocus();
     		break;
     	case DIGIT1:
-    		player1NameInput.requestFocus();
+    		if (!player2NameInput.isFocused())
+    			player1NameInput.requestFocus();
     		break;
     	case DIGIT2:
-    		player2NameInput.requestFocus();
+    		if (!player1NameInput.isFocused())
+    			player2NameInput.requestFocus();
     		break;
     	case B:
-    		core.mainMenu();
+    		if (!player1NameInput.isFocused() && !player2NameInput.isFocused())
+    			core.mainMenu();
     		break;
 		default:
 			break;

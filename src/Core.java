@@ -97,6 +97,11 @@ public class Core implements Observer{
     }
 	
     void mainMenu() {
+    	if (game == null) {
+			mainMenuViewController.disableResumeButton();
+		} else {
+			mainMenuViewController.enableResumeButton();
+		}
     	view.displayScene(mainMenuViewController);
     }
 	
