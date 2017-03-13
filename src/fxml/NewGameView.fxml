@@ -62,7 +62,7 @@
                   <Insets bottom="20.0" top="100.0" />
                </VBox.margin>
             </Button>
-            <RadioButton mnemonicParsing="false" prefHeight="22.0" prefWidth="95.0" selected="true" text="Normal">
+            <RadioButton mnemonicParsing="false" prefHeight="22.0" prefWidth="110.0" selected="true" text="Normal">
                <toggleGroup>
                   <ToggleGroup fx:id="gameMode" />
                </toggleGroup>
