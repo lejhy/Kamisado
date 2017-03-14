@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyReleased="#keyboardInput" prefHeight="800.0" prefWidth="1200.0" styleClass="background" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LoadGameViewController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyReleased="#keyboardInput" prefHeight="600.0" prefWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LoadGameViewController">
    <children>
       <Label styleClass="header" text="Load Game">
          <font>
@@ -18,7 +18,7 @@
             <Insets bottom="50.0" />
          </VBox.margin>
       </Label>
-      <TableView fx:id="loadGameTable" pickOnBounds="false" prefHeight="400.0" prefWidth="1200.0">
+      <TableView fx:id="loadGameTable" pickOnBounds="false" prefHeight="300.0" prefWidth="800.0">
         <columns>
             <TableColumn editable="false" prefWidth="150.0" text="Player 1" />
             <TableColumn editable="false" prefWidth="150.0" text="Player 2" />
@@ -29,11 +29,11 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button minHeight="50.0" minWidth="200.0" mnemonicParsing="false" onAction="#loadGame" text="Load">
+      <Button minHeight="40.0" minWidth="125.0" mnemonicParsing="false" onAction="#loadGame" text="Load">
          <VBox.margin>
             <Insets bottom="5.0" top="20.0" />
          </VBox.margin>
       </Button>
-      <Button minHeight="50.0" minWidth="200.0" mnemonicParsing="false" onAction="#mainMenu" text="Back" />
+      <Button minHeight="40.0" minWidth="125.0" mnemonicParsing="false" onAction="#mainMenu" text="Back" />
    </children>
 </VBox>
