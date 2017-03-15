@@ -1,4 +1,6 @@
-public class Tower {
+import java.io.Serializable;
+
+public class Tower implements Serializable{
 	
 	private boolean playerValue;
 	private Value color;

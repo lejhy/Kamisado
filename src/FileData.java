@@ -1,3 +1,4 @@
+import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,90 +12,69 @@ public class FileData {
    
    private Scoreboard scoreboard;
    private String fileName;
-   private ArrayList<Game> games;
-   private ArrayList<Player> players;
+   private Game game;
    
    public FileData(){
-	   this.fileName = fileName;
-	   this.scoreboard = scoreboard;
-	   ArrayList<Game> games = new ArrayList<Game>();
-	   ArrayList<Player> players = new ArrayList<Player>();
+	   this.fileName = "Kamisado.config";
+	   this.game = null;
    }
    
+   public FileData(String fileName){
+	   this.fileName = fileName;
+	   this.game = null;
+	   loadFile();
+   }
+   
+   public void writeOut() {
+	   System.out.println(game.toString());
+   }
    
    public Scoreboard getScore() {
       return scoreboard;
    } 
    
-   public void addGame(FileData filedata, Game game) {
-      games.add(game);
+   public void setGame(Game game) {
+      this.game = game;
    }
    
-   public Game getGame(FileData filedata, int i) {
-      return games.get(i);
-   }
-   
-   public Player getPlayers(FileData filedata, int i){
-	   return players.get(i);
-   }
-   
-   public ArrayList<Game> getGames(FileData filedata) {
-      return games;
+   public Game getGame() {
+      return game;
    }
    
    public void saveDataToFile() {
-	   try {
-//		  JFileChooser chooser = new JFileChooser();
-//		  chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);;
-//		  chooser.showSaveDialog(null);
-//		  
-//		  String path = chooser.getSelectedFile().getAbsolutePath();
-//		  String filename = chooser.getSelectedFile().getName();
-		   
+	   try {		   
 		   FileOutputStream outPut = new FileOutputStream(fileName);
 		   ObjectOutputStream out = new ObjectOutputStream(outPut);
-		   out.writeObject(games);
-		   out.writeObject(scoreboard);
+		   out.writeObject(game);
 		   out.close();
 		   outPut.close();
-		   System.out.println("Data is save in: " + fileName);
-	   
+		   System.out.println("Data is saved in: " + fileName);
 	   }catch(IOException i){
 		   i.printStackTrace();
 	   } 
-   }
+   }	   
 	   
-	   
-	   
-	public void loadFile(){
-			      games = null;
-			      scoreboard = null;
-			      try {
-			         FileInputStream fileIn = new FileInputStream(fileName);
-			         ObjectInputStream in = new ObjectInputStream(fileIn);
-			         games = (ArrayList) in.readObject();
-			         scoreboard = (Scoreboard) in.readObject();
-			         in.close();
-			         fileIn.close();
-			      }catch(IOException i) {
-			         i.printStackTrace();
-			         return;
-			      }catch(ClassNotFoundException c) {
-			         System.out.println("File was not found");
-			         c.printStackTrace();
-						      }
-   }
-   
-   public void removeGame(FileData filedata, int i) {
-     games.remove(i);   
+	public void loadFile(){     
+	      try {
+	         FileInputStream fileIn = new FileInputStream(fileName);
+	         ObjectInputStream in = new ObjectInputStream(fileIn);
+	         try {
+	        	 Object inputObject = null;
+        		 inputObject = in.readObject();
+        		 if (inputObject instanceof Game)
+        			 game = ((Game)inputObject);
+	         } catch (ClassNotFoundException | EOFException e) {
+	        	 in.close();
+		         fileIn.close();
+	         }
+	      }catch(IOException i) {
+	         i.printStackTrace();
+	         return;
+	      }
    }
 
-public String getFileName(FileData filedata) {
-	return fileName;
-	
-}
-
-
-
-   
+	public String getFileName() {
+		return fileName;
+		
+	}
 }

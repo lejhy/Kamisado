@@ -5,7 +5,6 @@ import java.util.Observer;
 
 
 public class Core implements Observer{
-	@SuppressWarnings("unused")
 	private FileData data;
 	private Game game;
 	private Position selection;
@@ -13,19 +12,12 @@ public class Core implements Observer{
 	private View view;
 	private MainMenuViewController mainMenuViewController;
 	private NewGameViewController newGameViewController;
-	private LoadGameViewController loadGameViewController;
 	private ScoreViewController scoreViewController;
 	private GameViewController gameViewController;
 	
 	
 	public Core () {
-		try {
-			// try opening an existing file
-			data = new FileData();
-		} catch (Exception e) {
-			// create a new file
-			data = new FileData();
-		}
+		data = new FileData("Kamisado.config");
 		this.game = null;
 		this.selection = new Position(-1,-1);
 	}
@@ -52,6 +44,13 @@ public class Core implements Observer{
 		drawGame();
 	}
 	
+	public void undoMove() {
+		if(game.getCurrentPlayer().getType() == Value.HUMAN && game.getLastPlayer().getType() != Value.HUMAN) {
+			game.getBoard().undoLastMove();
+			updateGame();
+		}
+	}
+	
 	private void drawGame() {
 		gameViewController.drawBoard(game.getBoard());
 		if (game.isGameOver()) {
@@ -74,9 +73,15 @@ public class Core implements Observer{
 		checkForAI();
 	}
 	
+	public void saveGame() {
+		data.setGame(game);
+		data.saveDataToFile();
+	}
+	
 	public void resumeGame() {
 		if (game != null) {
 			view.displayScene(gameViewController);
+			updateGame();
 		}
 	}
 
@@ -84,15 +89,18 @@ public class Core implements Observer{
 		view.displayScene(newGameViewController);
     }
 	
-	public void loadGameMenu() {
-		view.displayScene(loadGameViewController);
-    }
+	public void loadGame() {
+		data.loadFile();
+		this.game = data.getGame();
+		initGame();
+	}
 	
 	public void scoreMenu() {
 		view.displayScene(scoreViewController);
     }
 	
 	public void exit() {
+		data.saveDataToFile();
 		System.exit(0);
     }
 	
@@ -112,8 +120,12 @@ public class Core implements Observer{
     		this.game = new NormalGame(player1, player2);
     	}
     	
+    	initGame();
+    }
+    
+    public void initGame() {
     	game.addObserver(this);
-    	gameViewController.setPlayerNames(player1.getName(), player2.getName());
+    	gameViewController.setPlayerNames(game.player1.getName(), game.player2.getName());
     	view.displayScene(gameViewController);
     	this.update(game, Value.READY);
     }
@@ -167,11 +179,6 @@ public class Core implements Observer{
 	public void setNewGameViewController(Controller newGameViewController) {
 		this.newGameViewController = (NewGameViewController)newGameViewController;
 		newGameViewController.setCore(this);
-	}
-
-	public void setLoadGameViewController(Controller loadGameViewController) {
-		this.loadGameViewController = (LoadGameViewController)loadGameViewController;
-		loadGameViewController.setCore(this);
 	}
 
 	public void setScoreViewController(Controller scoreViewController) {

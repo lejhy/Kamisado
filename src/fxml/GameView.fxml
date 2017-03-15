@@ -42,9 +42,19 @@
                   <Insets top="20.0" />
                </VBox.margin></ProgressIndicator>
             <ProgressBar fx:id="timer" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="150.0" progress="0.43" visible="false" />
+            <Button minHeight="40.0" minWidth="125.0" mnemonicParsing="false" onAction="#undoMove" text="Undo">
+               <VBox.margin>
+                  <Insets top="60.0" />
+               </VBox.margin>
+            </Button>
+            <Button minHeight="40.0" minWidth="125.0" mnemonicParsing="false" onAction="#saveGame" text="Save">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </Button>
             <Button minHeight="40.0" minWidth="125.0" mnemonicParsing="false" onAction="#mainMenu" text="Back">
                <VBox.margin>
-                  <Insets top="100.0" />
+                  <Insets top="20.0" />
                </VBox.margin>
             </Button>
          </children>

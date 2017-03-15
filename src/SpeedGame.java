@@ -1,10 +1,13 @@
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.OutputStream;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class SpeedGame extends Game {
 	
 	public int timeLimit = 5000;
-	private Timer timer;
+	private transient Timer timer;
 	
 	@Override
 	public void nextTurn(Move move, Value type) {
@@ -62,6 +65,12 @@ public class SpeedGame extends Game {
 
 	public SpeedGame(Player player1, Player player2) {
 		super(player1, player2);
+		timer = new Timer();
+		timer.schedule(new TimeIsUp(), timeLimit);
+	}
+	
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
+		in.defaultReadObject();
 		timer = new Timer();
 		timer.schedule(new TimeIsUp(), timeLimit);
 	}

@@ -116,6 +116,12 @@ public class GameViewController extends Controller{
     		position = null;
     		core.gameInput(new Position(position), Value.HOVER);
     		break;
+    	case U:
+    		core.undoMove();
+    		break;
+    	case S:
+    		core.saveGame();
+    		break;
     	case B:
     		core.mainMenu();
     		break;
@@ -137,6 +143,16 @@ public class GameViewController extends Controller{
     		
     		core.gameInput(new Position(squareX, squareY), Value.ACTION);
     	}
+    }
+    
+    @FXML
+    void undoMove(ActionEvent event) {
+    	core.undoMove();
+    }
+    
+    @FXML
+    void saveGame(ActionEvent event) {
+    	core.saveGame();
     }
 
     @FXML

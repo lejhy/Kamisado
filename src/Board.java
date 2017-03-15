@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Board {
+public class Board implements Serializable{
 	private List<Move> previousMoves;
 	private Value lastColor;
 	private boolean lastPlayerValue;
@@ -19,17 +20,28 @@ public class Board {
 	public Board () {
 		initTiles();
 		initTowers();
+		initPreviousMoves();
 		lastPlayerValue = false;
 		lastColor = null;
-		previousMoves = new ArrayList<Move>();
 	}
 	
 	public Board (Board board) {
-		initTiles(board.tiles);
-		initTowers(board.towers);
+		initTiles(board.getTiles());
+		initTowers(board.getTowers());
+		initPreviousMoves(board.getPreviousMoves());
 		this.lastPlayerValue = board.lastPlayerValue;
 		this.lastColor = board.lastColor;
-		previousMoves = new ArrayList<Move>();
+	}
+	
+	private void initPreviousMoves() {
+		this.previousMoves = new ArrayList<Move>();
+	}
+	
+	private void initPreviousMoves(List<Move> moves) {
+		this.previousMoves = new ArrayList<Move>();
+		for (Move move: moves) {
+			this.previousMoves.add(move);
+		}
 	}
 	
 	private void initTiles() {
@@ -165,8 +177,23 @@ public class Board {
 	   }
    }
    
-   public boolean undoLastMove() {
-      // TODO implement this operation
-      throw new UnsupportedOperationException("not implemented");
+   public List<Move> getPreviousMoves() {
+	   return previousMoves;
+   }
+   
+   public void undoLastMove() {
+	   Move move = getLastMove();
+	   previousMoves.remove(previousMoves.size()-1);	   
+	   Tower tower = findTower(move.finishX, move.finishY);
+	   tower.setPositionX(move.startX);
+	   tower.setPositionY(move.startY);
+	   
+	   move = getLastMove();
+	   previousMoves.remove(previousMoves.size()-1);
+	   tower = findTower(move.finishX, move.finishY);
+	   tower.setPositionX(move.startX);
+	   tower.setPositionY(move.startY);
+	   
+	   lastColor = tower.getColor();
    }
 }
