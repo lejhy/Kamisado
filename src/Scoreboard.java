@@ -1,13 +1,14 @@
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Scoreboard implements Serializable{
    
-   private int[] score;
-   private String[] playerName;
-   private int[] time;
+   private ArrayList<Integer> score = new ArrayList<Integer>();
+   private ArrayList<String> playerName = new ArrayList<String>();
+   private ArrayList<Integer> time = new ArrayList<Integer>();
    
    
-   public Scoreboard(int[] score , String[] playerName, int[] time) {
+   public Scoreboard(ArrayList<Integer> score , ArrayList<String> playerName, ArrayList<Integer> time) {
 	   score = this.score;
 	   playerName = this.playerName;
 	   time = this.time;
@@ -16,15 +17,15 @@ public class Scoreboard implements Serializable{
    
    
    public void setScore(int value, int i) {
-      this.score[i] = value;
+      value = score.get(i);
    }
    
    public int getScore(int i) {
-      return this.score[i];
+      return score.get(i);
    }
    
    public int size(){
-	   return score.length;
+	   return score.size();
    }
    
    public void resetScore(){
@@ -34,20 +35,20 @@ public class Scoreboard implements Serializable{
    }
    
    public void setPlayerName(String value,int i) {
-      this.playerName[i] = value;
+      value = playerName.get(i);
    }
    
    public String getPlayerName(int i) {
-      return this.playerName[i];
+      return playerName.get(i);
    }
    
    
    
    public void setTime(int value, int i) {
-      this.time[i] = value;
+      value = time.get(i);
    }
    
    public int getTime(int i) {
-      return this.time[i];
+      return time.get(i);
    }
 }
