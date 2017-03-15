@@ -3,3 +3,14 @@ Controller asks Game if its the valid move
 Add observer, then initialise
 Ideally specific view part observes specific parts of the model
 Core only sets everything up and wire evrything up
+
+
+Bugs:
+	In SpeedGame, when go back and then resume again, timerUI is reset, but the actual Timer is not, resulting in a TIME UP when the timerUI is still in progress.
+	
+TODO:
+	Confirmation message on saveGame
+	highscores
+	best of N games winner
+	notify user about invalid moves
+	
