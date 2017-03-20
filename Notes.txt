@@ -13,4 +13,5 @@ TODO:
 	highscores
 	best of N games winner
 	notify user about invalid moves
+	undo doesnt work after deadlock on win
 	
