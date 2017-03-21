@@ -16,26 +16,26 @@
             <Font size="42.0" />
          </font>
       </Label>
-      <Button fx:id="resume" disable="true" minHeight="50.0" minWidth="250.0" mnemonicParsing="false" onAction="#resumeGame" text="Resume Game">
+      <Button fx:id="resume" disable="true" minHeight="50.0" minWidth="250.0" mnemonicParsing="false" onAction="#resumeGame" text="Resume Game [R]">
          <VBox.margin>
             <Insets bottom="20.0" />
          </VBox.margin>
       </Button>
-      <Button minHeight="50.0" minWidth="250.0" mnemonicParsing="false" onAction="#newGameMenu" text="New Game">
+      <Button minHeight="50.0" minWidth="250.0" mnemonicParsing="false" onAction="#newGameMenu" text="New Game [N]">
          <VBox.margin>
             <Insets bottom="20.0" />
          </VBox.margin>
       </Button>
-      <Button minHeight="50.0" minWidth="250.0" mnemonicParsing="false" onAction="#loadGame" text="Load Game">
+      <Button minHeight="50.0" minWidth="250.0" mnemonicParsing="false" onAction="#loadGame" text="Load Game [L]">
          <VBox.margin>
             <Insets bottom="20.0" />
          </VBox.margin>
       </Button>
-      <Button minHeight="50.0" minWidth="250.0" mnemonicParsing="false" onAction="#score" text="Score">
+      <Button minHeight="50.0" minWidth="250.0" mnemonicParsing="false" onAction="#score" text="Score [S]">
          <VBox.margin>
             <Insets bottom="20.0" />
          </VBox.margin>
       </Button>
-      <Button minHeight="50.0" minWidth="250.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
+      <Button minHeight="50.0" minWidth="250.0" mnemonicParsing="false" onAction="#exit" text="Exit [E]" />
    </children>
 </VBox>

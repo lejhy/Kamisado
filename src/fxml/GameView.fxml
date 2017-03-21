@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Box?>
 <?import javafx.scene.text.Font?>
 
 <GridPane onKeyReleased="#keyboardInput" prefHeight="600.0" prefWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameViewController">
@@ -42,17 +43,17 @@
                   <Insets top="20.0" />
                </VBox.margin></ProgressIndicator>
             <ProgressBar fx:id="timer" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="150.0" progress="0.43" visible="false" />
-            <Button minHeight="40.0" minWidth="125.0" mnemonicParsing="false" onAction="#undoMove" text="Undo">
+            <Button minHeight="40.0" minWidth="125.0" mnemonicParsing="false" onAction="#undoMove" text="Undo [U]">
                <VBox.margin>
                   <Insets top="60.0" />
                </VBox.margin>
             </Button>
-            <Button minHeight="40.0" minWidth="125.0" mnemonicParsing="false" onAction="#saveGame" text="Save">
+            <Button minHeight="40.0" minWidth="125.0" mnemonicParsing="false" onAction="#saveGame" text="Save [S]">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
             </Button>
-            <Button minHeight="40.0" minWidth="125.0" mnemonicParsing="false" onAction="#mainMenu" text="Back">
+            <Button minHeight="40.0" minWidth="125.0" mnemonicParsing="false" onAction="#mainMenu" text="Back [B]">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
@@ -60,5 +61,7 @@
          </children>
       </VBox>
       <Canvas fx:id="gameView" height="600.0" onMouseClicked="#gameInput" width="600.0" GridPane.columnIndex="1" />
+      <Box />
+      <Box />
    </children>
 </GridPane>

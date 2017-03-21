@@ -6,6 +6,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+
+import javax.swing.JFileChooser;
 
 public class FileData {
    
@@ -15,6 +18,7 @@ public class FileData {
    private Game game;
    
    public FileData(){
+	   Scanner user_input = new Scanner(System.in);
 	   this.fileName = "Kamisado.config";
 	   this.game = null;
    }
@@ -56,6 +60,7 @@ public class FileData {
 	   
 	public void loadFile(){     
 	      try {
+	    	  
 	         FileInputStream fileIn = new FileInputStream(fileName);
 	         ObjectInputStream in = new ObjectInputStream(fileIn);
 	         try {
