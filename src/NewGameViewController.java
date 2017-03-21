@@ -84,6 +84,7 @@ public class NewGameViewController extends Controller{
     	Value player1TypeValue = getRBSelectionValue (player1Type);
     	Value player2TypeValue = getRBSelectionValue (player2Type);
     	Value gameModeValue = getRBSelectionValue (gameMode);
+    	int points = 1; //TODO
     	
     	String player1Name = player1NameInput.getText();
     	if (player1Name.equals("")){
@@ -98,7 +99,7 @@ public class NewGameViewController extends Controller{
     	Player player1 = new Player (player1Name, player1TypeValue);
     	Player player2 = new Player (player2Name, player2TypeValue);
     	
-    	core.newGame(player1, player2, gameModeValue);
+    	core.newGame(player1, player2, points, gameModeValue);
     }
     
     public Value getRBSelectionValue (ToggleGroup toggleGroup) {

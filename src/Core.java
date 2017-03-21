@@ -25,7 +25,7 @@ public class Core implements Observer{
 	@Override
 	public void update (Observable observable, Object argument) {
 		if(observable == this.game){
-			updateGame();
+			updateGameView();
 		} else {
 			
 		}
@@ -47,7 +47,7 @@ public class Core implements Observer{
 	public void undoMove() {
 		if(game.getCurrentPlayer().getType() == Value.HUMAN && game.getLastPlayer().getType() != Value.HUMAN) {
 			game.getBoard().undoLastMove();
-			updateGame();
+			updateGameView();
 		}
 	}
 	
@@ -62,8 +62,8 @@ public class Core implements Observer{
 		}
 	}
 	
-	private void updateGame() {
-		System.out.println("updateGame");
+	private void updateGameView() {
+		System.out.println("updateGameView");
 		if (game instanceof SpeedGame && !game.isGameOver()) {
 			gameViewController.showTimer(((SpeedGame)game).getTimeLimit());
 		} else {
@@ -81,7 +81,7 @@ public class Core implements Observer{
 	public void resumeGame() {
 		if (game != null) {
 			view.displayScene(gameViewController);
-			updateGame();
+			updateGameView();
 		}
 	}
 
@@ -113,11 +113,11 @@ public class Core implements Observer{
     	view.displayScene(mainMenuViewController);
     }
 	
-    void newGame(Player player1, Player player2, Value gameMode) {
+    void newGame(Player player1, Player player2, int points, Value gameMode) {
     	if (gameMode == Value.SPEED_MODE){
-    		this.game = new SpeedGame(player1, player2);
+    		this.game = new SpeedGame(player1, player2, points);
     	} else {
-    		this.game = new NormalGame(player1, player2);
+    		this.game = new NormalGame(player1, player2, points);
     	}
     	
     	initGame();

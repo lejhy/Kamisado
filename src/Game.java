@@ -7,11 +7,26 @@ public abstract class Game extends Observable implements Serializable{
 	protected Board board;
 	protected boolean gameOver;
 	protected Value gameOverCause;
-	protected int round;
+	protected int turn;
+	protected Score score;
    
-   	public abstract void nextTurn(Move move, Value playerType);
+   	public abstract boolean nextTurn(Move move, Value playerType);
    	protected abstract void makeMove(Move move);
-   	protected abstract void gameOver(Value cause);
+   	protected abstract void setGameOver(Value cause);
+   	
+   	public boolean nextRound() {
+   		if (gameOver && score.hasNextRound()) {
+   			board = new Board();
+   			gameOver = false;
+   			return true;
+   		} else {
+   			return false;
+   		}
+   	}
+   	
+   	public Score getScore() {
+   		return score;
+   	}
    	
    	public void change() {
    		setChanged();
@@ -67,19 +82,24 @@ public abstract class Game extends Observable implements Serializable{
    	}
 	
 	public int getRound() {
-		return this.round;
+		return this.score.getRound();
+	}
+	
+	public int getTurn() {
+		return this.turn;
 	}
 	
 	public Board getBoard(){
 		return board;
 	}
 	
-	public Game(Player player1, Player player2){
+	public Game(Player player1, Player player2, int points){
 		this.player1 = player1;
 		this.player2 = player2;
 		board = new Board();
 		gameOver = false;
-		round = 0;
+		turn = 0;
+		score = new Score(points);
 		System.out.println("newGameCreated");
 	}
 }
