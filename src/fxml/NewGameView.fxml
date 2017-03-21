@@ -57,7 +57,7 @@
       </VBox>
       <VBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
-            <Button minHeight="50.0" minWidth="200.0" mnemonicParsing="false" onAction="#newGame" text="Start">
+            <Button minHeight="50.0" minWidth="200.0" mnemonicParsing="false" onAction="#newGame" text="Start [S]">
                <VBox.margin>
                   <Insets bottom="50.0" top="100.0" />
                </VBox.margin>
@@ -75,11 +75,12 @@
                   <Insets />
                </VBox.margin>
             </RadioButton>
-            <Button minHeight="40.0" minWidth="125.0" mnemonicParsing="false" onAction="#mainMenu" text="Back">
+            <Button minHeight="40.0" minWidth="125.0" mnemonicParsing="false" onAction="#mainMenu" text="Back [B]">
                <VBox.margin>
                   <Insets top="50.0" />
                </VBox.margin>
             </Button>
+            <Label graphicTextGap="6.0" prefHeight="89.0" prefWidth="267.0" text="     Tab to switch and Up/Downt to select" textFill="RED" />
          </children>
       </VBox>
       <VBox alignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1">
