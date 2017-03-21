@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane onKeyReleased="#keyboardInput" prefHeight="600.0" prefWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NewGameViewController">
+<GridPane onKeyPressed="#keyboardInput" prefHeight="600.0" prefWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NewGameViewController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
@@ -80,7 +80,7 @@
                   <Insets top="50.0" />
                </VBox.margin>
             </Button>
-            <Label graphicTextGap="6.0" prefHeight="89.0" prefWidth="267.0" text="     Tab to switch and Up/Downt to select" textFill="RED" />
+            <Label alignment="CENTER" graphicTextGap="6.0" prefHeight="89.0" prefWidth="267.0" text="Tab to switch and Up/Downt to select" textFill="RED" />
          </children>
       </VBox>
       <VBox alignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1">

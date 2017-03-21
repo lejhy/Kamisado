@@ -87,6 +87,7 @@ public class GameViewController extends Controller{
     		if (position.y > 0)
     			position.y--;
     		core.gameInput(new Position(position), Value.HOVER);
+    		event.consume();
     		break;
     	case LEFT:
     		if (position == null)
@@ -94,6 +95,7 @@ public class GameViewController extends Controller{
     		if (position.x > 0)
     			position.x--;
     		core.gameInput(new Position(position), Value.HOVER);
+    		event.consume();
     		break;
     	case DOWN:
     		if (position == null)
@@ -101,6 +103,7 @@ public class GameViewController extends Controller{
     		if (position.y < 7)
     			position.y++;
     		core.gameInput(new Position(position), Value.HOVER);
+    		event.consume();
     		break;
     	case RIGHT:
     		if (position == null)
@@ -108,6 +111,7 @@ public class GameViewController extends Controller{
     		if (position.x < 7)
     			position.x++;
     		core.gameInput(new Position(position), Value.HOVER);
+    		event.consume();
     		break;
     	case ENTER:
     		core.gameInput(new Position(position), Value.ACTION);

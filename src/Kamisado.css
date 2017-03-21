@@ -42,6 +42,11 @@
     -fx-background-color: #3a3a3a;
 }
 
+.button:focused{
+    -fx-border-color: white;
+    -fx-text-fill: white;
+}
+
 .button:pressed
 {
   -fx-background-color: white;
@@ -53,6 +58,19 @@
     -fx-opacity: 0.4;
     -fx-background-color: #1d1d1d;
     -fx-text-fill: white;
+}
+
+.text-input:focused {
+    -fx-highlight-fill: white;
+    -fx-highlight-text-fill: white;
+    -fx-background-color:
+        white,
+        white,
+        white,
+        linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
+    -fx-background-insets: -0.2, 1, -1.4, 3;
+    -fx-background-radius: 3, 2, 4, 0;
+    -fx-prompt-text-fill: transparent;
 }
 
 .radio-button {
@@ -73,6 +91,11 @@
 .radio-button:hover .radio {
     -fx-background-color: #e0e0e0;
     -fx-border-color: #e0e0e0;
+}
+
+.radio-button:focused .radio {
+    -fx-background-color: white;
+    -fx-border-color: white;
 }
 
 
