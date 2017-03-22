@@ -1,5 +1,9 @@
 /* Reference to default styling of Modena.css at https://gist.github.com/maxd/63691840fc372f22f470 */
 
+
+//-fx-focus-color: #FFFFFF;
+//-fx-faint-focus-color: #FFFFFF22;
+
 .background {
     -fx-background-color: #1d1d1d;
 }
@@ -21,7 +25,11 @@
 	-fx-font-size: 12pt;
     -fx-font-family: "Avenir";
     -fx-text-fill: white;
-    -fx-opacity: 0.4;
+    -fx-opacity: 0.6;
+}
+
+.slider:focused .thumb {
+    -fx-background-color: #FFFFFF, -fx-inner-border, -fx-body-color, #FFFFFF22, -fx-body-color;
 }
 
 .button {
@@ -64,13 +72,10 @@
     -fx-highlight-fill: white;
     -fx-highlight-text-fill: white;
     -fx-background-color:
-        white,
-        white,
-        white,
+        #FFFFFF,
+        -fx-control-inner-background,
+        #FFFFFF22,
         linear-gradient(from 0px 0px to 0px 5px, derive(-fx-control-inner-background, -9%), -fx-control-inner-background);
-    -fx-background-insets: -0.2, 1, -1.4, 3;
-    -fx-background-radius: 3, 2, 4, 0;
-    -fx-prompt-text-fill: transparent;
 }
 
 .radio-button {

@@ -1,9 +1,13 @@
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyEvent;
@@ -27,6 +31,12 @@ public class NewGameViewController extends Controller{
 
     @FXML
     private TextField player2NameInput;
+    
+    @FXML
+    private Label pointsLabel;
+
+    @FXML
+    private Slider pointsInput;
 
     @FXML
     private ToggleGroup player2Type;
@@ -77,14 +87,16 @@ public class NewGameViewController extends Controller{
         assert gameMode != null : "fx:id=\"gameMode\" was not injected: check your FXML file 'NewGameView.fxml'.";
         assert player2NameInput != null : "fx:id=\"player2NameInput\" was not injected: check your FXML file 'NewGameView.fxml'.";
         assert player2Type != null : "fx:id=\"player2Type\" was not injected: check your FXML file 'NewGameView.fxml'.";
-
+        pointsInput.valueProperty().addListener((observable, oldValue, newValue) -> {
+        	pointsLabel.setText("Points: " + String.valueOf(newValue.intValue()));
+        });
     }
     
     private void newGame() {
     	Value player1TypeValue = getRBSelectionValue (player1Type);
     	Value player2TypeValue = getRBSelectionValue (player2Type);
     	Value gameModeValue = getRBSelectionValue (gameMode);
-    	int points = 1; //TODO
+    	int points = (int)pointsInput.getValue();
     	
     	String player1Name = player1NameInput.getText();
     	if (player1Name.equals("")){
