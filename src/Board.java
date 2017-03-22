@@ -182,18 +182,24 @@ public class Board implements Serializable{
    }
    
    public void undoLastMove() {
-	   Move move = getLastMove();
-	   previousMoves.remove(previousMoves.size()-1);	   
-	   Tower tower = findTower(move.finishX, move.finishY);
-	   tower.setPositionX(move.startX);
-	   tower.setPositionY(move.startY);
-	   
-	   move = getLastMove();
-	   previousMoves.remove(previousMoves.size()-1);
-	   tower = findTower(move.finishX, move.finishY);
-	   tower.setPositionX(move.startX);
-	   tower.setPositionY(move.startY);
-	   
-	   lastColor = tower.getColor();
+	   if (previousMoves.isEmpty() == false) {
+		   Move move = getLastMove();
+		   previousMoves.remove(previousMoves.size()-1);	   
+		   Tower tower = findTower(move.finishX, move.finishY);
+		   tower.setPositionX(move.startX);
+		   tower.setPositionY(move.startY);
+		   
+		   move = getLastMove();
+		   previousMoves.remove(previousMoves.size()-1);
+		   tower = findTower(move.finishX, move.finishY);
+		   tower.setPositionX(move.startX);
+		   tower.setPositionY(move.startY);
+		   
+		   if (previousMoves.isEmpty()) {
+			   lastColor = null;
+		   } else {
+			   lastColor = tower.getColor();
+		   }
+	   }
    }
 }

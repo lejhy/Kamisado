@@ -44,7 +44,7 @@
                   <Insets top="20.0" />
                </VBox.margin></ProgressIndicator>
             <ProgressBar fx:id="timer" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="150.0" progress="0.43" visible="false" />
-            <Button minHeight="40.0" minWidth="125.0" mnemonicParsing="false" onAction="#undoMove" text="Undo [U]">
+            <Button fx:id="undo" minHeight="40.0" minWidth="125.0" mnemonicParsing="false" onAction="#undoMove" text="Undo [U]">
                <VBox.margin>
                   <Insets top="60.0" />
                </VBox.margin>

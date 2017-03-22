@@ -17,6 +17,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -78,6 +79,9 @@ public class GameViewController extends Controller{
 
     @FXML
     private ProgressBar timer;
+    
+    @FXML
+    private Button undo;
 
     @FXML
     private Canvas gameView;
@@ -300,6 +304,14 @@ public class GameViewController extends Controller{
     
     public void hideTimer() {
     	timer.setVisible(false);
+    }
+    
+    public void showUndoButton() {
+    	undo.setVisible(true);
+    }
+    
+    public void hideUndoButton() {
+    	undo.setVisible(false);
     }
     
     public void setPlayerNames(String player1, String player2) {

@@ -83,6 +83,11 @@ public class Core implements Observer{
 		} else {
 			gameViewController.hideTimer();
 		}
+		if (game.getCurrentPlayer().getType() == Value.HUMAN && game.getLastPlayer().getType() != Value.HUMAN && !game.isGameOver()) {
+			gameViewController.showUndoButton();
+		} else {
+			gameViewController.hideUndoButton();
+		}
 		drawGame();
 		checkForAI();
 	}
