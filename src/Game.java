@@ -18,10 +18,15 @@ public abstract class Game extends Observable implements Serializable{
    		if (gameOver && score.hasNextRound()) {
    			board = new Board();
    			gameOver = false;
+   			score.nextRound();
    			return true;
    		} else {
    			return false;
    		}
+   	}
+   	
+   	public boolean hasNextRound() {
+   		return score.hasNextRound();
    	}
    	
    	public Score getScore() {
@@ -40,17 +45,17 @@ public abstract class Game extends Observable implements Serializable{
    	
    	public Player getCurrentPlayer() {
    		if (board.getLastPlayerValue()) {
-   			return new Player(player2);
+   			return player2;
    		} else {
-   			return new Player(player1);
+   			return player1;
    		}
    	}
    	
    	public Player getLastPlayer() {
    		if (board.getLastPlayerValue()) {
-   			return new Player(player1);
+   			return player1;
    		} else {
-   			return new Player(player2);
+   			return player2;
    		}
    	}
    	
@@ -79,6 +84,16 @@ public abstract class Game extends Observable implements Serializable{
    			}
    		}
    		else return null;
+   	}
+   	
+   	public Player getOverallWinner() {
+   		if (score.getPlayer1Points() > score.getPlayer2Points()) {
+   			return player1;
+   		} else if (score.getPlayer1Points() < score.getPlayer2Points()) {
+   			return player1;
+   		} else {
+   			return null;
+   		}
    	}
 	
 	public int getRound() {

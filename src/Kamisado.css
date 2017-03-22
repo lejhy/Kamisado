@@ -1,8 +1,8 @@
 /* Reference to default styling of Modena.css at https://gist.github.com/maxd/63691840fc372f22f470 */
 
 
-//-fx-focus-color: #FFFFFF;
-//-fx-faint-focus-color: #FFFFFF22;
+/*	-fx-focus-color: #FFFFFF;
+	-fx-faint-focus-color: #FFFFFF22;	*/
 
 .background {
     -fx-background-color: #1d1d1d;

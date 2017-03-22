@@ -1,5 +1,6 @@
 
 import java.net.URL;
+import java.util.Observable;
 import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
@@ -141,4 +142,10 @@ public class NewGameViewController extends Controller{
     	
     	return value;
     }
+
+	@Override
+	public void update(Observable o, Object arg) {
+		
+		
+	}
 }

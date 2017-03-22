@@ -1,5 +1,6 @@
 
 import java.net.URL;
+import java.util.Observable;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -76,4 +77,10 @@ public class MainMenuViewController extends Controller{
     public void disableResumeButton() {
     	resume.setDisable(true);
     }
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
+	}
 }

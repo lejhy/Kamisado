@@ -23,6 +23,10 @@ public class Tower implements Serializable{
 	   return playerValue;
    }
    
+   public Position getPosition() {
+	   return new Position(positionX, positionY);
+   }
+   
    public int getPositionY() {
       return positionY;
    }

@@ -31,6 +31,11 @@ public class NormalGame extends Game {
 		System.out.println("game over in normalGame");
    		gameOver = true;
    		gameOverCause = cause;
+   		if (getWinner() == player1){
+   			score.setWinnerPlayer1();
+   		} else {
+   			score.setWinnerPlayer2();
+   		}
    		change(cause);
 	}
 

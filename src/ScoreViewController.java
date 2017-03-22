@@ -1,5 +1,6 @@
 
 import java.net.URL;
+import java.util.Observable;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -38,4 +39,10 @@ public class ScoreViewController extends Controller{
         assert scoreTable != null : "fx:id=\"scoreTable\" was not injected: check your FXML file 'ScoreView.fxml'.";
 
     }
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
+	}
 }

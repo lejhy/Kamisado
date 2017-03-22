@@ -157,6 +157,14 @@ public final class GameLogic {
 		return moves;
 	}
 	
+	public static Tower getValidTower(Board board) {
+		if (!board.getLastPlayerValue()) {
+			return getValidWhiteTower(board);
+		} else {
+			return getValidBlackTower(board);
+		}
+	}
+	
 	public static Tower getValidWhiteTower(Board board) {
 		if (board.getLastColor() == null) {
 			int zeroToSeven = (int) (Math.random()*7);

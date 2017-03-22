@@ -2,6 +2,7 @@
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 import java.util.ResourceBundle;
 
 
@@ -62,12 +63,15 @@ public class GameViewController extends Controller{
 
     @FXML
     private URL location;
+    
+    @FXML
+    private Label score;
 
     @FXML
-    private Label player2Name;
+    private Label player2Label;
 
     @FXML
-    private Label player1Name;
+    private Label player1Label;
 
     @FXML
     private ProgressIndicator loading;
@@ -77,6 +81,11 @@ public class GameViewController extends Controller{
 
     @FXML
     private Canvas gameView;
+    
+    private GraphicsContext gc;
+    private double canvasWidth;
+    private double canvasHeight;
+    private double squareSize;
     
     @FXML
     void keyboardInput(KeyEvent event) {
@@ -166,11 +175,15 @@ public class GameViewController extends Controller{
 
     @FXML
     void initialize() {
-        assert player2Name != null : "fx:id=\"player2Name\" was not injected: check your FXML file 'Game.fxml'.";
-        assert player1Name != null : "fx:id=\"player1Name\" was not injected: check your FXML file 'Game.fxml'.";
+        assert player2Label != null : "fx:id=\"player2Name\" was not injected: check your FXML file 'Game.fxml'.";
+        assert player1Label != null : "fx:id=\"player1Name\" was not injected: check your FXML file 'Game.fxml'.";
         assert loading != null : "fx:id=\"loading\" was not injected: check your FXML file 'Game.fxml'.";
         assert timer != null : "fx:id=\"timer\" was not injected: check your FXML file 'Game.fxml'.";
         assert gameView != null : "fx:id=\"gameView\" was not injected: check your FXML file 'Game.fxml'.";
+        gc = gameView.getGraphicsContext2D();
+        canvasWidth = gameView.getWidth();
+    	canvasHeight = gameView.getHeight();
+    	squareSize = gameView.getWidth()/8;
         loadImages();
     }
     
@@ -206,7 +219,37 @@ public class GameViewController extends Controller{
     	BROWN_BLACK = new Image("img/BROWN_BLACK.png");
     }
     
-    public void gameOver(Value cause, String winner) {
+    public void roundOver(Value cause, String roundWinner) {
+    	drawRoundOver(cause, roundWinner);
+		gc.setFont(new Font("Avenir", squareSize/4));
+		gc.fillText(
+				"Click to continue to next round", 
+				canvasWidth/2, 
+				(canvasHeight + 3*squareSize)/2
+		);
+	}
+    
+    public void gameOver(Value cause, String roundWinner, String gameWinner) {
+    	drawRoundOver(cause, roundWinner);
+		gc.setFont(new Font("Courier New", squareSize/2));
+		gc.fillText(
+				gameWinner + " Won the Game!", 
+				canvasWidth/2, 
+				(canvasHeight + 3*squareSize)/2
+		);
+	}
+    
+    public void gameOverDraw(Value cause, String roundWinner) {
+    	drawRoundOver(cause, roundWinner);
+		gc.setFont(new Font("Courier New", squareSize/2));
+		gc.fillText(
+				"It's a DRAW!", 
+				canvasWidth/2, 
+				(canvasHeight + 3*squareSize)/2
+		);
+	}
+    
+    private void drawRoundOver(Value cause, String roundWinner) {
     	if (timer.isVisible())
     		timer.setVisible(false);
 		
@@ -216,13 +259,7 @@ public class GameViewController extends Controller{
     	if (cause == Value.DOUBLE_DEADLOCK)
     		gameOverCause = "DEADLOCK";
     	
-    	
-    	double width = gameView.getWidth();
-    	double height = gameView.getHeight();
-    	double squareSize = gameView.getWidth()/8;
-    	
-    	GraphicsContext gc = gameView.getGraphicsContext2D();
-		gc.drawImage(GAME_OVER, 0, 0, width, height);
+		gc.drawImage(GAME_OVER, 0, 0, canvasWidth, canvasHeight);
 		
 		gc.setTextAlign(TextAlignment.CENTER);
 		gc.setTextBaseline(VPos.CENTER);
@@ -230,18 +267,17 @@ public class GameViewController extends Controller{
 		gc.setFill(Color.WHITE);
 		gc.fillText(
 				gameOverCause, 
-				width/2, 
-				(height - squareSize)/2
+				canvasWidth/2, 
+				(canvasHeight - squareSize)/2
 		);
-		
 		gc.setFont(new Font("Avenir", squareSize/2));
 		gc.fillText(
-				winner + " is the Winner!", 
-				width/2, 
-				(height + squareSize)/2
+				roundWinner + " won this round!", 
+				canvasWidth/2, 
+				(canvasHeight + squareSize)/2
 		);
-	}
-    
+    }
+
     public void showLoader() {
     	// Show only if there is no timer
     	if (!timer.isVisible())
@@ -267,8 +303,8 @@ public class GameViewController extends Controller{
     }
     
     public void setPlayerNames(String player1, String player2) {
-    	player1Name.setText(player1);
-    	player2Name.setText(player2);
+    	player1Label.setText(player1);
+    	player2Label.setText(player2);
     }
     
     public void drawHighlights(List<Position> positions) {
@@ -396,4 +432,11 @@ public class GameViewController extends Controller{
     		}
     	}
     }
+
+	@Override
+	public void update(Observable o, Object arg) {
+		if (o instanceof Score) {
+			score.setText(((Score) o).getPlayer1Points() + "_" + ((Score) o).getPlayer2Points());
+		}
+	}
 }

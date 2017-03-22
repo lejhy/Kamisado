@@ -1,6 +1,6 @@
+import java.util.Observer;
 
-
-public abstract class Controller {
+public abstract class Controller implements Observer{
 	protected Core core;
 
 	public Controller() {

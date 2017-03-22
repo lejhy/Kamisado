@@ -4,6 +4,8 @@ import java.io.OutputStream;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javafx.application.Platform;
+
 public class SpeedGame extends Game {
 	
 	public int timeLimit = 5000;
@@ -42,6 +44,11 @@ public class SpeedGame extends Game {
    		gameOver = true;
    		gameOverCause = cause;
    		cancelTimer();
+   		if (getWinner() == player1){
+   			score.setWinnerPlayer1();
+   		} else {
+   			score.setWinnerPlayer2();
+   		}
    		change(cause);
 	}
 	
@@ -61,7 +68,11 @@ public class SpeedGame extends Game {
 	
 	class TimeIsUp extends TimerTask{
 		public void run() {
-			setGameOver(Value.TIME_UP);
+			Platform.runLater(new Runnable() {
+				public void run() {
+					setGameOver(Value.TIME_UP);
+				}
+			});
 		}
 	}
 

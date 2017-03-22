@@ -33,10 +33,16 @@ public class Core implements Observer{
 	
 	public void gameInput(Position position, Value inputType) {
 		if (inputType == Value.ACTION) {
-			if (GameLogic.isValidTower(game.getBoard(), position.x, position.y)) {
-				selection = position;
-			} else {
-				game.nextTurn(new Move(selection.x, selection.y, position.x, position.y), Value.HUMAN);
+			if (!game.isGameOver()) {
+				if (GameLogic.isValidTower(game.getBoard(), position.x, position.y)) {
+					selection = position;
+				} else {
+					game.nextTurn(new Move(selection.x, selection.y, position.x, position.y), Value.HUMAN);
+					selection = GameLogic.getValidTower(game.getBoard()).getPosition();
+					
+				}
+			} else if (game.hasNextRound()){
+				game.nextRound();
 			}
 		} else if (inputType == Value.HOVER){
 			
@@ -54,7 +60,15 @@ public class Core implements Observer{
 	private void drawGame() {
 		gameViewController.drawBoard(game.getBoard());
 		if (game.isGameOver()) {
-			gameViewController.gameOver(game.getGameOverCause(), game.getWinner().getName());
+			if (game.hasNextRound())
+				gameViewController.roundOver(game.getGameOverCause(), game.getWinner().getName());
+			else {
+				Player overallWinner = game.getOverallWinner();
+				if (overallWinner == null)
+					gameViewController.gameOverDraw(game.getGameOverCause(), game.getWinner().getName());
+				else
+					gameViewController.gameOver(game.getGameOverCause(), game.getWinner().getName(), overallWinner.getName());
+			}
 		} else {
 			Tower tower = game.getBoard().getTower(selection.x, selection.y);
 			if (tower != null)
@@ -119,7 +133,7 @@ public class Core implements Observer{
     	} else {
     		this.game = new NormalGame(player1, player2, points);
     	}
-    	
+    	game.getScore().addObserver(gameViewController);
     	initGame();
     }
     
