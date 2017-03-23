@@ -1,8 +1,9 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
-public class Board implements Serializable{
+public class Board extends Observable implements Serializable{
 	private List<Move> previousMoves;
 	private Value lastColor;
 	private boolean lastPlayerValue;
@@ -167,6 +168,8 @@ public class Board implements Serializable{
 	  Move lastMove = new Move(move);
 	  previousMoves.add(lastMove);
 	  nextPlayer();
+	  setChanged();
+	  notifyObservers();
    }
    
    public void nextPlayer(){
@@ -200,6 +203,8 @@ public class Board implements Serializable{
 		   } else {
 			   lastColor = tower.getColor();
 		   }
+		   setChanged();
+		   notifyObservers();
 	   }
    }
 }

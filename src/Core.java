@@ -3,8 +3,10 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import javafx.application.Platform;
 
-public class Core implements Observer{
+
+public class Core extends Observable implements Observer{
 	private FileData data;
 	private Game game;
 	private Position selection;
@@ -22,13 +24,11 @@ public class Core implements Observer{
 		this.selection = new Position(-1,-1);
 	}
 	
+	
+	
 	@Override
 	public void update (Observable observable, Object argument) {
-		if(observable == this.game){
-			updateGameView();
-		} else {
-			
-		}
+		checkForAI();
 	}
 	
 	public void gameInput(Position position, Value inputType) {
@@ -39,57 +39,21 @@ public class Core implements Observer{
 				} else {
 					game.nextTurn(new Move(selection.x, selection.y, position.x, position.y), Value.HUMAN);
 					selection = GameLogic.getValidTower(game.getBoard()).getPosition();
-					
 				}
+				setChanged();
+				notifyObservers();
 			} else if (game.hasNextRound()){
 				game.nextRound();
 			}
 		} else if (inputType == Value.HOVER){
 			
 		}
-		drawGame();
 	}
 	
 	public void undoMove() {
 		if(game.getCurrentPlayer().getType() == Value.HUMAN && game.getLastPlayer().getType() != Value.HUMAN) {
 			game.getBoard().undoLastMove();
-			updateGameView();
 		}
-	}
-	
-	private void drawGame() {
-		gameViewController.drawBoard(game.getBoard());
-		if (game.isGameOver()) {
-			if (game.hasNextRound())
-				gameViewController.roundOver(game.getGameOverCause(), game.getWinner().getName());
-			else {
-				Player overallWinner = game.getOverallWinner();
-				if (overallWinner == null)
-					gameViewController.gameOverDraw(game.getGameOverCause(), game.getWinner().getName());
-				else
-					gameViewController.gameOver(game.getGameOverCause(), game.getWinner().getName(), overallWinner.getName());
-			}
-		} else {
-			Tower tower = game.getBoard().getTower(selection.x, selection.y);
-			if (tower != null)
-				drawValidMoves(tower);
-		}
-	}
-	
-	private void updateGameView() {
-		System.out.println("updateGameView");
-		if (game instanceof SpeedGame && !game.isGameOver()) {
-			gameViewController.showTimer(((SpeedGame)game).getTimeLimit());
-		} else {
-			gameViewController.hideTimer();
-		}
-		if (game.getCurrentPlayer().getType() == Value.HUMAN && game.getLastPlayer().getType() != Value.HUMAN && !game.isGameOver()) {
-			gameViewController.showUndoButton();
-		} else {
-			gameViewController.hideUndoButton();
-		}
-		drawGame();
-		checkForAI();
 	}
 	
 	public void saveGame() {
@@ -100,7 +64,6 @@ public class Core implements Observer{
 	public void resumeGame() {
 		if (game != null) {
 			view.displayScene(gameViewController);
-			updateGameView();
 		}
 	}
 
@@ -112,6 +75,7 @@ public class Core implements Observer{
 		data.loadFile();
 		this.game = data.getGame();
 		initGame();
+		change();
 	}
 	
 	public void scoreMenu() {
@@ -124,11 +88,6 @@ public class Core implements Observer{
     }
 	
     void mainMenu() {
-    	if (game == null) {
-			mainMenuViewController.disableResumeButton();
-		} else {
-			mainMenuViewController.enableResumeButton();
-		}
     	view.displayScene(mainMenuViewController);
     }
 	
@@ -140,24 +99,31 @@ public class Core implements Observer{
     	}
     	game.getScore().addObserver(gameViewController);
     	initGame();
+    	change();
     }
     
     public void initGame() {
     	game.addObserver(this);
-    	gameViewController.setPlayerNames(game.player1.getName(), game.player2.getName());
+    	gameViewController.setGame(game);
+    	game.addObserver(gameViewController);
     	view.displayScene(gameViewController);
     	this.update(game, Value.READY);
+    	gameViewController.update(game, null);
     }
     
     
-    public void drawValidMoves(Tower tower) {
-    	List<Move> moves = GameLogic.getValidMoves(game.getBoard(), tower);
-    	List<Position> positions = new ArrayList<Position>();
-    	for (Move move:moves) {
-    		positions.add(new Position(move.finishX, move.finishY));
+    public List<Position> getPositionsToHighlight() {
+    	Tower tower = game.getBoard().getTower(selection.x, selection.y);
+    	if (tower != null) {
+	    	List<Move> moves = GameLogic.getValidMoves(game.getBoard(), tower);
+	    	List<Position> positions = new ArrayList<Position>();
+	    	for (Move move:moves) {
+	    		positions.add(new Position(move.finishX, move.finishY));
+	    	}
+	    	return positions;
+    	} else {
+    		return new ArrayList<Position>();
     	}
-    	gameViewController.drawBoard(game.board);
-    	gameViewController.drawHighlights(positions);
     }
 	
 	public void checkForAI() {
@@ -165,8 +131,15 @@ public class Core implements Observer{
 			Thread thread = new Thread(new Runnable() {
 				public void run() {
 					gameViewController.showLoader();
-					game.nextTurn(AI.MiniMaxAB(game.getBoard(), 3), Value.EASY_AI);
+					Move move = AI.MiniMaxAB(game.getBoard(), 5);
 					gameViewController.hideLoader();
+					Platform.runLater(new Runnable() {
+						public void run() {
+							game.nextTurn(move, Value.EASY_AI);
+							selection = GameLogic.getValidTower(game.getBoard()).getPosition();
+							change();
+						}
+					});
 				}
 			});
 			thread.setDaemon(true);
@@ -175,8 +148,15 @@ public class Core implements Observer{
 			Thread thread = new Thread(new Runnable() {
 				public void run() {
 					gameViewController.showLoader();
-					game.nextTurn(AI.MiniMaxAB(game.getBoard(), 9), Value.HARD_AI);
+					Move move = AI.MiniMaxAB(game.getBoard(), 9);
 					gameViewController.hideLoader();
+					Platform.runLater(new Runnable() {
+						public void run() {
+							game.nextTurn(move, Value.HARD_AI);
+							selection = GameLogic.getValidTower(game.getBoard()).getPosition();
+							change();
+						}
+					});
 				}
 			});
 			thread.setDaemon(true);
@@ -184,7 +164,18 @@ public class Core implements Observer{
 		}
 	}
 	
+	public boolean hasGame() {
+		if (game != null){
+			return true;
+		} else {
+			return false;	
+		}
+	}
 	
+	private void change() {
+		setChanged();
+		notifyObservers();
+	}
 	
 	public void setView(View view) {
 		this.view = view;
@@ -192,6 +183,7 @@ public class Core implements Observer{
 	
 	public void setMainMenuViewController(Controller mainMenuViewController) {
 		this.mainMenuViewController = (MainMenuViewController)mainMenuViewController;
+		this.addObserver(mainMenuViewController);
 		mainMenuViewController.setCore(this);
 	}
 
@@ -206,7 +198,8 @@ public class Core implements Observer{
 	}
 
 	public void setGameViewController(Controller gameViewController) {
-		this.gameViewController = (GameViewController)gameViewController;
+		this.gameViewController = (GameViewController)gameViewController; 
+		this.addObserver(gameViewController);
 		gameViewController.setCore(this);
 	}
 }

@@ -28,6 +28,7 @@ import javafx.util.Duration;
 
 public class GameViewController extends Controller{
 	private Position position;
+	private Game game;
 	
 	private Image GAME_OVER;
 	private Image GRUDGE;
@@ -99,7 +100,7 @@ public class GameViewController extends Controller{
     			position = new Position(3,0);
     		if (position.y > 0)
     			position.y--;
-    		core.gameInput(new Position(position), Value.HOVER);
+    		update(null, null);
     		event.consume();
     		break;
     	case LEFT:
@@ -107,7 +108,7 @@ public class GameViewController extends Controller{
     			position = new Position(0,3);
     		if (position.x > 0)
     			position.x--;
-    		core.gameInput(new Position(position), Value.HOVER);
+    		update(null, null);
     		event.consume();
     		break;
     	case DOWN:
@@ -115,7 +116,7 @@ public class GameViewController extends Controller{
     			position = new Position(4,7);
     		if (position.y < 7)
     			position.y++;
-    		core.gameInput(new Position(position), Value.HOVER);
+    		update(null, null);
     		event.consume();
     		break;
     	case RIGHT:
@@ -123,7 +124,7 @@ public class GameViewController extends Controller{
     			position = new Position(7,4);
     		if (position.x < 7)
     			position.x++;
-    		core.gameInput(new Position(position), Value.HOVER);
+    		update(null, null);
     		event.consume();
     		break;
     	case ENTER:
@@ -158,6 +159,7 @@ public class GameViewController extends Controller{
     		int squareX = (int)(x/squareSize);
     		int squareY = (int)(y/squareSize);
     		
+    		position = null;
     		core.gameInput(new Position(squareX, squareY), Value.ACTION);
     	}
     }
@@ -319,17 +321,27 @@ public class GameViewController extends Controller{
     	player2Label.setText(player2);
     }
     
+    public void setScore(int x, int y) {
+    	score.setText(String.valueOf(x) + "_" +  String.valueOf(y));
+    }
+    
+    public void setGame(Game game) {
+    	this.game = game;
+    }
+    
+    public void drawHighlight(Position position) {
+    	gc.drawImage(HIGHLIGHT, position.x*squareSize, position.y*squareSize, squareSize, squareSize);
+    }
+    
     public void drawHighlights(List<Position> positions) {
-    	GraphicsContext gc = gameView.getGraphicsContext2D();
-    	double squareSize = gameView.getWidth()/8;
     	for (Position position: positions) {
     		gc.drawImage(HIGHLIGHT, position.x*squareSize, position.y*squareSize, squareSize, squareSize);
     	}
     }
     
-    public void drawBoard(Board board) {
-    	drawTiles(board.getTiles());
-    	drawTowers(board.getTowers());
+    public void drawBoard() {
+    	drawTiles(game.getBoard().getTiles());
+    	drawTowers(game.getBoard().getTowers());
     	
     	GraphicsContext gc = gameView.getGraphicsContext2D();
     	double squareSize = gameView.getWidth()/8;
@@ -447,8 +459,35 @@ public class GameViewController extends Controller{
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if (o instanceof Score) {
-			score.setText(((Score) o).getPlayer1Points() + "_" + ((Score) o).getPlayer2Points());
+		
+		setPlayerNames(game.getPlayer1().getName(), game.getPlayer2().getName());
+		setScore(game.getScore().getPlayer1Points(), game.getScore().getPlayer2Points());
+		
+		drawBoard();
+		List<Position> positions = core.getPositionsToHighlight();
+		drawHighlights(positions);
+		if (position != null) {
+			drawHighlight(position);
+		}
+		
+		if (game.isGameOver()) {
+			if (game.hasNextRound())
+				roundOver(game.getGameOverCause(), game.getWinner().getName());
+			else {
+				Player overallWinner = game.getOverallWinner();
+				if (overallWinner == null)
+					gameOverDraw(game.getGameOverCause(), game.getWinner().getName());
+				else
+					gameOver(game.getGameOverCause(), game.getWinner().getName(), overallWinner.getName());
+			}
+		} else if (game instanceof SpeedGame && arg == Value.TIMER) {
+			showTimer(((SpeedGame)game).getTimeLimit());
+		}
+		
+		if (game.getCurrentPlayer().getType() == Value.HUMAN && game.getLastPlayer().getType() != Value.HUMAN) {
+			undo.setVisible(true);
+		} else {
+			undo.setVisible(false);
 		}
 	}
 }

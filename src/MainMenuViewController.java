@@ -70,17 +70,15 @@ public class MainMenuViewController extends Controller{
         assert resume != null : "fx:id=\"resume\" was not injected: check your FXML file 'MainMenuView.fxml'.";
     }
     
-    public void enableResumeButton() {
-    	resume.setDisable(false);
-    }
-    
-    public void disableResumeButton() {
-    	resume.setDisable(true);
-    }
-
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("aaA");
+		if (o == core) {
+			if (core.hasGame()) {
+				resume.setDisable(false);
+			} else {
+				resume.setDisable(true);
+			}
+		}
 	}
 }

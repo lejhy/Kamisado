@@ -2,10 +2,10 @@ import java.io.Serializable;
 import java.util.Observable;
 
 public class Score extends Observable implements Serializable{
-	private int round;
-	private int points;
-	private int player1Points;
-	private int player2Points;
+	protected int round;
+	protected int points;
+	protected int player1Points;
+	protected int player2Points;
 	
 	public Score(int points) {
 		round = 1;

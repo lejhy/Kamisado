@@ -60,6 +60,7 @@ public class SpeedGame extends Game {
 		timer.cancel();
    		timer = new Timer();
    		timer.schedule(new TimeIsUp(), timeLimit);
+   		change(Value.TIMER);
 	}
 	
 	private void cancelTimer() {
