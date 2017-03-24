@@ -8,7 +8,7 @@ import javafx.application.Platform;
 
 public class SpeedGame extends Game {
 	
-	public int timeLimit = 5000;
+	public int timeLimit;
 	private transient Timer timer;
 	
 	@Override
@@ -77,8 +77,9 @@ public class SpeedGame extends Game {
 		}
 	}
 
-	public SpeedGame(Player player1, Player player2, int points) {
+	public SpeedGame(Player player1, Player player2, int time, int points) {
 		super(player1, player2, points);
+		timeLimit = time;
 		timer = new Timer();
 	}
 	

@@ -19,6 +19,7 @@ public abstract class Game extends Observable implements Serializable{
    			board = new Board();
    			gameOver = false;
    			score.nextRound();
+   			change();
    			return true;
    		} else {
    			return false;

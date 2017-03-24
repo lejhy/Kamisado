@@ -40,8 +40,7 @@ public class Core extends Observable implements Observer{
 					game.nextTurn(new Move(selection.x, selection.y, position.x, position.y), Value.HUMAN);
 					selection = GameLogic.getValidTower(game.getBoard()).getPosition();
 				}
-				setChanged();
-				notifyObservers();
+				change();
 			} else if (game.hasNextRound()){
 				game.nextRound();
 			}
@@ -51,7 +50,7 @@ public class Core extends Observable implements Observer{
 	}
 	
 	public void undoMove() {
-		if(game.getCurrentPlayer().getType() == Value.HUMAN && game.getLastPlayer().getType() != Value.HUMAN) {
+		if(!game.isGameOver() && game.getCurrentPlayer().getType() == Value.HUMAN && game.getLastPlayer().getType() != Value.HUMAN) {
 			game.getBoard().undoLastMove();
 		}
 	}
@@ -93,9 +92,9 @@ public class Core extends Observable implements Observer{
     	view.displayScene(mainMenuViewController);
     }
 	
-    void newGame(Player player1, Player player2, int points, Value gameMode) {
+    void newGame(Player player1, Player player2, int time, int points, Value gameMode) {
     	if (gameMode == Value.SPEED_MODE){
-    		this.game = new SpeedGame(player1, player2, points);
+    		this.game = new SpeedGame(player1, player2, time, points);
     	} else {
     		this.game = new NormalGame(player1, player2, points);
     	}
@@ -107,6 +106,7 @@ public class Core extends Observable implements Observer{
     public void wireGameView() {
     	gameViewController.setGame(game);
     	game.addObserver(gameViewController);
+    	game.getBoard().addObserver(gameViewController);
     	
     	gameViewController.setPlayer1Name(game.getPlayer1().getName().get());
     	gameViewController.setPlayer2Name(game.getPlayer2().getName().get());
@@ -127,7 +127,7 @@ public class Core extends Observable implements Observer{
     
     public List<Position> getPositionsToHighlight() {
     	Tower tower = game.getBoard().getTower(selection.x, selection.y);
-    	if (tower != null) {
+    	if (tower != null && game.getCurrentPlayer().getType() == Value.HUMAN) {
 	    	List<Move> moves = GameLogic.getValidMoves(game.getBoard(), tower);
 	    	List<Position> positions = new ArrayList<Position>();
 	    	for (Move move:moves) {

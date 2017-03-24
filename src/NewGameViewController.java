@@ -34,6 +34,12 @@ public class NewGameViewController extends Controller{
     private TextField player2NameInput;
     
     @FXML
+    private Label timeLabel;
+
+    @FXML
+    private Slider timeInput;
+    
+    @FXML
     private Label pointsLabel;
 
     @FXML
@@ -91,12 +97,26 @@ public class NewGameViewController extends Controller{
         pointsInput.valueProperty().addListener((observable, oldValue, newValue) -> {
         	pointsLabel.setText("Points: " + String.valueOf(newValue.intValue()));
         });
+        timeInput.valueProperty().addListener((observable, oldValue, newValue) -> {
+        	timeLabel.setText("Time: " + String.valueOf(newValue.intValue()) + "s");
+        });
+        gameMode.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+    		if (((RadioButton)newValue).getText().equals("Speed Mode")) {
+    			timeLabel.setVisible(true);
+    			timeInput.setVisible(true);
+    		} else {
+    			timeLabel.setVisible(false);
+    			timeInput.setVisible(false);
+    		}
+        });
+        
     }
     
     private void newGame() {
     	Value player1TypeValue = getRBSelectionValue (player1Type);
     	Value player2TypeValue = getRBSelectionValue (player2Type);
     	Value gameModeValue = getRBSelectionValue (gameMode);
+    	int time = (int)timeInput.getValue() * 1000;
     	int points = (int)pointsInput.getValue();
     	
     	String player1Name = player1NameInput.getText();
@@ -112,7 +132,7 @@ public class NewGameViewController extends Controller{
     	Player player1 = new Player (player1Name, player1TypeValue);
     	Player player2 = new Player (player2Name, player2TypeValue);
     	
-    	core.newGame(player1, player2, points, gameModeValue);
+    	core.newGame(player1, player2, time, points,  gameModeValue);
     }
     
     public Value getRBSelectionValue (ToggleGroup toggleGroup) {

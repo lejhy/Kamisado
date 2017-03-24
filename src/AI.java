@@ -15,7 +15,7 @@ public final class AI {
 			   Move move = moves.get(i);
 			   newBoard = new Board(board);
 			   newBoard.performMove(move);
-			   if(GameLogic.isGameOver(newBoard)) {
+			   if(GameLogic.isWinningMove(newBoard.getLastPlayerValue(), move)) {
 				   return move;
 			   } else {
 				   value = MinAB(newBoard, depth - 1, a, b);
