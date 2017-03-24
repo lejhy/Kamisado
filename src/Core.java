@@ -6,6 +6,8 @@ import java.util.Observer;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
+import javafx.stage.WindowEvent;
 
 
 public class Core extends Observable implements Observer{
@@ -194,6 +196,11 @@ public class Core extends Observable implements Observer{
 	
 	public void setView(View view) {
 		this.view = view;
+		this.view.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			public void handle(WindowEvent we) {
+				exit();
+			}
+		});
 	}
 	
 	public void setMainMenuViewController(Controller mainMenuViewController) {
