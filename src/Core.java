@@ -4,6 +4,8 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 
 public class Core extends Observable implements Observer{
@@ -23,8 +25,6 @@ public class Core extends Observable implements Observer{
 		this.game = null;
 		this.selection = new Position(-1,-1);
 	}
-	
-	
 	
 	@Override
 	public void update (Observable observable, Object argument) {
@@ -93,6 +93,8 @@ public class Core extends Observable implements Observer{
     }
 	
     void newGame(Player player1, Player player2, int time, int points, Value gameMode) {
+    	if (this.game != null)
+    		data.addScore(game);
     	if (gameMode == Value.SPEED_MODE){
     		this.game = new SpeedGame(player1, player2, time, points);
     	} else {
@@ -197,22 +199,23 @@ public class Core extends Observable implements Observer{
 	public void setMainMenuViewController(Controller mainMenuViewController) {
 		this.mainMenuViewController = (MainMenuViewController)mainMenuViewController;
 		this.addObserver(mainMenuViewController);
-		mainMenuViewController.setCore(this);
+		this.mainMenuViewController.setCore(this);
 	}
 
 	public void setNewGameViewController(Controller newGameViewController) {
 		this.newGameViewController = (NewGameViewController)newGameViewController;
-		newGameViewController.setCore(this);
+		this.newGameViewController.setCore(this);
 	}
 
 	public void setScoreViewController(Controller scoreViewController) {
 		this.scoreViewController = (ScoreViewController)scoreViewController;
-		scoreViewController.setCore(this);
+		this.scoreViewController.setCore(this);
+		this.scoreViewController.setScoreList(data.getScoreList());
 	}
 
 	public void setGameViewController(Controller gameViewController) {
 		this.gameViewController = (GameViewController)gameViewController; 
 		this.addObserver(gameViewController);
-		gameViewController.setCore(this);
+		this.gameViewController.setCore(this);
 	}
 }

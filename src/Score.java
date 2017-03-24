@@ -9,7 +9,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Score extends Observable implements Serializable{
-	private int round;
+	protected int round;
 	protected int points;
 	protected transient IntegerProperty player1Points;
 	protected transient IntegerProperty player2Points;

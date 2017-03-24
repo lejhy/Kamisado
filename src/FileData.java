@@ -10,22 +10,27 @@ import java.util.Scanner;
 
 import javax.swing.JFileChooser;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class FileData {
    
    
-   private Scoreboard scoreboard;
+   private ObservableList<ScoreEntry> scoreList;
    private String fileName;
    private Game game;
    
    public FileData(){
-	   Scanner user_input = new Scanner(System.in);
 	   this.fileName = "Kamisado.config";
 	   this.game = null;
+	   this.scoreList = FXCollections.observableArrayList();
+	   loadFile();
    }
    
    public FileData(String fileName){
 	   this.fileName = fileName;
 	   this.game = null;
+	   this.scoreList = FXCollections.observableArrayList();
 	   loadFile();
    }
    
@@ -33,9 +38,18 @@ public class FileData {
 	   System.out.println(game.toString());
    }
    
-   public Scoreboard getScore() {
-      return scoreboard;
+   public ObservableList<ScoreEntry> getScoreList() {
+      return scoreList;
    } 
+   
+   public void addScore(Game game) {
+	   scoreList.add(new ScoreEntry(
+		   game.getPlayer1().getName().get(), 
+		   game.getPlayer2().getName().get(), 
+		   game.getScore().getPlayer1Points().get(), 
+		   game.getScore().getPlayer2Points().get()
+	   ));
+   }
    
    public void setGame(Game game) {
       this.game = game;
@@ -50,6 +64,9 @@ public class FileData {
 		   FileOutputStream outPut = new FileOutputStream(fileName);
 		   ObjectOutputStream out = new ObjectOutputStream(outPut);
 		   out.writeObject(game);
+		   for (ScoreEntry entry : scoreList) {
+			   out.writeObject(entry);
+		   }
 		   out.close();
 		   outPut.close();
 		   System.out.println("Data is saved in: " + fileName);
@@ -65,9 +82,13 @@ public class FileData {
 	         ObjectInputStream in = new ObjectInputStream(fileIn);
 	         try {
 	        	 Object inputObject = null;
-        		 inputObject = in.readObject();
-        		 if (inputObject instanceof Game)
-        			 game = ((Game)inputObject);
+	        	 while(true) {
+	        		 inputObject = in.readObject();
+	        		 if (inputObject instanceof Game)
+	        			 game = ((Game)inputObject);
+	        		 else if (inputObject instanceof ScoreEntry)
+	        			 scoreList.add((ScoreEntry)inputObject);
+	        	 }
 	         } catch (ClassNotFoundException | EOFException e) {
 	        	 in.close();
 		         fileIn.close();
