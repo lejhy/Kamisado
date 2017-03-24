@@ -80,12 +80,10 @@ public class SpeedGame extends Game {
 	public SpeedGame(Player player1, Player player2, int points) {
 		super(player1, player2, points);
 		timer = new Timer();
-		timer.schedule(new TimeIsUp(), timeLimit);
 	}
 	
 	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
 		in.defaultReadObject();
 		timer = new Timer();
-		timer.schedule(new TimeIsUp(), timeLimit);
 	}
 }

@@ -324,6 +324,10 @@ public class GameViewController extends Controller{
     	player2Label.setText(player2);
     }
     
+    public void setPlayerScore(String newScore) {
+    	score.setText(newScore);
+    }
+    
     public void setPlayer1Score(int newScore) {
     	score.setText(score.getText().replaceFirst("\\d*_", String.valueOf(newScore) + "_"));
     }

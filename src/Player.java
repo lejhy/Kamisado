@@ -1,13 +1,17 @@
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Observable;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableStringValue;
 
 public class Player extends Observable implements Serializable{
 	protected int score;
-	protected StringProperty name;
+	protected transient StringProperty name;
 	private Value type;
 	
 	public void setScore(int value) {
@@ -39,5 +43,16 @@ public class Player extends Observable implements Serializable{
 		this.name = player.name;
 		this.score = player.score;
 		this.type = player.getType();
+	}
+	
+	private void writeObject(ObjectOutputStream out) throws IOException {
+		out.defaultWriteObject();
+		out.writeObject(name.get());
+	}
+	
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
+		in.defaultReadObject();
+		name = new SimpleStringProperty();
+		name.set((String) in.readObject()); 
 	}
 }

@@ -74,6 +74,8 @@ public class Core extends Observable implements Observer{
 	public void loadGame() {
 		data.loadFile();
 		this.game = data.getGame();
+		game.addObserver(this);
+		selection = GameLogic.getValidTower(game.getBoard()).getPosition();
 		wireGameView();
 		change();
 	}
@@ -109,6 +111,7 @@ public class Core extends Observable implements Observer{
     	gameViewController.setPlayer1Name(game.getPlayer1().getName().get());
     	gameViewController.setPlayer2Name(game.getPlayer2().getName().get());
     	
+    	gameViewController.setPlayerScore("0_0");
     	game.getScore().getPlayer1Points().addListener((o, ov, nv) -> {
     		gameViewController.setPlayer1Score(nv.intValue());
     	});

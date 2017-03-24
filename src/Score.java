@@ -1,5 +1,9 @@
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Observable;
+import java.util.Timer;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -7,8 +11,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class Score extends Observable implements Serializable{
 	private int round;
 	protected int points;
-	protected IntegerProperty player1Points;
-	protected IntegerProperty player2Points;
+	protected transient IntegerProperty player1Points;
+	protected transient IntegerProperty player2Points;
 	
 	public Score(int points) {
 		round = 1;
@@ -66,8 +70,21 @@ public class Score extends Observable implements Serializable{
 		return player1Points;
 	}
 
-
 	public IntegerProperty getPlayer2Points() {
 		return player2Points;
+	}
+	
+	private void writeObject(ObjectOutputStream out) throws IOException {
+		out.defaultWriteObject();
+		out.writeInt(player1Points.get());
+		out.writeInt(player2Points.get());
+	}
+	
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
+		in.defaultReadObject();
+		player1Points = new SimpleIntegerProperty();
+		player1Points.set(in.readInt());
+		player2Points = new SimpleIntegerProperty();
+		player2Points.set(in.readInt());
 	}
 }
