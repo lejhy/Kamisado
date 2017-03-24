@@ -1,9 +1,13 @@
 import java.io.Serializable;
 import java.util.Observable;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableStringValue;
+
 public class Player extends Observable implements Serializable{
 	protected int score;
-	protected String name;
+	protected StringProperty name;
 	private Value type;
 	
 	public void setScore(int value) {
@@ -20,12 +24,13 @@ public class Player extends Observable implements Serializable{
 		return this.score;
 	}
 
-	public String getName() {
+	public StringProperty getName() {
 		return name;
 	}
 	
 	public Player(String name, Value type){
-		this.name = name;
+		this.name = new SimpleStringProperty();
+		this.name.set(name);
 		this.score = 0;
 		this.type = type;
 	}

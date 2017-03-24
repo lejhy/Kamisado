@@ -74,7 +74,7 @@ public class Core extends Observable implements Observer{
 	public void loadGame() {
 		data.loadFile();
 		this.game = data.getGame();
-		initGame();
+		wireGameView();
 		change();
 	}
 	
@@ -97,15 +97,25 @@ public class Core extends Observable implements Observer{
     	} else {
     		this.game = new NormalGame(player1, player2, points);
     	}
-    	game.getScore().addObserver(gameViewController);
-    	initGame();
+    	game.addObserver(this);
+    	wireGameView();
     	change();
     }
     
-    public void initGame() {
-    	game.addObserver(this);
+    public void wireGameView() {
     	gameViewController.setGame(game);
     	game.addObserver(gameViewController);
+    	
+    	gameViewController.setPlayer1Name(game.getPlayer1().getName().get());
+    	gameViewController.setPlayer2Name(game.getPlayer2().getName().get());
+    	
+    	game.getScore().getPlayer1Points().addListener((o, ov, nv) -> {
+    		gameViewController.setPlayer1Score(nv.intValue());
+    	});
+    	game.getScore().getPlayer2Points().addListener((o, ov, nv) -> {
+    		gameViewController.setPlayer2Score(nv.intValue());
+    	});
+
     	view.displayScene(gameViewController);
     	this.update(game, Value.READY);
     	gameViewController.update(game, null);

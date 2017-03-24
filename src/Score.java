@@ -1,17 +1,22 @@
 import java.io.Serializable;
 import java.util.Observable;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 public class Score extends Observable implements Serializable{
-	protected int round;
+	private int round;
 	protected int points;
-	protected int player1Points;
-	protected int player2Points;
+	protected IntegerProperty player1Points;
+	protected IntegerProperty player2Points;
 	
 	public Score(int points) {
 		round = 1;
 		this.points = points;
-		player1Points = 0;
-		player2Points = 0;
+		player1Points = new SimpleIntegerProperty();
+		player1Points.set(0);
+		player2Points = new SimpleIntegerProperty();
+		player2Points.set(0);
 	}
 	
 	public Score(Score score) {
@@ -22,15 +27,11 @@ public class Score extends Observable implements Serializable{
 	}
 	
 	public void setWinnerPlayer1() {
-		player1Points++;
-		setChanged();
-		notifyObservers();
+		player1Points.set(player1Points.get() + 1);
 	}
 	
 	public void setWinnerPlayer2() {
-		player2Points++;
-		setChanged();
-		notifyObservers();
+		player2Points.set(player2Points.get() + 1);
 	}
 	
 	public boolean hasNextRound() {
@@ -61,12 +62,12 @@ public class Score extends Observable implements Serializable{
 		return points;
 	}
 
-	public int getPlayer1Points() {
+	public IntegerProperty getPlayer1Points() {
 		return player1Points;
 	}
 
 
-	public int getPlayer2Points() {
+	public IntegerProperty getPlayer2Points() {
 		return player2Points;
 	}
 }

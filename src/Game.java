@@ -87,9 +87,9 @@ public abstract class Game extends Observable implements Serializable{
    	}
    	
    	public Player getOverallWinner() {
-   		if (score.getPlayer1Points() > score.getPlayer2Points()) {
+   		if (score.getPlayer1Points().intValue() > score.getPlayer2Points().intValue()) {
    			return player1;
-   		} else if (score.getPlayer1Points() < score.getPlayer2Points()) {
+   		} else if (score.getPlayer1Points().intValue() < score.getPlayer2Points().intValue()) {
    			return player1;
    		} else {
    			return null;

@@ -316,13 +316,20 @@ public class GameViewController extends Controller{
     	undo.setVisible(false);
     }
     
-    public void setPlayerNames(String player1, String player2) {
+    public void setPlayer1Name(String player1) {
     	player1Label.setText(player1);
+    }
+    
+    public void setPlayer2Name(String player2) {
     	player2Label.setText(player2);
     }
     
-    public void setScore(int x, int y) {
-    	score.setText(String.valueOf(x) + "_" +  String.valueOf(y));
+    public void setPlayer1Score(int newScore) {
+    	score.setText(score.getText().replaceFirst("\\d*_", String.valueOf(newScore) + "_"));
+    }
+    
+    public void setPlayer2Score(int newScore) {
+    	score.setText(score.getText().replaceFirst("_\\d*", "_" + String.valueOf(newScore)));
     }
     
     public void setGame(Game game) {
@@ -460,9 +467,6 @@ public class GameViewController extends Controller{
 	@Override
 	public void update(Observable o, Object arg) {
 		
-		setPlayerNames(game.getPlayer1().getName(), game.getPlayer2().getName());
-		setScore(game.getScore().getPlayer1Points(), game.getScore().getPlayer2Points());
-		
 		drawBoard();
 		List<Position> positions = core.getPositionsToHighlight();
 		drawHighlights(positions);
@@ -472,13 +476,13 @@ public class GameViewController extends Controller{
 		
 		if (game.isGameOver()) {
 			if (game.hasNextRound())
-				roundOver(game.getGameOverCause(), game.getWinner().getName());
+				roundOver(game.getGameOverCause(), game.getWinner().getName().get());
 			else {
 				Player overallWinner = game.getOverallWinner();
 				if (overallWinner == null)
-					gameOverDraw(game.getGameOverCause(), game.getWinner().getName());
+					gameOverDraw(game.getGameOverCause(), game.getWinner().getName().get());
 				else
-					gameOver(game.getGameOverCause(), game.getWinner().getName(), overallWinner.getName());
+					gameOver(game.getGameOverCause(), game.getWinner().getName().get(), overallWinner.getName().get());
 			}
 		} else if (game instanceof SpeedGame && arg == Value.TIMER) {
 			showTimer(((SpeedGame)game).getTimeLimit());
