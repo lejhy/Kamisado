@@ -15,7 +15,7 @@ import javafx.collections.ObservableList;
 
 public class FileData {
    
-   private ObservableList<Game> gameList;
+   private ObservableList<GameEntry> gameList;
    private ObservableList<ScoreEntry> scoreList;
    private String fileName;
    
@@ -46,23 +46,23 @@ public class FileData {
 	   ));
    }
    
-   public ObservableList<Game> getGameList() {
+   public ObservableList<GameEntry> getGameList() {
 	   return gameList;
    } 
    
    public void addGame(Game game) {
-      gameList.add(game);
+
    }
    
    public Game getGame(int i) {
-      return gameList.get(i);
+      return gameList.get(i).getGame();
    }
    
    public void saveDataToFile() {
 	   try {		   
 		   FileOutputStream outPut = new FileOutputStream(fileName);
 		   ObjectOutputStream out = new ObjectOutputStream(outPut);
-		   for (Game game : gameList) {
+		   for (GameEntry game : gameList) {
 			   out.writeObject(game);
 		   }
 		   for (ScoreEntry entry : scoreList) {
