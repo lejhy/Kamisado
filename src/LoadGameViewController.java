@@ -1,4 +1,6 @@
 import java.util.Observable;
+
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -8,19 +10,19 @@ import javafx.scene.input.KeyEvent;
 public class LoadGameViewController extends Controller {
 
     @FXML
-    private TableView<?> loadGameTable;
+    private TableView<Game> loadGameTable;
 
     @FXML
-    private TableColumn<?, ?> Player1Name;
+    private TableColumn<Game, String> Player1Name;
 
     @FXML
-    private TableColumn<?, ?> Player1Score;
+    private TableColumn<Game, Integer> Player1Score;
 
     @FXML
-    private TableColumn<?, ?> player2Name;
+    private TableColumn<Game, String> player2Name;
 
     @FXML
-    private TableColumn<?, ?> Player2Score;
+    private TableColumn<Game, Integer> Player2Score;
 
     @FXML
     void keyboardInput(KeyEvent event) {
@@ -44,6 +46,10 @@ public class LoadGameViewController extends Controller {
     @FXML
     void mainMenu(ActionEvent event) {
     	core.mainMenu();
+    }
+    
+    public void setGameList(ObservableList<Game> gl) {
+    	loadGameTable.setItems(gl);
     }
 
 	@Override

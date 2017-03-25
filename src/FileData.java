@@ -15,27 +15,22 @@ import javafx.collections.ObservableList;
 
 public class FileData {
    
-   
+   private ObservableList<Game> gameList;
    private ObservableList<ScoreEntry> scoreList;
    private String fileName;
-   private Game game;
    
    public FileData(){
 	   this.fileName = "Kamisado.config";
-	   this.game = null;
+	   this.gameList = FXCollections.observableArrayList();
 	   this.scoreList = FXCollections.observableArrayList();
 	   loadFile();
    }
    
    public FileData(String fileName){
 	   this.fileName = fileName;
-	   this.game = null;
+	   this.gameList = FXCollections.observableArrayList();
 	   this.scoreList = FXCollections.observableArrayList();
 	   loadFile();
-   }
-   
-   public void writeOut() {
-	   System.out.println(game.toString());
    }
    
    public ObservableList<ScoreEntry> getScoreList() {
@@ -51,19 +46,25 @@ public class FileData {
 	   ));
    }
    
-   public void setGame(Game game) {
-      this.game = game;
+   public ObservableList<Game> getGameList() {
+	   return gameList;
+   } 
+   
+   public void addGame(Game game) {
+      gameList.add(game);
    }
    
-   public Game getGame() {
-      return game;
+   public Game getGame(int i) {
+      return gameList.get(i);
    }
    
    public void saveDataToFile() {
 	   try {		   
 		   FileOutputStream outPut = new FileOutputStream(fileName);
 		   ObjectOutputStream out = new ObjectOutputStream(outPut);
-		   out.writeObject(game);
+		   for (Game game : gameList) {
+			   out.writeObject(game);
+		   }
 		   for (ScoreEntry entry : scoreList) {
 			   out.writeObject(entry);
 		   }
@@ -85,7 +86,7 @@ public class FileData {
 	        	 while(true) {
 	        		 inputObject = in.readObject();
 	        		 if (inputObject instanceof Game)
-	        			 game = ((Game)inputObject);
+	        			 gameList.add((Game)inputObject);
 	        		 else if (inputObject instanceof ScoreEntry)
 	        			 scoreList.add((ScoreEntry)inputObject);
 	        	 }
@@ -101,6 +102,5 @@ public class FileData {
 
 	public String getFileName() {
 		return fileName;
-		
 	}
 }
