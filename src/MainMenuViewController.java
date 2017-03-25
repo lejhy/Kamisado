@@ -51,8 +51,8 @@ public class MainMenuViewController extends Controller{
     }
     
     @FXML
-    void loadGame(ActionEvent event) {
-    	core.loadGame();
+    void loadGameMenu(ActionEvent event) {
+    	core.loadGameMenu();
     }
     
     @FXML

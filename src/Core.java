@@ -18,6 +18,7 @@ public class Core extends Observable implements Observer{
 	private View view;
 	private MainMenuViewController mainMenuViewController;
 	private NewGameViewController newGameViewController;
+	private LoadGameViewController loadGameViewController;
 	private ScoreViewController scoreViewController;
 	private GameViewController gameViewController;
 	
@@ -72,8 +73,11 @@ public class Core extends Observable implements Observer{
 		view.displayScene(newGameViewController);
     }
 	
+	public void loadGameMenu() {
+		view.displayScene(loadGameViewController);
+    }
+	
 	public void loadGame() {
-		data.loadFile();
 		this.game = data.getGame();
 		game.addObserver(this);
 		selection = GameLogic.getValidTower(game.getBoard()).getPosition();
@@ -212,6 +216,11 @@ public class Core extends Observable implements Observer{
 	public void setNewGameViewController(Controller newGameViewController) {
 		this.newGameViewController = (NewGameViewController)newGameViewController;
 		this.newGameViewController.setCore(this);
+	}
+	
+	public void setLoadGameViewController(Controller loadGameViewController) {
+		this.loadGameViewController = (LoadGameViewController)loadGameViewController;
+		this.loadGameViewController.setCore(this);
 	}
 
 	public void setScoreViewController(Controller scoreViewController) {
