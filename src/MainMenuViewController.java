@@ -27,7 +27,7 @@ public class MainMenuViewController extends Controller{
     		core.newGameMenu();
     		break;
     	case L:
-    		core.loadGame();
+    		core.loadGameMenu();
     		break;
     	case S:
     		core.scoreMenu();

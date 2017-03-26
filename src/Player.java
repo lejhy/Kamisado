@@ -40,7 +40,7 @@ public class Player extends Observable implements Serializable{
 	}
 	
 	public Player(Player player) {
-		this.name = player.name;
+		this.name = new SimpleStringProperty(player.name.get());
 		this.score = player.score;
 		this.type = player.getType();
 	}

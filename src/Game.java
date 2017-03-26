@@ -13,6 +13,7 @@ public abstract class Game extends Observable implements Serializable{
    	public abstract boolean nextTurn(Move move, Value playerType);
    	protected abstract void makeMove(Move move);
    	protected abstract void setGameOver(Value cause);
+   	protected abstract Game clone();
    	
    	public boolean nextRound() {
    		if (gameOver && score.hasNextRound()) {
@@ -116,6 +117,14 @@ public abstract class Game extends Observable implements Serializable{
 		gameOver = false;
 		turn = 0;
 		score = new Score(points);
-		System.out.println("newGameCreated");
+	}
+	
+	public Game(Game game) {
+		this.player1 = new Player(game.getPlayer1());
+		this.player2 = new Player(game.getPlayer2());
+		board = new Board(game.getBoard());
+		gameOver = game.isGameOver();
+		turn = game.getTurn();
+		score = new Score(game.getScore());
 	}
 }

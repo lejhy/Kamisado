@@ -1,5 +1,6 @@
 import java.io.EOFException;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -51,7 +52,7 @@ public class FileData {
    } 
    
    public void addGame(Game game) {
-
+	   gameList.add(new GameEntry(game));
    }
    
    public Game getGame(int i) {
@@ -77,28 +78,29 @@ public class FileData {
    }	   
 	   
 	public void loadFile(){     
-	      try {
-	    	  
-	         FileInputStream fileIn = new FileInputStream(fileName);
-	         ObjectInputStream in = new ObjectInputStream(fileIn);
-	         try {
-	        	 Object inputObject = null;
-	        	 while(true) {
-	        		 inputObject = in.readObject();
-	        		 if (inputObject instanceof Game)
-	        			 gameList.add((Game)inputObject);
-	        		 else if (inputObject instanceof ScoreEntry)
-	        			 scoreList.add((ScoreEntry)inputObject);
-	        	 }
-	         } catch (ClassNotFoundException | EOFException e) {
-	        	 in.close();
-		         fileIn.close();
-	         }
-	      }catch(IOException i) {
-	         i.printStackTrace();
-	         return;
-	      }
-   }
+		scoreList.clear();
+		gameList.clear();;
+		try {
+			FileInputStream fileIn = new FileInputStream(fileName);
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			try {
+				Object inputObject = null;
+				while(true) {
+					inputObject = in.readObject();
+					if (inputObject instanceof GameEntry)
+						gameList.add((GameEntry)inputObject);
+					else if (inputObject instanceof ScoreEntry)
+						scoreList.add((ScoreEntry)inputObject);
+				}
+			} catch (ClassNotFoundException | EOFException e) {
+				in.close();
+				fileIn.close();
+			}
+      	}catch(IOException e) {
+      		e.printStackTrace();
+      		return;
+      	}
+	}
 
 	public String getFileName() {
 		return fileName;

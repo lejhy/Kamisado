@@ -29,7 +29,7 @@ public class LoadGameViewController extends Controller {
     void keyboardInput(KeyEvent event) {
     	switch(event.getCode()){
     	case L:
-    		core.loadGame();
+    		core.loadGame(loadGameTable.getSelectionModel().getSelectedItem().getGame().clone());
     		break;
     	case B:
     		core.mainMenu();
@@ -41,7 +41,7 @@ public class LoadGameViewController extends Controller {
 
     @FXML
     void loadGame(ActionEvent event) {
-    	core.loadGame();
+    	core.loadGame(loadGameTable.getSelectionModel().getSelectedItem().getGame().clone());
     }
 
     @FXML

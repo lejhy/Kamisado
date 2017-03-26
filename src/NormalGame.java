@@ -42,4 +42,13 @@ public class NormalGame extends Game {
 	public NormalGame(Player player1, Player player2, int points) {
 		super(player1, player2, points);
 	}
+	
+	public NormalGame(NormalGame game) {
+		super((Game) game);
+	}
+	
+	protected Game clone() {
+		Game game = new NormalGame(this);
+		return game;
+	}
 }

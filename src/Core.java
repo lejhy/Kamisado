@@ -59,8 +59,7 @@ public class Core extends Observable implements Observer{
 	}
 	
 	public void saveGame() {
-		data.addGame(game);
-		data.saveDataToFile();
+		data.addGame(game.clone());
 	}
 	
 	public void resumeGame() {
@@ -77,8 +76,8 @@ public class Core extends Observable implements Observer{
 		view.displayScene(loadGameViewController);
     }
 	
-	public void loadGame() {
-		this.game = data.getGame(0);
+	public void loadGame(Game game) {
+		this.game = game;
 		game.addObserver(this);
 		selection = GameLogic.getValidTower(game.getBoard()).getPosition();
 		wireGameView();

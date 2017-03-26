@@ -15,12 +15,12 @@ public class GameEntry implements Serializable{
 	private transient IntegerProperty player1Points;
 	private transient IntegerProperty player2Points;
 	
-	public GameEntry (Game game, String player1Name, String player2Name, int player1Points, int player2Points) {
+	public GameEntry (Game game) {
 		this.game = game;
-		this.player1Name = new SimpleStringProperty(player1Name);
-		this.player2Name = new SimpleStringProperty(player2Name);
-		this.player1Points = new SimpleIntegerProperty(player1Points);
-		this.player2Points = new SimpleIntegerProperty(player2Points);
+		this.player1Name = game.getPlayer1().getName();
+		this.player2Name = game.getPlayer2().getName();
+		this.player1Points = game.getScore().getPlayer1Points();
+		this.player2Points = game.getScore().getPlayer2Points();
 	}
 	
 	public Game getGame() {
