@@ -14,6 +14,8 @@ public class GameEntry implements Serializable{
 	private transient StringProperty player2Name;
 	private transient IntegerProperty player1Points;
 	private transient IntegerProperty player2Points;
+	private transient IntegerProperty points;
+	private transient IntegerProperty turn;
 	
 	public GameEntry (Game game) {
 		this.game = game;
@@ -21,6 +23,8 @@ public class GameEntry implements Serializable{
 		this.player2Name = game.getPlayer2().getName();
 		this.player1Points = game.getScore().getPlayer1Points();
 		this.player2Points = game.getScore().getPlayer2Points();
+		this.points = new SimpleIntegerProperty(game.getScore().getPoints());
+		this.turn = new SimpleIntegerProperty(game.getTurn());
 	}
 	
 	public Game getGame() {
@@ -43,6 +47,14 @@ public class GameEntry implements Serializable{
 		return player2Points.get();
 	}
 	
+	public int getPoints() {
+		return points.get();
+	}
+	
+	public int getTurn() {
+		return turn.get();
+	}
+	
 	public void setGame(Game game) {
 		this.game = game;
 	}
@@ -63,12 +75,22 @@ public class GameEntry implements Serializable{
 		player2Points.set(points);
 	}
 	
+	public void setPoints(int points) {
+		this.points.set(points);
+	}
+	
+	public void setTurn(int turn) {
+		this.turn.set(turn);
+	}
+	
 	private void writeObject(ObjectOutputStream out) throws IOException {
 		out.defaultWriteObject();
 		out.writeObject(player1Name.get());
 		out.writeObject(player2Name.get());
 		out.writeInt(player1Points.get());
 		out.writeInt(player2Points.get());
+		out.writeInt(points.get());
+		out.writeInt(turn.get());
 	}
 	
 	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
@@ -81,5 +103,9 @@ public class GameEntry implements Serializable{
 		player1Points.set(in.readInt());
 		player2Points = new SimpleIntegerProperty();
 		player2Points.set(in.readInt());
+		points = new SimpleIntegerProperty();
+		points.set(in.readInt());
+		turn = new SimpleIntegerProperty();
+		turn.set(in.readInt());
 	}
 }
