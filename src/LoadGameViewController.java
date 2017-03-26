@@ -1,5 +1,8 @@
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Observable;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,6 +33,9 @@ public class LoadGameViewController extends Controller {
     
     @FXML
     private TableColumn<GameEntry, Integer> turn;
+    
+    @FXML
+    private TableColumn<GameEntry, String> time;
 
     @FXML
     void keyboardInput(KeyEvent event) {
@@ -64,6 +70,12 @@ public class LoadGameViewController extends Controller {
         player2Score.setCellValueFactory(new PropertyValueFactory<GameEntry, Integer>("player2Points"));
         points.setCellValueFactory(new PropertyValueFactory<GameEntry, Integer>("points"));
         turn.setCellValueFactory(new PropertyValueFactory<GameEntry, Integer>("turn"));
+        time.setCellValueFactory(gameEntry -> {
+        	SimpleStringProperty time = new SimpleStringProperty();
+        	DateFormat dateFormat = new SimpleDateFormat("d/M/yy h:mm:ss");
+        	time.setValue(dateFormat.format(gameEntry.getValue().getTime()));
+        	return time;
+        });
     }
     
     public void setGameList(ObservableList<GameEntry> gl) {

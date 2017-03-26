@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -16,8 +17,9 @@ public class GameEntry implements Serializable{
 	private transient IntegerProperty player2Points;
 	private transient IntegerProperty points;
 	private transient IntegerProperty turn;
+	private transient SimpleLongProperty time;
 	
-	public GameEntry (Game game) {
+	public GameEntry (Game game, long time) {
 		this.game = game;
 		this.player1Name = game.getPlayer1().getName();
 		this.player2Name = game.getPlayer2().getName();
@@ -25,6 +27,7 @@ public class GameEntry implements Serializable{
 		this.player2Points = game.getScore().getPlayer2Points();
 		this.points = new SimpleIntegerProperty(game.getScore().getPoints());
 		this.turn = new SimpleIntegerProperty(game.getTurn());
+		this.time = new SimpleLongProperty(time);
 	}
 	
 	public Game getGame() {
@@ -55,6 +58,10 @@ public class GameEntry implements Serializable{
 		return turn.get();
 	}
 	
+	public long getTime() {
+		return time.get();
+	}
+	
 	public void setGame(Game game) {
 		this.game = game;
 	}
@@ -83,6 +90,10 @@ public class GameEntry implements Serializable{
 		this.turn.set(turn);
 	}
 	
+	public void setTime(long time) {
+		this.time.set(time);
+	}
+	
 	private void writeObject(ObjectOutputStream out) throws IOException {
 		out.defaultWriteObject();
 		out.writeObject(player1Name.get());
@@ -91,6 +102,7 @@ public class GameEntry implements Serializable{
 		out.writeInt(player2Points.get());
 		out.writeInt(points.get());
 		out.writeInt(turn.get());
+		out.writeLong(time.get());
 	}
 	
 	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
@@ -107,5 +119,7 @@ public class GameEntry implements Serializable{
 		points.set(in.readInt());
 		turn = new SimpleIntegerProperty();
 		turn.set(in.readInt());
+		time = new SimpleLongProperty();
+		time.set(in.readLong());
 	}
 }

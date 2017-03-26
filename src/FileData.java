@@ -52,7 +52,7 @@ public class FileData {
    } 
    
    public void addGame(Game game) {
-	   gameList.add(new GameEntry(game));
+	   gameList.add(new GameEntry(game, System.currentTimeMillis()));
    }
    
    public Game getGame(int i) {
