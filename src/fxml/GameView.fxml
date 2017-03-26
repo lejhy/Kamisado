@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Box?>
 <?import javafx.scene.text.Font?>
 
 <GridPane onKeyPressed="#keyboardInput" prefHeight="600.0" prefWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameViewController">
@@ -24,29 +23,30 @@
    <children>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
          <children>
-            <Label fx:id="score" alignment="CENTER" contentDisplay="CENTER" prefHeight="66.0" prefWidth="200.0" styleClass="header" text="0_0" wrapText="true" />
             <Label fx:id="player2Label" alignment="CENTER" contentDisplay="CENTER" styleClass="title" text="Player2">
                <VBox.margin>
-                  <Insets top="50.0" />
+                  <Insets top="30.0" />
                </VBox.margin>
             </Label>
+            <Label fx:id="player2Score" alignment="CENTER" contentDisplay="CENTER" prefHeight="66.0" prefWidth="200.0" styleClass="header" text="0" wrapText="true" />
             <Label alignment="CENTER" contentDisplay="CENTER" styleClass="subtitle" text="vs.">
                <font>
                   <Font size="21.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="20.0" top="20.0" />
+                  <Insets bottom="3.0" />
                </VBox.margin>
             </Label>
+            <Label fx:id="player1Score" alignment="CENTER" contentDisplay="CENTER" prefHeight="66.0" prefWidth="200.0" styleClass="header" text="0" wrapText="true" />
             <Label fx:id="player1Label" alignment="CENTER" contentDisplay="CENTER" styleClass="title" text="Player1" />
             <ProgressIndicator fx:id="loading" visible="false">
                <VBox.margin>
-                  <Insets top="20.0" />
+                  <Insets bottom="10.0" top="20.0" />
                </VBox.margin></ProgressIndicator>
             <ProgressBar fx:id="timer" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="150.0" progress="0.43" visible="false" />
             <Button fx:id="undo" minHeight="40.0" minWidth="125.0" mnemonicParsing="false" onAction="#undoMove" text="Undo [U]">
                <VBox.margin>
-                  <Insets top="60.0" />
+                  <Insets top="30.0" />
                </VBox.margin>
             </Button>
             <Button minHeight="40.0" minWidth="125.0" mnemonicParsing="false" onAction="#saveGame" text="Save [S]">
@@ -62,7 +62,5 @@
          </children>
       </VBox>
       <Canvas fx:id="gameView" height="600.0" onMouseClicked="#gameInput" width="600.0" GridPane.columnIndex="1" />
-      <Box />
-      <Box />
    </children>
 </GridPane>

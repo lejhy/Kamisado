@@ -65,12 +65,15 @@ public class GameViewController extends Controller{
 
     @FXML
     private URL location;
-    
-    @FXML
-    private Label score;
 
     @FXML
     private Label player2Label;
+    
+    @FXML
+    private Label player2Score;
+    
+    @FXML
+    private Label player1Score;
 
     @FXML
     private Label player1Label;
@@ -324,16 +327,12 @@ public class GameViewController extends Controller{
     	player2Label.setText(player2);
     }
     
-    public void setPlayerScore(String newScore) {
-    	score.setText(newScore);
-    }
-    
     public void setPlayer1Score(int newScore) {
-    	score.setText(score.getText().replaceFirst("\\d*_", String.valueOf(newScore) + "_"));
+    	player1Score.setText(String.valueOf(newScore));
     }
     
     public void setPlayer2Score(int newScore) {
-    	score.setText(score.getText().replaceFirst("_\\d*", "_" + String.valueOf(newScore)));
+    	player2Score.setText(String.valueOf(newScore));
     }
     
     public void setGame(Game game) {

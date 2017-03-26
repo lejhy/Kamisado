@@ -72,7 +72,6 @@ public class MainMenuViewController extends Controller{
     
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.println("aaA");
 		if (o == core) {
 			if (core.hasGame()) {
 				resume.setDisable(false);

@@ -118,7 +118,8 @@ public class Core extends Observable implements Observer{
     	gameViewController.setPlayer1Name(game.getPlayer1().getName().get());
     	gameViewController.setPlayer2Name(game.getPlayer2().getName().get());
     	
-    	gameViewController.setPlayerScore("0_0");
+    	gameViewController.setPlayer1Score(0);
+    	gameViewController.setPlayer2Score(0);
     	game.getScore().getPlayer1Points().addListener((o, ov, nv) -> {
     		gameViewController.setPlayer1Score(nv.intValue());
     	});
