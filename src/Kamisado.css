@@ -28,8 +28,37 @@
     -fx-opacity: 0.6;
 }
 
+.slider:hover .thumb {
+     -fx-background-color:
+        linear-gradient(to bottom, derive(-fx-text-box-border, -20%), derive(-fx-text-box-border, -30%)),
+        #EEEEEE,
+        #EEEEEE;
+}
+
 .slider:focused .thumb {
-    -fx-background-color: #FFFFFF, -fx-inner-border, -fx-body-color, #FFFFFF22, -fx-body-color;
+     -fx-background-color:
+        linear-gradient(to bottom, derive(-fx-text-box-border, -20%), derive(-fx-text-box-border, -30%)),
+        #FFFFFF,
+        #FFFFFF;
+}
+
+.slider:hover .track {
+      -fx-background-color:
+          -fx-shadow-highlight-color,
+          linear-gradient(to bottom, derive(#ffffff, -10%), #ffffff),
+          linear-gradient(to bottom,
+            derive(#ffffff, -9%),
+            derive(#ffffff, 0%),
+            derive(#ffffff, -5%),
+            derive(#ffffff, -12%)
+          );
+}
+
+.slider:focused .track {
+      -fx-background-color:
+          -fx-shadow-highlight-color,
+          linear-gradient(to bottom, derive(#ffffff, -10%), #ffffff),
+          #FFFFFF;
 }
 
 .button {
@@ -53,6 +82,7 @@
 .button:focused{
     -fx-border-color: white;
     -fx-text-fill: white;
+    -fx-border-width: 2.5;
 }
 
 .button:pressed
@@ -101,6 +131,7 @@
 .radio-button:focused .radio {
     -fx-background-color: white;
     -fx-border-color: white;
+    -fx-background-insets: -0.5px;
 }
 
 
@@ -152,7 +183,7 @@
 }
 
 .table-view .table-cell{
-    -fx-text-fill: white;
+    -fx-text-fill: #dddddd;
     -fx-alignment: center;
 }
 
@@ -169,13 +200,26 @@
    -fx-selection-bar: lightgrey;
 }
 
+.table-view:focused{
+   -fx-background-color: #1a1a1a;
+   -fx-selection-: #ffffff;
+}
+
+.table-view:focused .table-cell{
+   -fx-text-fill: #ffffff;
+}
+
 .table-view .filler {
 	-fx-background-color: #1d1d1d;
 	-fx-border-color: #1d1d1d;
 }
 
-.table-view .cell:focused {
-	-fx-background-color: #1d1d1d;
+.table-view .table-row-cell:focused{
+   -fx-background-color: #1d1d1d;
+}
+
+.table-view .table-row-cell:odd:focused{
+   -fx-background-color: #1d1d1d;
 }
 
 .scroll-bar .thumb{

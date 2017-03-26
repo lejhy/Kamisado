@@ -2,7 +2,7 @@
 public class NormalGame extends Game {
 	
 	public boolean nextTurn(Move move, Value type) {
-   		if (!gameOver){
+   		if (!isGameOver()){
 		   	if (GameLogic.isValidMove(board, move) && getCurrentPlayer().getType() == type){
 		   		makeMove(move);
 			   	if (GameLogic.isGameOver(board)) {
@@ -29,7 +29,7 @@ public class NormalGame extends Game {
 	
 	protected void setGameOver(Value cause) {
 		System.out.println("game over in normalGame");
-   		gameOver = true;
+   		gameOver.set(true);
    		gameOverCause = cause;
    		if (getWinner() == player1){
    			score.setWinnerPlayer1();

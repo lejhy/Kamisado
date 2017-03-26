@@ -13,7 +13,7 @@ public class SpeedGame extends Game {
 	
 	@Override
 	public boolean nextTurn(Move move, Value type) {
-		if (!gameOver){
+		if (!isGameOver()){
 		   	if (GameLogic.isValidMove(board, move) && getCurrentPlayer().getType() == type){
 		   		makeMove(move);
 			   	if (GameLogic.isGameOver(board)) {
@@ -41,7 +41,7 @@ public class SpeedGame extends Game {
 	
 	protected void setGameOver(Value cause) {
 		System.out.println("game over in speedGame");
-   		gameOver = true;
+   		gameOver.set(true);
    		gameOverCause = cause;
    		cancelTimer();
    		if (getWinner() == player1){

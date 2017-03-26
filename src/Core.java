@@ -98,14 +98,16 @@ public class Core extends Observable implements Observer{
     }
 	
     void newGame(Player player1, Player player2, int time, int points, Value gameMode) {
-    	if (this.game != null)
-    		data.addScore(game);
     	if (gameMode == Value.SPEED_MODE){
     		this.game = new SpeedGame(player1, player2, time, points);
     	} else {
     		this.game = new NormalGame(player1, player2, points);
     	}
     	game.addObserver(this);
+    	game.getGameOver().addListener((observable, oldValue, newValue) -> {
+    		if (game.hasNextRound() == false)
+    			data.addScore(game);
+    	});
     	wireGameView();
     	change();
     }

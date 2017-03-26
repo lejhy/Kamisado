@@ -18,7 +18,7 @@
             <Insets bottom="50.0" top="50.0" />
          </VBox.margin>
       </Label>
-      <TableView fx:id="loadGameTable" focusTraversable="false">
+      <TableView fx:id="loadGameTable">
         <columns>
           <TableColumn fx:id="player1Name" editable="false" minWidth="-1.0" prefWidth="300.0" sortType="DESCENDING" text="Player 1" />
           <TableColumn fx:id="player1Score" editable="false" minWidth="-1.0" prefWidth="300.0" sortType="DESCENDING" text="Score" />

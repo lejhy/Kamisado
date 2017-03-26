@@ -1,11 +1,18 @@
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Observable;
+
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 public abstract class Game extends Observable implements Serializable{
 	protected Player player1;
 	protected Player player2;
 	protected Board board;
-	protected boolean gameOver;
+	protected transient BooleanProperty gameOver;
 	protected Value gameOverCause;
 	protected int turn;
 	protected Score score;
@@ -16,9 +23,9 @@ public abstract class Game extends Observable implements Serializable{
    	protected abstract Game clone();
    	
    	public boolean nextRound() {
-   		if (gameOver && score.hasNextRound()) {
+   		if (isGameOver() && score.hasNextRound()) {
    			board = new Board();
-   			gameOver = false;
+   			gameOver.set(false);
    			score.nextRound();
    			change();
    			return true;
@@ -70,6 +77,10 @@ public abstract class Game extends Observable implements Serializable{
    	}
    	
    	public boolean isGameOver() {
+   		return gameOver.get();
+   	}
+   	
+   	public BooleanProperty getGameOver() {
    		return gameOver;
    	}
    	
@@ -78,7 +89,7 @@ public abstract class Game extends Observable implements Serializable{
    	}
    	
    	public Player getWinner(){
-   		if (gameOver) {
+   		if (isGameOver()) {
    			if (GameLogic.isDoubleDeadLock(board)){
    				return getCurrentPlayer();
    			} else {
@@ -114,7 +125,8 @@ public abstract class Game extends Observable implements Serializable{
 		this.player1 = player1;
 		this.player2 = player2;
 		board = new Board();
-		gameOver = false;
+		gameOver = new SimpleBooleanProperty();
+		gameOver.set(false);
 		turn = 0;
 		score = new Score(points);
 	}
@@ -123,8 +135,20 @@ public abstract class Game extends Observable implements Serializable{
 		this.player1 = new Player(game.getPlayer1());
 		this.player2 = new Player(game.getPlayer2());
 		board = new Board(game.getBoard());
-		gameOver = game.isGameOver();
+		gameOver = new SimpleBooleanProperty();
+		gameOver.set(game.isGameOver());
 		turn = game.getTurn();
 		score = new Score(game.getScore());
+	}
+	
+	private void writeObject(ObjectOutputStream out) throws IOException {
+		out.defaultWriteObject();
+		out.writeBoolean(isGameOver());
+	}
+	
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
+		in.defaultReadObject();
+		gameOver = new SimpleBooleanProperty();
+		gameOver.set(in.readBoolean());
 	}
 }

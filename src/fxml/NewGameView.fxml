@@ -98,10 +98,9 @@
             </RadioButton>
             <Button minHeight="40.0" minWidth="125.0" mnemonicParsing="false" onAction="#mainMenu" text="Back [B]">
                <VBox.margin>
-                  <Insets top="50.0" />
+                  <Insets bottom="80.0" top="50.0" />
                </VBox.margin>
             </Button>
-            <Label alignment="CENTER" graphicTextGap="6.0" prefHeight="89.0" prefWidth="267.0" text="Tab to switch and Up/Downt to select" textFill="RED" />
          </children>
       </VBox>
       <VBox alignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1">
