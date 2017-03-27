@@ -151,6 +151,7 @@ public class NewGameViewController extends Controller{
     		break;
     	case "Beginner AI":
     		value = Value.BEGINNER_AI;
+    		break;
     	case "Normal":
     		value = Value.NORMAL;
     		break; 
