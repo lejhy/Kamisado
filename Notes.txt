@@ -11,3 +11,5 @@ TODO:
 	Confirmation message on saveGame
 	notify user about invalid moves
 	undo doesnt work after deadlock on win
+	timer in view is not hidden on new or load game, gameOver is displayed on the background from the last game when its timer runs out
+	speed game time up, inconsistent round and game winner
