@@ -28,6 +28,22 @@
     -fx-opacity: 0.6;
 }
 
+.slider .track {
+	-fx-background-color:
+          -fx-shadow-highlight-color,
+          linear-gradient(to bottom, derive(#acacac, -10%), #acacac),
+          linear-gradient(to bottom,
+            derive(#acacac, -9%),
+            derive(#acacac, 0%),
+            derive(#acacac, -5%),
+            derive(#acacac, -12%)
+          );
+}
+
+.slider .thumb {
+	
+}
+
 .slider:hover .thumb {
      -fx-background-color:
         linear-gradient(to bottom, derive(-fx-text-box-border, -20%), derive(-fx-text-box-border, -30%)),
@@ -63,7 +79,7 @@
 
 .button {
     -fx-padding: 5 22 5 22;   
-    -fx-border-color: #e2e2e2;
+    -fx-border-color: #acacac;
     -fx-border-width: 2;
 
     -fx-background-radius: 0;
@@ -98,6 +114,11 @@
     -fx-text-fill: white;
 }
 
+.text-input {
+	-fx-background-color:
+		#acacac;
+}
+
 .text-input:focused {
     -fx-highlight-fill: white;
     -fx-highlight-text-fill: white;
@@ -113,12 +134,12 @@
 }
 
 .radio-button .radio  {
-   -fx-background-color: #cfcfcf;
+   -fx-background-color: #acacac;
    -fx-background-radius: 1.0em;
    -fx-background-insets: 0;
    
    -fx-border-radius: 1.0em;
-   -fx-border-color: #cfcfcf;
+   -fx-border-color: #acacac;
     
    -fx-padding: 4px;
 }

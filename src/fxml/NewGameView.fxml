@@ -68,7 +68,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </Label>
-            <Slider fx:id="timeInput" min="5.0" value="1.0" visible="false">
+            <Slider fx:id="timeInput" min="5.0" value="1.0" visible="false" blockIncrement="1.0">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
@@ -78,7 +78,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </Label>
-            <Slider fx:id="pointsInput" max="20.0" min="1.0" value="1.0">
+            <Slider fx:id="pointsInput" max="20.0" min="1.0" value="1.0" blockIncrement="1.0">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
