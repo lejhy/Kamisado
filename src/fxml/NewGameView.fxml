@@ -124,17 +124,17 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </RadioButton>
-            <RadioButton minHeight="25.0" minWidth="100.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="102.0" text="Hard AI" toggleGroup="$player2Type">
+            <RadioButton minHeight="25.0" minWidth="100.0" mnemonicParsing="false" text="Hard AI" toggleGroup="$player2Type">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
             </RadioButton>
-            <RadioButton minHeight="25.0" minWidth="100.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" text="Easy AI" toggleGroup="$player2Type">
+            <RadioButton minHeight="25.0" minWidth="100.0" mnemonicParsing="false" text="Easy AI" toggleGroup="$player2Type">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
             </RadioButton>
-            <RadioButton minHeight="25.0" minWidth="100.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" text="Beginner AI" toggleGroup="$player2Type" />
+            <RadioButton minHeight="25.0" minWidth="100.0" mnemonicParsing="false" text="Beginner AI" toggleGroup="$player2Type" />
          </children>
       </VBox>
    </children>
