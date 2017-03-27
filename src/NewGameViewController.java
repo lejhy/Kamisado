@@ -149,9 +149,11 @@ public class NewGameViewController extends Controller{
     	case "Hard AI":
     		value = Value.HARD_AI;
     		break;
+    	case "Beginner AI":
+    		value = Value.BEGINNER_AI;
     	case "Normal":
     		value = Value.NORMAL;
-    		break;
+    		break; 
     	case "Speed Mode":
     		value = Value.SPEED_MODE;
     		break;

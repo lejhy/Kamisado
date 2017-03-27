@@ -150,7 +150,26 @@ public class Core extends Observable implements Observer{
     }
 	
 	public void checkForAI() {
-		if (game.getCurrentPlayer().getType() == Value.EASY_AI) {
+		
+		if (game.getCurrentPlayer().getType() == Value.BEGINNER_AI) {
+			Thread thread = new Thread(new Runnable() {
+				public void run() {
+					gameViewController.showLoader();
+					Move move = AI.MiniMaxAB(game.getBoard(), 3);
+					gameViewController.hideLoader();
+					Platform.runLater(new Runnable() {
+						public void run() {
+							game.nextTurn(move, Value.BEGINNER_AI);
+							selection = GameLogic.getValidTower(game.getBoard()).getPosition();
+							change();
+						}
+					});
+				}
+			});
+			thread.setDaemon(true);
+			thread.start();
+		}	
+	else if (game.getCurrentPlayer().getType() == Value.EASY_AI) {
 			Thread thread = new Thread(new Runnable() {
 				public void run() {
 					gameViewController.showLoader();
@@ -167,7 +186,9 @@ public class Core extends Observable implements Observer{
 			});
 			thread.setDaemon(true);
 			thread.start();
-		} else if (game.getCurrentPlayer().getType() == Value.HARD_AI) {
+			
+		}
+		else if (game.getCurrentPlayer().getType() == Value.HARD_AI) {
 			Thread thread = new Thread(new Runnable() {
 				public void run() {
 					gameViewController.showLoader();
