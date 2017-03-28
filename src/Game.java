@@ -12,8 +12,6 @@ public abstract class Game extends Observable implements Serializable{
 	protected Player player1;
 	protected Player player2;
 	protected Board board;
-	protected transient BooleanProperty gameOver;
-	protected Value gameOverCause;
 	protected int turn;
 	protected Score score;
    
@@ -23,9 +21,8 @@ public abstract class Game extends Observable implements Serializable{
    	protected abstract Game clone();
    	
    	public boolean nextRound() {
-   		if (isGameOver() && score.hasNextRound()) {
+   		if (isGameOver() && hasNextRound()) {
    			board = new Board();
-   			gameOver.set(false);
    			score.nextRound();
    			change();
    			return true;
@@ -77,36 +74,29 @@ public abstract class Game extends Observable implements Serializable{
    	}
    	
    	public boolean isGameOver() {
-   		return gameOver.get();
-   	}
-   	
-   	public BooleanProperty getGameOver() {
-   		return gameOver;
+   		return board.isGameOver();
    	}
    	
    	public Value getGameOverCause() {
-   		return gameOverCause;
-   	}
-   	
-   	public Player getWinner(){
-   		if (isGameOver()) {
-   			if (GameLogic.isDoubleDeadLock(board)){
-   				return getCurrentPlayer();
-   			} else {
-   				return getLastPlayer();
-   			}
-   		}
-   		else return null;
+   		return board.getGameOverCause();
    	}
    	
    	public Player getOverallWinner() {
-   		if (score.getPlayer1Points().intValue() > score.getPlayer2Points().intValue()) {
+   		if (getPlayer1Points() > getPlayer2Points()) {
    			return player1;
-   		} else if (score.getPlayer1Points().intValue() < score.getPlayer2Points().intValue()) {
+   		} else if (getPlayer1Points() < getPlayer2Points()) {
    			return player1;
    		} else {
    			return null;
    		}
+   	}
+   	
+   	public int getPlayer1Points() {
+   		return score.getPlayer1Points().get();
+   	}
+   	
+   	public int getPlayer2Points() {
+   		return score.getPlayer2Points().get();
    	}
 	
 	public int getRound() {
@@ -125,8 +115,6 @@ public abstract class Game extends Observable implements Serializable{
 		this.player1 = player1;
 		this.player2 = player2;
 		board = new Board();
-		gameOver = new SimpleBooleanProperty();
-		gameOver.set(false);
 		turn = 0;
 		score = new Score(points);
 	}
@@ -135,20 +123,7 @@ public abstract class Game extends Observable implements Serializable{
 		this.player1 = new Player(game.getPlayer1());
 		this.player2 = new Player(game.getPlayer2());
 		board = new Board(game.getBoard());
-		gameOver = new SimpleBooleanProperty();
-		gameOver.set(game.isGameOver());
 		turn = game.getTurn();
 		score = new Score(game.getScore());
-	}
-	
-	private void writeObject(ObjectOutputStream out) throws IOException {
-		out.defaultWriteObject();
-		out.writeBoolean(isGameOver());
-	}
-	
-	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
-		in.defaultReadObject();
-		gameOver = new SimpleBooleanProperty();
-		gameOver.set(in.readBoolean());
 	}
 }

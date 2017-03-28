@@ -2,22 +2,8 @@
 public class NormalGame extends Game {
 	
 	public boolean nextTurn(Move move, Value type) {
-   		if (!isGameOver()){
-		   	if (GameLogic.isValidMove(board, move) && getCurrentPlayer().getType() == type){
-		   		makeMove(move);
-			   	if (GameLogic.isGameOver(board)) {
-			   		if (GameLogic.isDoubleDeadLock(board))
-			   			setGameOver(Value.DOUBLE_DEADLOCK);
-			   		else 
-			   			setGameOver(Value.GAME_OVER);
-			   	} else {
-				   	if (GameLogic.isDeadLock(board)) {
-				   		makeMove(GameLogic.getDeadLockMove(board));
-				   	}
-				   	change(Value.NEXT_TURN);
-			   	}
-			   	return true;
-		  	}
+   		if (!isGameOver() && getCurrentPlayer().getType() == type){
+		   	
 	   	}
    		return false;
    	}

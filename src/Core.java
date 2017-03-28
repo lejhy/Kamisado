@@ -136,7 +136,7 @@ public class Core extends Observable implements Observer{
     
     
     public List<Position> getPositionsToHighlight() {
-    	Tower tower = game.getBoard().getTower(selection.x, selection.y);
+    	Piece tower = game.getBoard().getTower(selection.x, selection.y);
     	if (tower != null && game.getCurrentPlayer().getType() == Value.HUMAN) {
 	    	List<Move> moves = GameLogic.getValidMoves(game.getBoard(), tower);
 	    	List<Position> positions = new ArrayList<Position>();

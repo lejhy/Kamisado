@@ -1,22 +1,16 @@
 import java.io.Serializable;
 
 public class Move implements Serializable{
-	public int startX;
-	public int startY;
-	public int finishX;
-	public int finishY;
+	public Position start;
+	public Position finish;
 	
 	public Move (int startX, int startY, int finishX, int finishY) {
-		this.startX = startX;
-		this.startY = startY;
-		this.finishX = finishX;
-		this.finishY = finishY;
+		this.start = new Position (startX, startY);
+		this.finish = new Position (finishX, finishY);
 	}
 	
 	public Move (Move move) {
-		this.startX = move.startX;
-		this.startY = move.startY;
-		this.finishX = move.finishX;
-		this.finishY = move.finishY;
+		this.start = new Position(move.start);
+		this.finish = new Position(move.finish);
 	}
 }

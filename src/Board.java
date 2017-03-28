@@ -3,15 +3,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 public class Board extends Observable implements Serializable{
-	private List<Move> previousMoves;
+	
 	private Value lastColor;
 	private boolean lastPlayerValue;
-	private List<Tower> towers;
+	private BooleanProperty gameOver;
 	private Value[][] tiles;
+	private List<Piece> pieces;
+	private List<Move> previousMoves;
 	
-	public List<Tower> getTowers() {
-		return towers;
+	public List<Piece> getPieces() {
+		return pieces;
 	}
 	
 	public Value[][] getTiles() {
@@ -20,18 +25,20 @@ public class Board extends Observable implements Serializable{
 	
 	public Board () {
 		initTiles();
-		initTowers();
+		initPieces();
 		initPreviousMoves();
 		lastPlayerValue = false;
 		lastColor = null;
+		gameOver = new SimpleBooleanProperty(false);
 	}
 	
 	public Board (Board board) {
 		initTiles(board.getTiles());
-		initTowers(board.getTowers());
+		initPieces(board.getPieces());
 		initPreviousMoves(board.getPreviousMoves());
 		this.lastPlayerValue = board.lastPlayerValue;
 		this.lastColor = board.lastColor;
+		this.gameOver = new SimpleBooleanProperty(board.isGameOver());
 	}
 	
 	private void initPreviousMoves() {
@@ -41,7 +48,7 @@ public class Board extends Observable implements Serializable{
 	private void initPreviousMoves(List<Move> moves) {
 		this.previousMoves = new ArrayList<Move>();
 		for (Move move: moves) {
-			this.previousMoves.add(move);
+			this.previousMoves.add(new Move(move));
 		}
 	}
 	
@@ -63,25 +70,25 @@ public class Board extends Observable implements Serializable{
 		this.tiles = new Value[8][8];
 		for (int i = 0; i < 8; i++){
 			for (int j = 0; j < 8; j++){
-				this.tiles = tiles;
+				this.tiles[i][j] = tiles[i][j];
 			}
 		}
 	}
 	
-	private void initTowers() {
-		towers = new ArrayList<Tower>();
+	private void initPieces() {
+		pieces = new ArrayList<Piece>();
 		for (int i = 0; i < 8; i++){
-			towers.add(new Tower(tiles[i][0], false, i, 0));
+			pieces.add(new Tower(tiles[i][0], Value.TOP, new Position(i, 0)));
 		}
 		for (int i = 0; i < 8; i++){
-			towers.add(new Tower(tiles[i][7], true, i, 7));
+			pieces.add(new Tower(tiles[i][7], Value.BOTTOM, new Position(i, 7)));
 		}
 	}
 	
-	private void initTowers(List<Tower> towers) {
-		this.towers = new ArrayList<Tower>();
-		for (Tower tower: towers){
-			this.towers.add(new Tower(tower));
+	private void initPieces(List<Piece> pieces) {
+		this.pieces = new ArrayList<Piece>();
+		for (Piece piece: pieces){
+			this.pieces.add(piece.clone());
 		}
 	}
 	
@@ -89,57 +96,23 @@ public class Board extends Observable implements Serializable{
 		return tiles[x][y];
 	}
 	
-	public int getNumOfTowers () {
-		return towers.size();
+	public int getNumOfPieces () {
+		return pieces.size();
 	}
 	
-	public Value getTowerColor (int i) {
-		return towers.get(i).getColor();
-	}
-	
-	public boolean getTowerPlayer (int i) {
-		return towers.get(i).getPlayerValue();
-	}
-	
-	public int getTowerPosX (int i) {
-		return towers.get(i).getPositionX();
-	}
-	
-	public int getTowerPosY (int i) {
-		return towers.get(i).getPositionY();
-	}
-	
-	public Tower getTower(boolean playerValue, Value color) {
-		Tower tower = findTower(playerValue, color);
-		if (tower == null) {
+	public Piece getPiece(Position pos){
+		Piece piece = findPiece(pos);
+		if (piece == null) {
 			return null;
 		} else {
-			return new Tower (tower);
+			return piece.clone();
 		}
 	}
 	
-	public Tower getTower(int x, int y){
-		Tower tower = findTower(x, y);
-		if (tower == null) {
-			return null;
-		} else {
-			return new Tower (tower);
-		}
-	}
-	
-	public Tower findTower(boolean playerValue, Value color) {
-		for (Tower tower: towers) {
-			if (tower.getPlayerValue() == playerValue && tower.getColor() == color) {
-				return tower;
-			}
-		}
-		return null;
-	}
-	
-	private Tower findTower(int x, int y) {
-		for (Tower tower: towers){
-		   	if (tower.getPositionX() == x && tower.getPositionY() == y) {
-			   	return tower;
+	private Piece findPiece(Position pos) {
+		for (Piece piece: pieces){
+		   	if (piece.getPosition().equals(pos)) {
+			   	return piece;
 		   	}
 	   	}
 	   	return null;
@@ -159,17 +132,19 @@ public class Board extends Observable implements Serializable{
 		else
 			return new Move(previousMoves.get(previousMoves.size() - 1));
 	}
-   
-   public void performMove(Move move) {
-      Tower tower = findTower(move.startX, move.startY);
-	  tower.setPositionX(move.finishX);
-	  tower.setPositionY(move.finishY);
-	  lastColor = tiles[move.finishX][move.finishY];
-	  Move lastMove = new Move(move);
-	  previousMoves.add(lastMove);
-	  nextPlayer();
-	  setChanged();
-	  notifyObservers();
+	
+	public boolean makeMove(Move move) {
+	   Piece piece = findPiece(move.start);
+       if (piece.makeMove(new Position(move.finish))) {
+    	   lastColor = tiles[move.finish.x][move.finish.y];
+    	   Move lastMove = new Move(move);
+    	   previousMoves.add(lastMove);
+    	   nextPlayer();
+    	   setChanged();
+    	   notifyObservers();
+    	   return true;
+       }
+       return false;
    }
    
    public void nextPlayer(){
@@ -184,24 +159,26 @@ public class Board extends Observable implements Serializable{
 	   return previousMoves;
    }
    
+   public boolean isGameOver() {
+	   return gameOver.get();
+   }
+   
    public void undoLastMove() {
 	   if (previousMoves.isEmpty() == false) {
 		   Move move = getLastMove();
 		   previousMoves.remove(previousMoves.size()-1);	   
-		   Tower tower = findTower(move.finishX, move.finishY);
-		   tower.setPositionX(move.startX);
-		   tower.setPositionY(move.startY);
+		   Piece piece = findPiece(move.finish);
+		   piece.setPosition(new Position(move.start));
 		   
 		   move = getLastMove();
 		   previousMoves.remove(previousMoves.size()-1);
-		   tower = findTower(move.finishX, move.finishY);
-		   tower.setPositionX(move.startX);
-		   tower.setPositionY(move.startY);
+		   piece = findPiece(move.finish);
+		   piece.setPosition(new Position(move.start));
 		   
 		   if (previousMoves.isEmpty()) {
 			   lastColor = null;
 		   } else {
-			   lastColor = tower.getColor();
+			   lastColor = piece.getColor();
 		   }
 		   setChanged();
 		   notifyObservers();

@@ -407,11 +407,11 @@ public class GameViewController extends Controller{
     	}
 	}
 	
-	public void drawTowers(List<Tower> towers) {
+	public void drawTowers(List<Piece> towers) {
 		GraphicsContext gc = gameView.getGraphicsContext2D();
     	double squareSize = gameView.getWidth()/8;
     	
-    	for (Tower tower: towers) {
+    	for (Piece tower: towers) {
     		switch(tower.getColor()) {
     		case ORANGE:
     			if (tower.getPlayerValue())

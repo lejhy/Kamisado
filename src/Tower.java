@@ -1,51 +1,110 @@
-import java.io.Serializable;
 
-public class Tower implements Serializable{
+public class Tower extends Piece {
 	
-	private boolean playerValue;
-	private Value color;
-	private int positionX;
-	private int positionY;    
-	   
-   public void setPositionX(int value) {
-      this.positionX = value;
+	public Tower(Value color, Value playerPosition, Position towerPosition) {
+		super(color, playerPosition, towerPosition);
+	}
+	
+	public Tower(Piece piece) {
+		super(piece);
+	}
+
+	@Override
+	public boolean makeMove(Position pos) {
+		if (playerPosition == Value.BOTTOM) {
+			if (isValidBottomStraight(pos) || isValidBottomDiagonal(pos)) {
+				position.x = pos.x;
+				position.y = pos.y;
+				return true;
+			}
+		} else if (playerPosition == Value.TOP) {
+			if (isValidTopStraight(pos) || isValidTopDiagonal(pos)) {
+				position.x = pos.x;
+				position.y = pos.y;
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@Override
+	public Piece clone() {
+		return new Tower(this);
+	}
+	
+	private boolean isValidBottomStraight(Position pos) {
+	   if (position.x == pos.x && position.y > pos.y) {
+		   	for (int i = pos.y; i < position.y; i++) {
+		   		for (Piece piece : pieces) {
+		   			if (piece.getPosition().equals(pos))
+		   				return false;
+		   		}
+		   	}
+		   	return true;
+	   } else {
+		   return false;
+	   }
    }
-  
-   public void setPositionY(int value) {
-      this.positionY = value;
-   }
-   
-   public Value getColor() {
-	   return color;
-   }
-   
-   public boolean getPlayerValue() {
-	   return playerValue;
-   }
-   
-   public Position getPosition() {
-	   return new Position(positionX, positionY);
-   }
-   
-   public int getPositionY() {
-      return positionY;
-   }
-   
-   public int getPositionX() {
-      return positionX;
-   }
-   
-   public Tower (Value color, boolean playerValue, int positionX, int positionY) {
-      this.color = color;
-      this.playerValue = playerValue;
-      this.positionX = positionX;
-      this.positionY = positionY;
-   }
-   
-   public Tower(Tower tower){
-	   this.color = tower.getColor();
-	   this.playerValue = tower.getPlayerValue();
-	   this.positionX = tower.getPositionX();
-	   this.positionY = tower.getPositionY();
+	
+	private boolean isValidTopStraight(Position pos) {
+	   if (position.x == pos.x && position.y < pos.y) {
+		   	for (int i = pos.y; i > position.y; i--) {
+		   		for (Piece piece : pieces) {
+		   			if (piece.getPosition().equals(new Position(pos.x, i)))
+		   				return false;
+		   		}
+	   		}
+	   		return true;
+	   	} else {
+		   	return false;
+	   	}
+	}
+	
+	private boolean isValidBottomDiagonal(Position pos) {
+		int xDiff = position.x - pos.x;
+		int yDiff = position.y - pos.y;
+		if (xDiff == yDiff && position.x > pos.x && position.y > pos.y){
+	   		for (int i = xDiff; i > 0; i--) {
+	   			for (Piece piece : pieces) {
+		   			if (piece.getPosition().equals(new Position(position.x-i, position.y-i)))
+		   				return false;
+		   		}
+		   	}
+		   	return true;
+		} else if (-xDiff == yDiff && position.x < pos.x && position.y > pos.y){
+			for (int i = -xDiff; i > 0; i--) {
+				for (Piece piece : pieces) {
+		   			if (piece.getPosition().equals(new Position(position.x+i, position.y-i)))
+		   				return false;
+		   		}
+		   	}
+		   	return true;
+		} else {
+			return false;
+		}   
+	}
+	
+	private boolean isValidTopDiagonal(Position pos) {
+		int xDiff = position.x - pos.x;
+		int yDiff = position.y - pos.y;
+		if (xDiff == yDiff && position.x < pos.x && position.y < pos.y){
+	   		for (int i = -xDiff; i > 0; i--) {
+	   			for (Piece piece : pieces) {
+		   			if (piece.getPosition().equals(new Position(position.x+i, position.y+i)))
+		   				return false;
+		   		}
+		   	}
+		   	return true;
+		} else if (-xDiff == yDiff && position.x > pos.x && position.y < pos.y){
+			for (int i = xDiff; i > 0; i--) {
+				for (Piece piece : pieces) {
+		   			if (piece.getPosition().equals(new Position(position.x-i, position.y+i)))
+		   				return false;
+		   		}
+		   	}
+		   	return true;
+		} else {
+			return false;
+		}	   
    }
 }
