@@ -36,16 +36,14 @@ public class Core extends Observable implements Observer{
 	
 	public void gameInput(Position position, Value inputType) {
 		if (inputType == Value.ACTION) {
-			if (!game.isGameOver()) {
-				if (GameLogic.isValidTower(game.getBoard(), position.x, position.y)) {
-					selection = position;
-				} else {
-					game.nextTurn(new Move(selection.x, selection.y, position.x, position.y), Value.HUMAN);
-					selection = GameLogic.getValidTower(game.getBoard()).getPosition();
-				}
+			Move move = new Move(selection, position);
+			if (game.nextTurn(move, inputType)) {
+				selection = game.getValidPiece().getPosition();
 				change();
 			} else if (game.hasNextRound()){
 				game.nextRound();
+			} else {
+				selection = position;
 			}
 		} else if (inputType == Value.HOVER){
 			
@@ -79,7 +77,7 @@ public class Core extends Observable implements Observer{
 	public void loadGame(Game game) {
 		this.game = game;
 		game.addObserver(this);
-		selection = GameLogic.getValidTower(game.getBoard()).getPosition();
+		selection = GameLogic.getValidPiece(game.getBoard()).getPosition();
 		wireGameView();
 		change();
 	}
@@ -136,9 +134,9 @@ public class Core extends Observable implements Observer{
     
     
     public List<Position> getPositionsToHighlight() {
-    	Piece tower = game.getBoard().getTower(selection.x, selection.y);
-    	if (tower != null && game.getCurrentPlayer().getType() == Value.HUMAN) {
-	    	List<Move> moves = GameLogic.getValidMoves(game.getBoard(), tower);
+    	Piece piece = game.getBoard().getPiece(selection.x, selection.y);
+    	if (piece != null && game.getCurrentPlayer().getType() == Value.HUMAN) {
+	    	List<Move> moves = GameLogic.getValidMoves(game.getBoard(), piece);
 	    	List<Position> positions = new ArrayList<Position>();
 	    	for (Move move:moves) {
 	    		positions.add(new Position(move.finishX, move.finishY));
@@ -160,7 +158,7 @@ public class Core extends Observable implements Observer{
 					Platform.runLater(new Runnable() {
 						public void run() {
 							game.nextTurn(move, Value.BEGINNER_AI);
-							selection = GameLogic.getValidTower(game.getBoard()).getPosition();
+							selection = GameLogic.getValidPiece(game.getBoard()).getPosition();
 							change();
 						}
 					});
@@ -177,7 +175,7 @@ public class Core extends Observable implements Observer{
 					Platform.runLater(new Runnable() {
 						public void run() {
 							game.nextTurn(move, Value.EASY_AI);
-							selection = GameLogic.getValidTower(game.getBoard()).getPosition();
+							selection = GameLogic.getValidPiece(game.getBoard()).getPosition();
 							change();
 						}
 					});
@@ -195,7 +193,7 @@ public class Core extends Observable implements Observer{
 					Platform.runLater(new Runnable() {
 						public void run() {
 							game.nextTurn(move, Value.HARD_AI);
-							selection = GameLogic.getValidTower(game.getBoard()).getPosition();
+							selection = GameLogic.getValidPiece(game.getBoard()).getPosition();
 							change();
 						}
 					});

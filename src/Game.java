@@ -64,6 +64,10 @@ public abstract class Game extends Observable implements Serializable{
    		}
    	}
    	
+   	public Piece getValidPiece() {
+   		return GameLogic.getValidPiece(board);
+   	}
+   	
    	public Player getPlayer1() {
    		return player1;
    	}
