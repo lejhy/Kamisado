@@ -16,8 +16,7 @@ public abstract class Game extends Observable implements Serializable{
 	protected Score score;
    
    	public abstract boolean nextTurn(Move move, Value playerType);
-   	protected abstract void makeMove(Move move);
-   	protected abstract void setGameOver(Value cause);
+   	protected abstract void gameOver();
    	protected abstract Game clone();
    	
    	public boolean nextRound() {
@@ -50,7 +49,7 @@ public abstract class Game extends Observable implements Serializable{
    	}
    	
    	public Player getCurrentPlayer() {
-   		if (board.getLastPlayerValue()) {
+   		if (board.getLastPlayerPosition() == Value.BOTTOM) {
    			return player2;
    		} else {
    			return player1;
@@ -58,7 +57,7 @@ public abstract class Game extends Observable implements Serializable{
    	}
    	
    	public Player getLastPlayer() {
-   		if (board.getLastPlayerValue()) {
+   		if (board.getLastPlayerPosition() == Value.BOTTOM) {
    			return player1;
    		} else {
    			return player2;

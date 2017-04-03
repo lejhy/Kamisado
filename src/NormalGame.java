@@ -10,16 +10,14 @@ public class NormalGame extends Game {
    		return false;
    	}
 	
-	protected void setGameOver(Value cause) {
+	protected void gameOver() {
 		System.out.println("game over in normalGame");
-   		gameOver.set(true);
-   		gameOverCause = cause;
-   		if (getWinner() == player1){
+   		if (board.getWinnerPosition() == Value.BOTTOM){
    			score.setWinnerPlayer1();
    		} else {
    			score.setWinnerPlayer2();
    		}
-   		change(cause);
+   		change();
 	}
 
 	public NormalGame(Player player1, Player player2, int points) {

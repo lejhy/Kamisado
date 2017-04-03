@@ -13,43 +13,24 @@ public class SpeedGame extends Game {
 	
 	@Override
 	public boolean nextTurn(Move move, Value type) {
-		if (!isGameOver()){
-		   	if (GameLogic.isValidMove(board, move) && getCurrentPlayer().getType() == type){
-		   		makeMove(move);
-			   	if (GameLogic.isGameOver(board)) {
-			   		if (GameLogic.isDoubleDeadLock(board))
-			   			setGameOver(Value.DOUBLE_DEADLOCK);
-			   		else 
-			   			setGameOver(Value.GAME_OVER);
-			   	} else {
-				   	if (GameLogic.isDeadLock(board)) {
-				   		makeMove(GameLogic.getDeadLockMove(board));
-				   	}
-				   	change(Value.NEXT_TURN);
-			   	}
-			   	return true;
-		  	}
+		if (getCurrentPlayer().getType() == type){
+		   	if (board.makeMove(move)) {
+		   		resetTimer();
+		   		turn++;
+		   	}
 	   	}
-		return false;
+   		return false;
    	}
 	
-	protected void makeMove (Move move) {
-		board.performMove(move);
-	   	resetTimer();
-	   	turn++;
-	}
-	
-	protected void setGameOver(Value cause) {
+	protected void gameOver() {
 		System.out.println("game over in speedGame");
-   		gameOver.set(true);
-   		gameOverCause = cause;
    		cancelTimer();
-   		if (getWinner() == player1){
+   		if (board.getWinnerPosition() == Value.BOTTOM){
    			score.setWinnerPlayer1();
    		} else {
    			score.setWinnerPlayer2();
    		}
-   		change(cause);
+   		change();
 	}
 	
 	public int getTimeLimit() {
@@ -71,7 +52,8 @@ public class SpeedGame extends Game {
 		public void run() {
 			Platform.runLater(new Runnable() {
 				public void run() {
-					setGameOver(Value.TIME_UP);
+					board.setGameOver(Value.TIME_UP);
+					gameOver();
 				}
 			});
 		}

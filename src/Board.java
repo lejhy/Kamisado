@@ -9,7 +9,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 public class Board extends Observable implements Serializable{
 	
 	private Value lastColor;
-	private boolean lastPlayerValue;
+	private Value lastPlayerPosition;
 	private BooleanProperty gameOver;
 	private Value gameOverCause;
 	private Value[][] tiles;
@@ -28,7 +28,7 @@ public class Board extends Observable implements Serializable{
 		initTiles();
 		initPieces();
 		initPreviousMoves();
-		lastPlayerValue = false;
+		lastPlayerPosition = Value.TOP;
 		lastColor = null;
 		gameOver = new SimpleBooleanProperty(false);
 		gameOverCause = Value.GAME_OVER;
@@ -38,7 +38,7 @@ public class Board extends Observable implements Serializable{
 		initTiles(board.getTiles());
 		initPieces(board.getPieces());
 		initPreviousMoves(board.getPreviousMoves());
-		this.lastPlayerValue = board.lastPlayerValue;
+		this.lastPlayerPosition = board.lastPlayerPosition;
 		this.lastColor = board.lastColor;
 		this.gameOver = new SimpleBooleanProperty(board.isGameOver());
 		this.gameOverCause = board.getGameOverCause();
@@ -112,8 +112,8 @@ public class Board extends Observable implements Serializable{
 		}
 	}
 	
-	public Piece getPiece(boolean playervalue, Value color){
-		Piece piece = findPiece(playervalue, color);
+	public Piece getPiece(Value playerPosition, Value color){
+		Piece piece = findPiece(playerPosition, color);
 		if (piece == null) {
 			return null;
 		} else {
@@ -130,13 +130,17 @@ public class Board extends Observable implements Serializable{
 	   	return null;
 	}
 	
-	private Piece findPiece(boolean playerValue, Value color) {
+	private Piece findPiece(Value playerPosition, Value color) {
 		for (Piece piece: pieces){
-		   	if (piece.getPlayerPosition() == getPlayerPosition(playerValue) && piece.getColor() == color) {
+		   	if (piece.getPlayerPosition() == playerPosition && piece.getColor() == color) {
 			   	return piece;
 		   	}
 	   	}
 	   	return null;
+	}
+	
+	public Value getWinnerPosition() {
+		return lastPlayerPosition;
 	}
 	
 	public Value getPlayerPosition(boolean playerValue) {
@@ -147,15 +151,18 @@ public class Board extends Observable implements Serializable{
 	}
 	
 	public Value getLastPlayerPosition() {
-		return getPlayerPosition(getLastPlayerValue());
+		return lastPlayerPosition;
+	}
+	
+	public Value getCurrentPlayerPosition() {
+		if (lastPlayerPosition == Value.BOTTOM)
+			return Value.TOP;
+		else 
+			return Value.BOTTOM;
 	}
 	
 	public Value getLastColor () {
 		return lastColor;
-	}
-	
-	public boolean getLastPlayerValue () {
-		return lastPlayerValue;
 	}
 	
 	public Move getLastMove () {
@@ -166,10 +173,10 @@ public class Board extends Observable implements Serializable{
 	}
 	
 	public void nextPlayer(){
-		if (lastPlayerValue){
-		   lastPlayerValue = false;
+		if (lastPlayerPosition == Value.TOP){
+			lastPlayerPosition = Value.BOTTOM;
 		} else {
-			lastPlayerValue = true;
+			lastPlayerPosition = Value.TOP;
 		}
 	}
    
@@ -183,6 +190,11 @@ public class Board extends Observable implements Serializable{
 	
 	public Value getGameOverCause() {
 		return gameOverCause;
+	}
+	
+	public void setGameOver(Value cause) {
+		gameOver.set(true);
+		gameOverCause = cause;
 	}
 	
 	public boolean makeMove(Move move) {

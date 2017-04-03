@@ -4,9 +4,9 @@ import java.util.List;
 public final class GameLogic {
 	
 	public static boolean isGameOver(Board board) {
-		boolean lastPlayerValue = board.getLastPlayerValue();
+		Value lastPlayerPosition = board.getLastPlayerPosition();
 		Move lastMove = board.getLastMove();
-		if (lastMove != null && isWinningMove(lastPlayerValue, lastMove)) {
+		if (lastMove != null && isWinningMove(lastPlayerPosition, lastMove)) {
 			return true;
 		} else if (isDoubleDeadLock(board)) {
 			return true;
@@ -30,9 +30,9 @@ public final class GameLogic {
 	}
 	
 	public static boolean isDoubleDeadLock(Board board) {
-		boolean lastPlayerValue = board.getLastPlayerValue();
+		Value lastPlayerPosition = board.getLastPlayerPosition();
 		Move lastMove = board.getLastMove();
-		if (lastMove != null && isWinningMove(lastPlayerValue, lastMove)) {
+		if (lastMove != null && isWinningMove(lastPlayerPosition, lastMove)) {
 			return false;
 		} else if (isDeadLock(board)) {
 			Board newBoard = new Board(board);
@@ -44,17 +44,17 @@ public final class GameLogic {
 		return false;
 	}
 	
-	public static boolean isWinningMove(boolean playerValue, Move move) {
-		if (playerValue == false && move.finish.y == 7){
+	public static boolean isWinningMove(Value playerPosition, Move move) {
+		if (playerPosition == Value.TOP && move.finish.y == 7){
 			return true;
-		} else if (playerValue == true && move.finish.y == 0) {
+		} else if (playerPosition == Value.BOTTOM && move.finish.y == 0) {
 			return true;
 		}
 		return false;
 	}
 	
 	public static Move getDeadLockMove (Board board) {
-		Piece piece = board.getPiece(!board.getLastPlayerValue(), board.getLastColor());
+		Piece piece = board.getPiece(board.getCurrentPlayerPosition(), board.getLastColor());
 		if (piece == null) {
 			System.out.println("Error: Cannot determine deadlock on a new game");
 			return new Move (-1,-1,-1,-1);
@@ -65,29 +65,29 @@ public final class GameLogic {
 	}
 	
 	public static List<Move> getValidMoves (Board board, Piece piece) {
-		if (board.getLastPlayerValue()) {
-			// Last was white, now it's black's turn
-			return getValidBlackMoves (board, piece);
+		if (board.getLastPlayerPosition() == Value.BOTTOM) {
+			// Last was Bottom, now it's black's turn
+			return getValidTopMoves (board, piece);
 			
 		} else {
-			// Last was black, now it's white's turn
-			return getValidWhiteMoves (board, piece);			
+			// Last was black, now it's Bottom's turn
+			return getValidBottomMoves (board, piece);			
 		}
 	}
 	
 	public static List<Move> getValidMoves (Board board) {
-		if (board.getLastPlayerValue()) {
-			// Last was white, now it's black's turn
-			Piece piece = getValidBlackPiece(board);
-			return getValidBlackMoves (board, piece);
+		if (board.getLastPlayerPosition() == Value.BOTTOM) {
+			// Last was Bottom, now it's black's turn
+			Piece piece = getValidTopPiece(board);
+			return getValidTopMoves (board, piece);
 		} else {
-			// Last was black, now it's white's turn
+			// Last was black, now it's Bottom's turn
 			Piece piece = getValidWhitePiece(board);
-			return getValidWhiteMoves (board, piece);
+			return getValidBottomMoves (board, piece);
 		}
 	}
 	
-	public static List<Move> getValidWhiteMoves (Board board, Piece piece) {
+	public static List<Move> getValidBottomMoves (Board board, Piece piece) {
 		List <Move> moves = new ArrayList<Move>();
 		moves.addAll(getValidWhiteStraightMoves(board, piece));
 		moves.addAll(getValidWhiteDiagonalMoves(board, piece));
@@ -125,14 +125,14 @@ public final class GameLogic {
 		return moves;
 	}
 	
-	public static List<Move> getValidBlackMoves (Board board, Piece piece) {
+	public static List<Move> getValidTopMoves (Board board, Piece piece) {
 		List <Move> moves = new ArrayList<Move>();
-		moves.addAll(getValidBlackStraightMoves(board, piece));
-		moves.addAll(getValidBlackDiagonalMoves(board, piece));
+		moves.addAll(getValidTopStraightMoves(board, piece));
+		moves.addAll(getValidTopDiagonalMoves(board, piece));
 		return moves;
 	}
 	
-	public static List <Move> getValidBlackStraightMoves(Board board, Piece piece) {
+	public static List <Move> getValidTopStraightMoves(Board board, Piece piece) {
 		List <Move> moves = new ArrayList<Move>();
 		int i = 1;
 		Move move = new Move(piece.getPosition().x, piece.getPosition().y, piece.getPosition().x, piece.getPosition().y + i);
@@ -144,7 +144,7 @@ public final class GameLogic {
 		return moves;
 	}
 	
-	public static List <Move> getValidBlackDiagonalMoves(Board board, Piece piece) {
+	public static List <Move> getValidTopDiagonalMoves(Board board, Piece piece) {
 		List<Move> moves = new ArrayList<Move>();
 		int i = 1;
 		Move move = new Move(piece.getPosition().x, piece.getPosition().y, piece.getPosition().x + i, piece.getPosition().y + i);
@@ -164,10 +164,10 @@ public final class GameLogic {
 	}
 	
 	public static Piece getValidPiece(Board board) {
-		if (!board.getLastPlayerValue()) {
+		if (board.getCurrentPlayerPosition() == Value.BOTTOM) {
 			return getValidWhitePiece(board);
 		} else {
-			return getValidBlackPiece(board);
+			return getValidTopPiece(board);
 		}
 	}
 	
@@ -176,16 +176,16 @@ public final class GameLogic {
 			int zeroToSeven = (int) (Math.random()*7);
 			return board.getPiece(new Position(zeroToSeven, 7));
 		} else {
-			return  board.getPiece(true, board.getLastColor());
+			return  board.getPiece(Value.BOTTOM, board.getLastColor());
 		}		
 	}
 	
-	public static Piece getValidBlackPiece(Board board) {
+	public static Piece getValidTopPiece(Board board) {
 		if (board.getLastColor() == null) {
 			int zeroToSeven = (int) (Math.random()*7);
 			return board.getPiece(new Position(zeroToSeven, 0));
 		} else {
-			return board.getPiece(false, board.getLastColor());
+			return board.getPiece(Value.TOP, board.getLastColor());
 		}
 	}
 	
