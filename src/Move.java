@@ -9,6 +9,11 @@ public class Move implements Serializable{
 		this.finish = new Position (finishX, finishY);
 	}
 	
+	public Move (Position startPos, Position finishPos) {
+		this.start = new Position(startPos);
+		this.finish = new Position(finishPos);
+	}
+	
 	public Move (Move move) {
 		this.start = new Position(move.start);
 		this.finish = new Position(move.finish);

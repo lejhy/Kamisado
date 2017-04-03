@@ -11,6 +11,7 @@ public class Board extends Observable implements Serializable{
 	private Value lastColor;
 	private boolean lastPlayerValue;
 	private BooleanProperty gameOver;
+	private Value gameOverCause;
 	private Value[][] tiles;
 	private List<Piece> pieces;
 	private List<Move> previousMoves;
@@ -30,6 +31,7 @@ public class Board extends Observable implements Serializable{
 		lastPlayerValue = false;
 		lastColor = null;
 		gameOver = new SimpleBooleanProperty(false);
+		gameOverCause = Value.GAME_OVER;
 	}
 	
 	public Board (Board board) {
@@ -39,6 +41,7 @@ public class Board extends Observable implements Serializable{
 		this.lastPlayerValue = board.lastPlayerValue;
 		this.lastColor = board.lastColor;
 		this.gameOver = new SimpleBooleanProperty(board.isGameOver());
+		this.gameOverCause = board.getGameOverCause();
 	}
 	
 	private void initPreviousMoves() {
@@ -109,6 +112,15 @@ public class Board extends Observable implements Serializable{
 		}
 	}
 	
+	public Piece getPiece(boolean playervalue, Value color){
+		Piece piece = findPiece(playervalue, color);
+		if (piece == null) {
+			return null;
+		} else {
+			return piece.clone();
+		}
+	}
+	
 	private Piece findPiece(Position pos) {
 		for (Piece piece: pieces){
 		   	if (piece.getPosition().equals(pos)) {
@@ -116,6 +128,26 @@ public class Board extends Observable implements Serializable{
 		   	}
 	   	}
 	   	return null;
+	}
+	
+	private Piece findPiece(boolean playerValue, Value color) {
+		for (Piece piece: pieces){
+		   	if (piece.getPlayerPosition() == getPlayerPosition(playerValue) && piece.getColor() == color) {
+			   	return piece;
+		   	}
+	   	}
+	   	return null;
+	}
+	
+	public Value getPlayerPosition(boolean playerValue) {
+		if (playerValue == true)
+			return Value.BOTTOM;
+		else 
+			return Value.TOP;
+	}
+	
+	public Value getLastPlayerPosition() {
+		return getPlayerPosition(getLastPlayerValue());
 	}
 	
 	public Value getLastColor () {
@@ -133,34 +165,44 @@ public class Board extends Observable implements Serializable{
 			return new Move(previousMoves.get(previousMoves.size() - 1));
 	}
 	
+	public void nextPlayer(){
+		if (lastPlayerValue){
+		   lastPlayerValue = false;
+		} else {
+			lastPlayerValue = true;
+		}
+	}
+   
+	public List<Move> getPreviousMoves() {
+		return previousMoves;
+	}
+   
+	public boolean isGameOver() {
+		return gameOver.get();
+	}
+	
+	public Value getGameOverCause() {
+		return gameOverCause;
+	}
+	
 	public boolean makeMove(Move move) {
 	   Piece piece = findPiece(move.start);
-       if (piece.makeMove(new Position(move.finish))) {
-    	   lastColor = tiles[move.finish.x][move.finish.y];
-    	   Move lastMove = new Move(move);
-    	   previousMoves.add(lastMove);
-    	   nextPlayer();
-    	   setChanged();
-    	   notifyObservers();
-    	   return true;
-       }
-       return false;
-   }
-   
-   public void nextPlayer(){
-	   if (lastPlayerValue){
-		   lastPlayerValue = false;
-	   } else {
-		   lastPlayerValue = true;
+	   if (GameLogic.isValidPiece(this, piece)) {
+	       if (piece.makeMove(new Position(move.finish))) {
+	    	   lastColor = tiles[move.finish.x][move.finish.y];
+	    	   Move lastMove = new Move(move);
+	    	   previousMoves.add(lastMove);
+	    	   nextPlayer();
+	    	   if (GameLogic.isGameOver(this)) {
+	    		   gameOver.set(true);
+	    		   gameOverCause = GameLogic.getGameOverCause(this);
+	    	   }
+	    	   setChanged();
+	    	   notifyObservers();
+	    	   return true;
+	       }
 	   }
-   }
-   
-   public List<Move> getPreviousMoves() {
-	   return previousMoves;
-   }
-   
-   public boolean isGameOver() {
-	   return gameOver.get();
+       return false;
    }
    
    public void undoLastMove() {

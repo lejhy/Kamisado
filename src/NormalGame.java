@@ -2,16 +2,13 @@
 public class NormalGame extends Game {
 	
 	public boolean nextTurn(Move move, Value type) {
-   		if (!isGameOver() && getCurrentPlayer().getType() == type){
-		   	
+   		if (getCurrentPlayer().getType() == type){
+		   	if (board.makeMove(move)) {
+		   		turn++;
+		   	}
 	   	}
    		return false;
    	}
-	
-	protected void makeMove (Move move) {
-		board.performMove(move);
-	   	turn++;
-	}
 	
 	protected void setGameOver(Value cause) {
 		System.out.println("game over in normalGame");

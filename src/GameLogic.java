@@ -14,6 +14,13 @@ public final class GameLogic {
 		return false;
 	}
 	
+	public static Value getGameOverCause(Board board) {
+		if (GameLogic.isDoubleDeadLock(board))
+			return Value.DOUBLE_DEADLOCK;
+   		else 
+   			return Value.GAME_OVER;
+	}
+	
 	public static boolean isDeadLock(Board board) {
 		if (getValidMoves(board).isEmpty()) {
 			return true;
@@ -29,7 +36,7 @@ public final class GameLogic {
 			return false;
 		} else if (isDeadLock(board)) {
 			Board newBoard = new Board(board);
-			newBoard.performMove(getDeadLockMove(board));
+			newBoard.makeMove(getDeadLockMove(board));
 			if (isDeadLock(newBoard)) {
 				return true;
 			}
@@ -38,160 +45,158 @@ public final class GameLogic {
 	}
 	
 	public static boolean isWinningMove(boolean playerValue, Move move) {
-		if (playerValue == false && move.finishY == 7){
+		if (playerValue == false && move.finish.y == 7){
 			return true;
-		} else if (playerValue == true && move.finishY == 0) {
+		} else if (playerValue == true && move.finish.y == 0) {
 			return true;
 		}
 		return false;
 	}
 	
 	public static Move getDeadLockMove (Board board) {
-		Piece tower = board.getTower(!board.getLastPlayerValue(), board.getLastColor());
-		if (tower == null) {
+		Piece piece = board.getPiece(!board.getLastPlayerValue(), board.getLastColor());
+		if (piece == null) {
 			System.out.println("Error: Cannot determine deadlock on a new game");
 			return new Move (-1,-1,-1,-1);
 		} else {
-			int x = tower.getPositionX();
-			int y = tower.getPositionY();
-			return new Move(x, y, x, y);
+			Position pos = piece.getPosition();
+			return new Move(pos, pos);
 		}
 	}
 	
-	public static List<Move> getValidMoves (Board board, Piece tower) {
+	public static List<Move> getValidMoves (Board board, Piece piece) {
 		if (board.getLastPlayerValue()) {
 			// Last was white, now it's black's turn
-			return getValidBlackMoves (board, tower);
+			return getValidBlackMoves (board, piece);
 			
 		} else {
 			// Last was black, now it's white's turn
-			return getValidWhiteMoves (board, tower);			
+			return getValidWhiteMoves (board, piece);			
 		}
 	}
 	
 	public static List<Move> getValidMoves (Board board) {
 		if (board.getLastPlayerValue()) {
 			// Last was white, now it's black's turn
-			Piece tower = getValidBlackTower(board);
-			return getValidBlackMoves (board, tower);
+			Piece piece = getValidBlackPiece(board);
+			return getValidBlackMoves (board, piece);
 		} else {
 			// Last was black, now it's white's turn
-			Piece tower = getValidWhiteTower(board);
-			return getValidWhiteMoves (board, tower);
+			Piece piece = getValidWhitePiece(board);
+			return getValidWhiteMoves (board, piece);
 		}
 	}
 	
-	public static List<Move> getValidWhiteMoves (Board board, Piece tower) {
+	public static List<Move> getValidWhiteMoves (Board board, Piece piece) {
 		List <Move> moves = new ArrayList<Move>();
-		moves.addAll(getValidWhiteStraightMoves(board, tower));
-		moves.addAll(getValidWhiteDiagonalMoves(board, tower));
+		moves.addAll(getValidWhiteStraightMoves(board, piece));
+		moves.addAll(getValidWhiteDiagonalMoves(board, piece));
 		return moves;
 	}
 	
-	public static List<Move> getValidWhiteStraightMoves(Board board, Piece tower) {
+	public static List<Move> getValidWhiteStraightMoves(Board board, Piece piece) {
 		List <Move> moves = new ArrayList<Move>();
 		int i = 1;
-		Move move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX(), tower.getPositionY() - i);
+		Move move = new Move(piece.getPosition().x, piece.getPosition().y, piece.getPosition().x, piece.getPosition().y - i);
 		while (isValidMove(board, move)) {
 			moves.add(move);
 			i++;
-			move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX(), tower.getPositionY() - i);
+			move = new Move(piece.getPosition().x, piece.getPosition().y, piece.getPosition().x, piece.getPosition().y - i);
 		}
 		return moves;
 	}
 	
-	public static List<Move> getValidWhiteDiagonalMoves(Board board, Piece tower) {
+	public static List<Move> getValidWhiteDiagonalMoves(Board board, Piece piece) {
 		List <Move> moves = new ArrayList<Move>();
 		int i = 1;
-		Move move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX() + i, tower.getPositionY() - i);
+		Move move = new Move(piece.getPosition().x, piece.getPosition().y, piece.getPosition().x + i, piece.getPosition().y - i);
 		while (isValidMove(board, move)) {
 			moves.add(move);
 			i++;
-			move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX() + i, tower.getPositionY() - i);
+			move = new Move(piece.getPosition().x, piece.getPosition().y, piece.getPosition().x + i, piece.getPosition().y - i);
 		}
 		i = 1;
-		move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX() - i, tower.getPositionY() - i);
+		move = new Move(piece.getPosition().x, piece.getPosition().y, piece.getPosition().x - i, piece.getPosition().y - i);
 		while (isValidMove(board, move)) {
 			moves.add(move);
 			i++;
-			move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX() - i, tower.getPositionY() - i);
+			move = new Move(piece.getPosition().x, piece.getPosition().y, piece.getPosition().x - i, piece.getPosition().y - i);
 		}
 		return moves;
 	}
 	
-	public static List<Move> getValidBlackMoves (Board board, Piece tower) {
+	public static List<Move> getValidBlackMoves (Board board, Piece piece) {
 		List <Move> moves = new ArrayList<Move>();
-		moves.addAll(getValidBlackStraightMoves(board, tower));
-		moves.addAll(getValidBlackDiagonalMoves(board, tower));
+		moves.addAll(getValidBlackStraightMoves(board, piece));
+		moves.addAll(getValidBlackDiagonalMoves(board, piece));
 		return moves;
 	}
 	
-	public static List <Move> getValidBlackStraightMoves(Board board, Piece tower) {
+	public static List <Move> getValidBlackStraightMoves(Board board, Piece piece) {
 		List <Move> moves = new ArrayList<Move>();
 		int i = 1;
-		Move move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX(), tower.getPositionY() + i);
+		Move move = new Move(piece.getPosition().x, piece.getPosition().y, piece.getPosition().x, piece.getPosition().y + i);
 		while (isValidMove(board, move)) {
 			moves.add(move);
 			i++;
-			move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX(), tower.getPositionY() + i);
+			move = new Move(piece.getPosition().x, piece.getPosition().y, piece.getPosition().x, piece.getPosition().y + i);
 		}
 		return moves;
 	}
 	
-	public static List <Move> getValidBlackDiagonalMoves(Board board, Piece tower) {
+	public static List <Move> getValidBlackDiagonalMoves(Board board, Piece piece) {
 		List<Move> moves = new ArrayList<Move>();
 		int i = 1;
-		Move move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX() + i, tower.getPositionY() + i);
+		Move move = new Move(piece.getPosition().x, piece.getPosition().y, piece.getPosition().x + i, piece.getPosition().y + i);
 		while (isValidMove(board, move)) {
 			moves.add(move);
 			i++;
-			move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX() + i, tower.getPositionY() + i);
+			move = new Move(piece.getPosition().x, piece.getPosition().y, piece.getPosition().x + i, piece.getPosition().y + i);
 		}
 		i = 1;
-		move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX() - i, tower.getPositionY() + i);
+		move = new Move(piece.getPosition().x, piece.getPosition().y, piece.getPosition().x - i, piece.getPosition().y + i);
 		while (isValidMove(board, move)) {
 			moves.add(move);
 			i++;
-			move = new Move(tower.getPositionX(), tower.getPositionY(), tower.getPositionX() - i, tower.getPositionY() + i);
+			move = new Move(piece.getPosition().x, piece.getPosition().y, piece.getPosition().x - i, piece.getPosition().y + i);
 		}
 		return moves;
 	}
 	
-	public static Piece getValidTower(Board board) {
+	public static Piece getValidPiece(Board board) {
 		if (!board.getLastPlayerValue()) {
-			return getValidWhiteTower(board);
+			return getValidWhitePiece(board);
 		} else {
-			return getValidBlackTower(board);
+			return getValidBlackPiece(board);
 		}
 	}
 	
-	public static Piece getValidWhiteTower(Board board) {
+	public static Piece getValidWhitePiece(Board board) {
 		if (board.getLastColor() == null) {
 			int zeroToSeven = (int) (Math.random()*7);
-			return board.getTower(zeroToSeven, 7);
+			return board.getPiece(new Position(zeroToSeven, 7));
 		} else {
-			return  board.getTower(true, board.getLastColor());
+			return  board.getPiece(true, board.getLastColor());
 		}		
 	}
 	
-	public static Piece getValidBlackTower(Board board) {
+	public static Piece getValidBlackPiece(Board board) {
 		if (board.getLastColor() == null) {
 			int zeroToSeven = (int) (Math.random()*7);
-			return board.getTower(zeroToSeven, 0);
+			return board.getPiece(new Position(zeroToSeven, 0));
 		} else {
-			return board.getTower(false, board.getLastColor());
+			return board.getPiece(false, board.getLastColor());
 		}
 	}
 	
-	public static boolean isValidTower(Board board, int x, int y) {
-		   Piece tower = board.getTower(x, y);
-		   if (tower == null){
+	public static boolean isValidPiece(Board board, Piece piece) {
+		   if (piece == null){
 			   return false;
 		   } else {
-			   if (tower.getPlayerValue() == board.getLastPlayerValue()) {
+			   if (piece.getPlayerPosition() == board.getLastPlayerPosition()) {
 				   return false;
 			   } else {
-				   if (tower.getColor() == board.getLastColor() || board.getLastColor() == null){
+				   if (piece.getColor() == board.getLastColor() || board.getLastColor() == null){
 					   return true;
 				   } else {
 					   return false;
@@ -199,4 +204,112 @@ public final class GameLogic {
 			   }
 		   }
 	   }
+	
+	public static boolean isValidMove(Board board, Move move) {
+		   Piece piece = board.getPiece(move.start);
+		   if (isValidPiece(board, piece)) {
+			   if (move.start.x != move.finish.x || move.start.y != move.finish.y){
+				   if (move.finish.x >= 0 && move.finish.x < 8 && move.finish.y >= 0 && move.finish.y < 8) {
+					   if (piece.getPlayerPosition() == Value.BOTTOM) {
+						   return isValidBottom(board.getPieces(), move);
+					   } else {
+						   return isValidTop(board.getPieces(), move);
+					   }
+				   }
+			   }
+		   }
+		   return false;
+	   }
+	
+	public static boolean isValidBottom(List<Piece> pieces, Move move) {
+		   if (isValidBottomStraight(pieces, move) || isValidBottomDiagonal(pieces, move)) {
+			   	return true;
+		   } else {
+			   return false;
+		   }
+	   }
+	
+	public static boolean isValidTop(List<Piece> pieces, Move move) {
+		   if (isValidTopStraight(pieces, move) || isValidTopDiagonal(pieces, move)) {
+			   	return true;
+		   } else {
+			   return false;
+		   }
+	   }
+	
+	public static boolean isValidBottomStraight(List<Piece> pieces, Move move) {
+		   if (move.start.x == move.finish.x && move.start.y > move.finish.y) {
+			   	for (int i = move.finish.y; i < move.start.y; i++) {
+			   		for (Piece piece : pieces) {
+			   			if (piece.getPosition().equals(move.finish))
+			   				return false;
+			   		}
+			   	}
+			   	return true;
+		   } else {
+			   return false;
+		   }
+	   }
+		
+		public static boolean isValidTopStraight(List<Piece> pieces, Move move) {
+		   if (move.start.x == move.finish.x && move.start.y < move.finish.y) {
+			   	for (int i = move.finish.y; i > move.start.y; i--) {
+			   		for (Piece piece : pieces) {
+			   			if (piece.getPosition().equals(new Position(move.finish.x, i)))
+			   				return false;
+			   		}
+		   		}
+		   		return true;
+		   	} else {
+			   	return false;
+		   	}
+		}
+		
+		public static boolean isValidBottomDiagonal(List<Piece> pieces, Move move) {
+			int xDiff = move.start.x - move.finish.x;
+			int yDiff = move.start.y - move.finish.y;
+			if (xDiff == yDiff && move.start.x > move.finish.x && move.start.y > move.finish.y){
+		   		for (int i = xDiff; i > 0; i--) {
+		   			for (Piece piece : pieces) {
+			   			if (piece.getPosition().equals(new Position(move.start.x-i, move.start.y-i)))
+			   				return false;
+			   		}
+			   	}
+			   	return true;
+			} else if (-xDiff == yDiff && move.start.x < move.finish.x && move.start.y > move.finish.y){
+				for (int i = -xDiff; i > 0; i--) {
+					for (Piece piece : pieces) {
+			   			if (piece.getPosition().equals(new Position(move.start.x+i, move.start.y-i)))
+			   				return false;
+			   		}
+			   	}
+			   	return true;
+			} else {
+				return false;
+			}   
+		}
+		
+		public static boolean isValidTopDiagonal(List<Piece> pieces, Move move) {
+			int xDiff = move.start.x - move.finish.x;
+			int yDiff = move.start.y - move.finish.y;
+			if (xDiff == yDiff && move.start.x < move.finish.x && move.start.y < move.finish.y){
+		   		for (int i = -xDiff; i > 0; i--) {
+		   			for (Piece piece : pieces) {
+			   			if (piece.getPosition().equals(new Position(move.start.x+i, move.start.y+i)))
+			   				return false;
+			   		}
+			   	}
+			   	return true;
+			} else if (-xDiff == yDiff && move.start.x > move.finish.x && move.start.y < move.finish.y){
+				for (int i = xDiff; i > 0; i--) {
+					for (Piece piece : pieces) {
+			   			if (piece.getPosition().equals(new Position(move.start.x-i, move.start.y+i)))
+			   				return false;
+			   		}
+			   	}
+			   	return true;
+			} else {
+				return false;
+			}	
+		}
 }
