@@ -11,6 +11,7 @@ public abstract class Piece implements Serializable{
 	public abstract boolean makeMove(Position pos);
 	public abstract boolean isDeadlocked();
 	public abstract Piece clone();
+	public abstract Piece clone(List<Piece> pieces);
 	   
 	public void setPosition(Position pos) {
 		this.position = pos;
@@ -36,6 +37,13 @@ public abstract class Piece implements Serializable{
 		this.color = color;
 		this.playerPosition = playerPosition;
 		this.position = towerPosition;
+		this.pieces = pieces;
+	}
+	
+	public Piece(Piece tower, List<Piece> pieces){
+		this.color = tower.getColor();
+		this.playerPosition = tower.getPlayerPosition();
+		this.position = tower.getPosition();
 		this.pieces = pieces;
 	}
 	

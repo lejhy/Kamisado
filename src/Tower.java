@@ -6,6 +6,10 @@ public class Tower extends Piece {
 		super(color, playerPosition, towerPosition, pieces);
 	}
 	
+	public Tower(Piece piece,List<Piece> pieces) {
+		super(piece, pieces);
+	} 
+	
 	public Tower(Piece piece) {
 		super(piece);
 	}
@@ -45,6 +49,11 @@ public class Tower extends Piece {
 	@Override
 	public Piece clone() {
 		return new Tower(this);
+	}
+	
+	@Override
+	public Piece clone(List<Piece> pieces) {
+		return new Tower(this, pieces);
 	}
 	
 	public boolean isDeadLockedAtTop(List<Piece> pieces, Position pos) {

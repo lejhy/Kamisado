@@ -91,7 +91,7 @@ public class Board extends Observable implements Serializable{
 	private void initPieces(List<Piece> pieces) {
 		this.pieces = new ArrayList<Piece>();
 		for (Piece piece: pieces){
-			this.pieces.add(piece.clone());
+			this.pieces.add(piece.clone(pieces));
 		}
 	}
 	
