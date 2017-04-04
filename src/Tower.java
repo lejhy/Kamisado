@@ -12,29 +12,100 @@ public class Tower extends Piece {
 
 	@Override
 	public boolean makeMove(Position pos) {
-		Move move = new Move(this.position, pos);
-		if (playerPosition == Value.BOTTOM) {
-			if (GameLogic.isValidBottomStraight(pieces, move) || GameLogic.isValidBottomDiagonal(pieces, move)) {
-				position.x = pos.x;
-				position.y = pos.y;
-				return true;
-			} else if (GameLogic.isValidBottomDeadLockMove(pieces, move)){
-				return true;
+		if (pos.equals(position) && isDeadlocked()) {
+			return true;
+		} else {
+			Move move = new Move(this.position, pos);
+			if (playerPosition == Value.BOTTOM) {
+				if (GameLogic.isValidBottomStraight(pieces, move) || GameLogic.isValidBottomDiagonal(pieces, move)) {
+					position.x = pos.x;
+					position.y = pos.y;
+					return true;
+				}
+			} else if (playerPosition == Value.TOP) {
+				if (GameLogic.isValidTopStraight(pieces, move) || GameLogic.isValidTopDiagonal(pieces, move)) {
+					position.x = pos.x;
+					position.y = pos.y;
+					return true;
+				}
 			}
-		} else if (playerPosition == Value.TOP) {
-			if (GameLogic.isValidTopStraight(pieces, move) || GameLogic.isValidTopDiagonal(pieces, move)) {
-				position.x = pos.x;
-				position.y = pos.y;
-				return true;
-			} else if (GameLogic.isValidTopDeadLockMove(pieces, move)){
-				return true;
-			}
+			return false;
 		}
-		return false;
+	}
+	
+	@Override
+	public boolean isDeadlocked() {
+		if (playerPosition == Value.BOTTOM) {
+			return isDeadLockedAtTop(pieces, position);
+		} else {
+			return isDeadLockedAtBottom(pieces, position);
+		}
 	}
 	
 	@Override
 	public Piece clone() {
 		return new Tower(this);
+	}
+	
+	public boolean isDeadLockedAtTop(List<Piece> pieces, Position pos) {
+		boolean topObstacle = false;
+		Position topObstaclePos = new Position(pos.x, pos.y - 1);
+		
+		boolean topRightObstacle = false;
+		Position topRightObstaclePos = new Position(pos.x + 1, pos.y - 1);
+		
+		boolean topLeftObstacle = false;
+		Position topLeftObstaclePos = new Position(pos.x - 1, pos.y - 1);
+		
+		if (topRightObstaclePos.x > 7)
+			topRightObstacle = true;
+		
+		if (topLeftObstaclePos.x < 0)
+			topRightObstacle = true;
+		
+		for (Piece piece : pieces) {
+			if (piece.getPosition().equals(topObstaclePos))
+				topObstacle = true;
+			if (piece.getPosition().equals(topRightObstaclePos))
+				topRightObstacle = true;
+			if (piece.getPosition().equals(topLeftObstaclePos))
+				topLeftObstacle = true;
+		}
+		
+		if (topObstacle && topRightObstacle && topLeftObstacle) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isDeadLockedAtBottom(List<Piece> pieces, Position pos) {
+		boolean bottomObstacle = false;
+		Position bottomObstaclePos = new Position(pos.x, pos.y + 1);
+		
+		boolean bottomRightObstacle = false;
+		Position bottomRightObstaclePos = new Position(pos.x - 1, pos.y + 1);
+		
+		boolean bottomLeftObstacle = false;
+		Position bottomLeftObstaclePos = new Position(pos.x + 1, pos.y + 1);
+		
+		if (bottomRightObstaclePos.x > 7)
+			bottomRightObstacle = true;
+		
+		if (bottomLeftObstaclePos.x > 0)
+			bottomRightObstacle = true;
+		
+		for (Piece piece : pieces) {
+			if (piece.getPosition().equals(bottomObstaclePos))
+				bottomObstacle = true;
+			if (piece.getPosition().equals(bottomRightObstaclePos))
+				bottomRightObstacle = true;
+			if (piece.getPosition().equals(bottomLeftObstaclePos))
+				bottomLeftObstacle = true;
+		}
+		
+		if (bottomObstacle && bottomRightObstacle && bottomLeftObstacle) {
+			return true;
+		}
+		return false;
 	}
 }

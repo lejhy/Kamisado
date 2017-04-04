@@ -9,6 +9,7 @@ public abstract class Piece implements Serializable{
 	protected List<Piece> pieces;
 	
 	public abstract boolean makeMove(Position pos);
+	public abstract boolean isDeadlocked();
 	public abstract Piece clone();
 	   
 	public void setPosition(Position pos) {

@@ -99,6 +99,10 @@ public class Board extends Observable implements Serializable{
 		return tiles[x][y];
 	}
 	
+	public Value getTile(Position pos) {
+		return tiles[pos.x][pos.y];
+	}
+	
 	public int getNumOfPieces () {
 		return pieces.size();
 	}
