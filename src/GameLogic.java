@@ -29,6 +29,52 @@ public final class GameLogic {
 		}
 	}
 	
+	public static boolean isValidBottomDeadLockMove(List<Piece> pieces, Move move) {
+		if (move.finish.equals(move.start)) {
+			boolean topObstacle = false;
+			Position topObstaclePos = new Position(move.finish.x, move.finish.y - 1);
+			boolean topRightObstacle = false;
+			Position topRightObstaclePos = new Position(move.finish.x - 1, move.finish.y - 1);
+			boolean topLeftObstacle = false;
+			Position topLeftObstaclePos = new Position(move.finish.x + 1, move.finish.y - 1);
+			for (Piece piece : pieces) {
+				if (piece.getPosition().equals(topObstaclePos))
+					topObstacle = true;
+				if (piece.getPosition().equals(topRightObstaclePos))
+					topRightObstacle = true;
+				if (piece.getPosition().equals(topLeftObstaclePos))
+					topLeftObstacle = true;
+			}
+			if (topObstacle && topRightObstacle && topLeftObstacle) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static boolean isValidTopDeadLockMove(List<Piece> pieces, Move move) {
+		if (move.finish.equals(move.start)) {
+			boolean topObstacle = false;
+			Position topObstaclePos = new Position(move.finish.x, move.finish.y + 1);
+			boolean topRightObstacle = false;
+			Position topRightObstaclePos = new Position(move.finish.x - 1, move.finish.y + 1);
+			boolean topLeftObstacle = false;
+			Position topLeftObstaclePos = new Position(move.finish.x + 1, move.finish.y + 1);
+			for (Piece piece : pieces) {
+				if (piece.getPosition().equals(topObstaclePos))
+					topObstacle = true;
+				if (piece.getPosition().equals(topRightObstaclePos))
+					topRightObstacle = true;
+				if (piece.getPosition().equals(topLeftObstaclePos))
+					topLeftObstacle = true;
+			}
+			if (topObstacle && topRightObstacle && topLeftObstacle) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public static boolean isDoubleDeadLock(Board board) {
 		Value lastPlayerPosition = board.getLastPlayerPosition();
 		Move lastMove = board.getLastMove();

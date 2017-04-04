@@ -31,7 +31,8 @@ public class Core extends Observable implements Observer{
 	
 	@Override
 	public void update (Observable observable, Object argument) {
-		checkForAI();
+		if (game.isGameOver() == false) 
+			checkForAI();
 	}
 	
 	public void gameInput(Position position, Value inputType) {

@@ -205,7 +205,7 @@ public class Board extends Observable implements Serializable{
 	   Piece piece = findPiece(move.start);
 	   if (GameLogic.isValidPiece(this, piece)) {
 	       if (piece.makeMove(new Position(move.finish))) {
-	    	   lastColor = tiles[move.finish.x][move.finish.y];
+	    	   lastColor = tiles[piece.getPosition().x][piece.getPosition().y];
 	    	   Move lastMove = new Move(move);
 	    	   previousMoves.add(lastMove);
 	    	   nextPlayer();

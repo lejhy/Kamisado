@@ -18,11 +18,15 @@ public class Tower extends Piece {
 				position.x = pos.x;
 				position.y = pos.y;
 				return true;
+			} else if (GameLogic.isValidBottomDeadLockMove(pieces, move)){
+				return true;
 			}
 		} else if (playerPosition == Value.TOP) {
 			if (GameLogic.isValidTopStraight(pieces, move) || GameLogic.isValidTopDiagonal(pieces, move)) {
 				position.x = pos.x;
 				position.y = pos.y;
+				return true;
+			} else if (GameLogic.isValidTopDeadLockMove(pieces, move)){
 				return true;
 			}
 		}

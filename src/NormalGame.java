@@ -8,6 +8,7 @@ public class NormalGame extends Game {
 		   		if (board.isGameOver()) {
 		   			gameOver();
 		   		}
+		   		change();
 		   		return true;
 		   	}
 	   	}
