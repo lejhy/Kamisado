@@ -104,7 +104,11 @@ public class Core extends Observable implements Observer{
     		this.game = new NormalGame(player1, player2, points);
     	}
     	game.addObserver(this);
-    	game.addGameOverListener((observable, oldValue, newValue) -> {
+    	game.addPlayer1PointsListener((observable, oldValue, newValue) -> {
+    		if (game.hasNextRound() == false)
+    			data.addScore(game);
+    	});
+    	game.addPlayer2PointsListener((observable, oldValue, newValue) -> {
     		if (game.hasNextRound() == false)
     			data.addScore(game);
     	});

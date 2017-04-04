@@ -144,7 +144,12 @@ public class Board extends Observable implements Serializable{
 	}
 	
 	public Value getWinnerPosition() {
-		return lastPlayerPosition;
+		if (gameOverCause == Value.TIME_UP) 
+			return getLastPlayerPosition();
+		else if (gameOverCause == Value.DOUBLE_DEADLOCK)
+			return getCurrentPlayerPosition();
+		else
+			return getLastPlayerPosition(); 
 	}
 	
 	public Value getPlayerPosition(boolean playerValue) {
