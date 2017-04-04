@@ -31,10 +31,11 @@ public abstract class Piece implements Serializable{
 		return pieces;
 	}
    
-	public Piece (Value color, Value playerPosition, Position towerPosition) {
+	public Piece (Value color, Value playerPosition, Position towerPosition, List<Piece> pieces) {
 		this.color = color;
 		this.playerPosition = playerPosition;
 		this.position = towerPosition;
+		this.pieces = pieces;
 	}
 	
 	public Piece(Piece tower){

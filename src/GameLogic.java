@@ -241,7 +241,7 @@ public final class GameLogic {
 		   if (move.start.x == move.finish.x && move.start.y > move.finish.y) {
 			   	for (int i = move.finish.y; i < move.start.y; i++) {
 			   		for (Piece piece : pieces) {
-			   			if (piece.getPosition().equals(move.finish))
+			   			if (piece.getPosition().equals(new Position(move.finish.x, i)))
 			   				return false;
 			   		}
 			   	}

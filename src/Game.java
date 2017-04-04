@@ -84,6 +84,11 @@ public abstract class Game extends Observable implements Serializable{
    		return board.getGameOverCause();
    	}
    	
+   	public Player getRoundWinner() {
+   		return player1;
+   		//TODO
+   	}
+   	
    	public Player getOverallWinner() {
    		if (getPlayer1Points() > getPlayer2Points()) {
    			return player1;

@@ -1,8 +1,9 @@
+import java.util.List;
 
 public class Tower extends Piece {
 	
-	public Tower(Value color, Value playerPosition, Position towerPosition) {
-		super(color, playerPosition, towerPosition);
+	public Tower(Value color, Value playerPosition, Position towerPosition, List<Piece> pieces) {
+		super(color, playerPosition, towerPosition, pieces);
 	}
 	
 	public Tower(Piece piece) {

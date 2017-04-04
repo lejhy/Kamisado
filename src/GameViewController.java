@@ -351,7 +351,7 @@ public class GameViewController extends Controller{
     
     public void drawBoard() {
     	drawTiles(game.getBoard().getTiles());
-    	drawTowers(game.getBoard().getTowers());
+    	drawPieces(game.getBoard().getPieces());
     	
     	GraphicsContext gc = gameView.getGraphicsContext2D();
     	double squareSize = gameView.getWidth()/8;
@@ -407,59 +407,59 @@ public class GameViewController extends Controller{
     	}
 	}
 	
-	public void drawTowers(List<Piece> towers) {
+	public void drawPieces(List<Piece> pieces) {
 		GraphicsContext gc = gameView.getGraphicsContext2D();
     	double squareSize = gameView.getWidth()/8;
     	
-    	for (Piece tower: towers) {
-    		switch(tower.getColor()) {
+    	for (Piece piece: pieces) {
+    		switch(piece.getColor()) {
     		case ORANGE:
-    			if (tower.getPlayerValue())
-    				gc.drawImage(ORANGE_WHITE, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
+    			if (piece.getPlayerPosition() == Value.BOTTOM)
+    				gc.drawImage(ORANGE_WHITE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
     			else
-    				gc.drawImage(ORANGE_BLACK, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
+    				gc.drawImage(ORANGE_BLACK, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
 				break;
 			case BLUE:
-				if (tower.getPlayerValue())
-    				gc.drawImage(BLUE_WHITE, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
+				if (piece.getPlayerPosition() == Value.BOTTOM)
+    				gc.drawImage(BLUE_WHITE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
     			else
-    				gc.drawImage(BLUE_BLACK, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
+    				gc.drawImage(BLUE_BLACK, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
 				break;
 			case PURPLE:
-				if (tower.getPlayerValue())
-    				gc.drawImage(PURPLE_WHITE, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
+				if (piece.getPlayerPosition() == Value.BOTTOM)
+    				gc.drawImage(PURPLE_WHITE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
     			else
-    				gc.drawImage(PURPLE_BLACK, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
+    				gc.drawImage(PURPLE_BLACK, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
 				break;
 			case PINK:
-				if (tower.getPlayerValue())
-    				gc.drawImage(PINK_WHITE, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
+				if (piece.getPlayerPosition() == Value.BOTTOM)
+    				gc.drawImage(PINK_WHITE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
     			else
-    				gc.drawImage(PINK_BLACK, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
+    				gc.drawImage(PINK_BLACK, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
 				break;
 			case YELLOW:
-				if (tower.getPlayerValue())
-    				gc.drawImage(YELLOW_WHITE, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
+				if (piece.getPlayerPosition() == Value.BOTTOM)
+    				gc.drawImage(YELLOW_WHITE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
     			else
-    				gc.drawImage(YELLOW_BLACK, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
+    				gc.drawImage(YELLOW_BLACK, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
 				break;
 			case RED:
-				if (tower.getPlayerValue())
-    				gc.drawImage(RED_WHITE, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
+				if (piece.getPlayerPosition() == Value.BOTTOM)
+    				gc.drawImage(RED_WHITE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
     			else
-    				gc.drawImage(RED_BLACK, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
+    				gc.drawImage(RED_BLACK, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
 				break;
 			case GREEN:
-				if (tower.getPlayerValue())
-    				gc.drawImage(GREEN_WHITE, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
+				if (piece.getPlayerPosition() == Value.BOTTOM)
+    				gc.drawImage(GREEN_WHITE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
     			else
-    				gc.drawImage(GREEN_BLACK, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
+    				gc.drawImage(GREEN_BLACK, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
 				break;
 			case BROWN:
-				if (tower.getPlayerValue())
-    				gc.drawImage(BROWN_WHITE, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
+				if (piece.getPlayerPosition() == Value.BOTTOM)
+    				gc.drawImage(BROWN_WHITE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
     			else
-    				gc.drawImage(BROWN_BLACK, tower.getPositionX()*squareSize, tower.getPositionY()*squareSize, squareSize, squareSize);
+    				gc.drawImage(BROWN_BLACK, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
 				break;
 			default:
 				break;
@@ -479,13 +479,13 @@ public class GameViewController extends Controller{
 		
 		if (game.isGameOver()) {
 			if (game.hasNextRound())
-				roundOver(game.getGameOverCause(), game.getWinner().getName().get());
+				roundOver(game.getGameOverCause(), game.getRoundWinner().getName().get());
 			else {
 				Player overallWinner = game.getOverallWinner();
 				if (overallWinner == null)
-					gameOverDraw(game.getGameOverCause(), game.getWinner().getName().get());
+					gameOverDraw(game.getGameOverCause(), game.getRoundWinner().getName().get());
 				else
-					gameOver(game.getGameOverCause(), game.getWinner().getName().get(), overallWinner.getName().get());
+					gameOver(game.getGameOverCause(), game.getRoundWinner().getName().get(), overallWinner.getName().get());
 			}
 		} else if (game instanceof SpeedGame && arg == Value.TIMER) {
 			showTimer(((SpeedGame)game).getTimeLimit());

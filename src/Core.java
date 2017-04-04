@@ -37,10 +37,10 @@ public class Core extends Observable implements Observer{
 	public void gameInput(Position position, Value inputType) {
 		if (inputType == Value.ACTION) {
 			Move move = new Move(selection, position);
-			if (game.nextTurn(move, inputType)) {
+			if (game.nextTurn(move, Value.HUMAN)) {
 				selection = game.getValidPiece().getPosition();
 				change();
-			} else if (game.hasNextRound()){
+			} else if (game.isGameOver() && game.hasNextRound()){
 				game.nextRound();
 			} else {
 				selection = position;
@@ -102,7 +102,7 @@ public class Core extends Observable implements Observer{
     		this.game = new NormalGame(player1, player2, points);
     	}
     	game.addObserver(this);
-    	game.getGameOver().addListener((observable, oldValue, newValue) -> {
+    	game.getBoard().getGameOverProperty().addListener((observable, oldValue, newValue) -> {
     		if (game.hasNextRound() == false)
     			data.addScore(game);
     	});
@@ -134,12 +134,12 @@ public class Core extends Observable implements Observer{
     
     
     public List<Position> getPositionsToHighlight() {
-    	Piece piece = game.getBoard().getPiece(selection.x, selection.y);
+    	Piece piece = game.getBoard().getPiece(selection);
     	if (piece != null && game.getCurrentPlayer().getType() == Value.HUMAN) {
 	    	List<Move> moves = GameLogic.getValidMoves(game.getBoard(), piece);
 	    	List<Position> positions = new ArrayList<Position>();
 	    	for (Move move:moves) {
-	    		positions.add(new Position(move.finishX, move.finishY));
+	    		positions.add(new Position(move.finish));
 	    	}
 	    	return positions;
     	} else {

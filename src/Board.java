@@ -81,10 +81,10 @@ public class Board extends Observable implements Serializable{
 	private void initPieces() {
 		pieces = new ArrayList<Piece>();
 		for (int i = 0; i < 8; i++){
-			pieces.add(new Tower(tiles[i][0], Value.TOP, new Position(i, 0)));
+			pieces.add(new Tower(tiles[i][0], Value.TOP, new Position(i, 0), pieces));
 		}
 		for (int i = 0; i < 8; i++){
-			pieces.add(new Tower(tiles[i][7], Value.BOTTOM, new Position(i, 7)));
+			pieces.add(new Tower(tiles[i][7], Value.BOTTOM, new Position(i, 7), pieces));
 		}
 	}
 	
@@ -186,6 +186,10 @@ public class Board extends Observable implements Serializable{
    
 	public boolean isGameOver() {
 		return gameOver.get();
+	}
+	
+	public BooleanProperty getGameOverProperty() {
+		return gameOver;
 	}
 	
 	public Value getGameOverCause() {

@@ -14,8 +14,8 @@ public final class AI {
 		   for (int i = 0; i < moves.size(); i++){
 			   Move move = moves.get(i);
 			   newBoard = new Board(board);
-			   newBoard.performMove(move);
-			   if(GameLogic.isWinningMove(newBoard.getLastPlayerValue(), move)) {
+			   newBoard.makeMove(move);
+			   if(GameLogic.isWinningMove(newBoard.getLastPlayerPosition(), move)) {
 				   return move;
 			   } else {
 				   value = MinAB(newBoard, depth - 1, a, b);
@@ -40,14 +40,14 @@ public final class AI {
 		   List<Move> moves = GameLogic.getValidMoves(board);
 		   if (moves.size() == 0) {
 			   newBoard = new Board(board);
-			   newBoard.performMove(GameLogic.getDeadLockMove(newBoard));
+			   newBoard.makeMove(GameLogic.getDeadLockMove(newBoard));
 			   return MaxAB(newBoard, depth - 1, a, b);
 		   } else {
 			   for (int i = 0; i < moves.size(); i++){
 				   Move move = moves.get(i);
 				   newBoard = new Board(board);
-				   newBoard.performMove(move);
-				   if(GameLogic.isWinningMove(newBoard.getLastPlayerValue(), move)) {
+				   newBoard.makeMove(move);
+				   if(GameLogic.isWinningMove(newBoard.getLastPlayerPosition(), move)) {
 					   return -10*depth;
 				   } else {
 					   value = MaxAB(newBoard, depth - 1, a, b);
@@ -75,14 +75,14 @@ public final class AI {
 		   List<Move> moves = GameLogic.getValidMoves(board);
 		   if (moves.size() == 0) {
 			   newBoard = new Board(board);
-			   newBoard.performMove(GameLogic.getDeadLockMove(newBoard));
+			   newBoard.makeMove(GameLogic.getDeadLockMove(newBoard));
 			   return MinAB(newBoard, depth - 1, a, b);
 		   } else {
 			   for (int i = 0; i < moves.size(); i++){
 				   Move move = moves.get(i);
 				   newBoard = new Board(board);
-				   newBoard.performMove(move);
-				   if(GameLogic.isWinningMove(newBoard.getLastPlayerValue(), move)) {
+				   newBoard.makeMove(move);
+				   if(GameLogic.isWinningMove(newBoard.getLastPlayerPosition(), move)) {
 					   return 10*depth;
 				   } else {
 					   value = MinAB(newBoard, depth - 1, a, b);
