@@ -87,6 +87,21 @@ public final class GameLogic {
 		}
 	}
 	
+	public static List<Move> getValidMoves (Board board, Position pos) {
+		Piece piece = board.getPiece(pos);
+		if (isValidPiece(board, piece)) {
+			if (board.getLastPlayerPosition() == Value.BOTTOM) {
+				// Last was Bottom, now it's black's turn
+				return getValidTopMoves (board, piece);
+			} else {
+				// Last was black, now it's Bottom's turn
+				return getValidBottomMoves (board, piece);
+			}
+		} else {
+			return new ArrayList<Move>();
+		}
+	}
+	
 	public static List<Move> getValidBottomMoves (Board board, Piece piece) {
 		List <Move> moves = new ArrayList<Move>();
 		moves.addAll(getValidWhiteStraightMoves(board, piece));

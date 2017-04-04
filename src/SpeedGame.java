@@ -17,6 +17,10 @@ public class SpeedGame extends Game {
 		   	if (board.makeMove(move)) {
 		   		resetTimer();
 		   		turn++;
+		   		if (board.isGameOver()) {
+		   			gameOver();
+		   		}
+		   		return true;
 		   	}
 	   	}
    		return false;

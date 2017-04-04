@@ -2,11 +2,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Observable;
+import java.util.Observer;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
 
 public abstract class Game extends Observable implements Serializable{
 	protected Player player1;
@@ -86,7 +89,7 @@ public abstract class Game extends Observable implements Serializable{
    	
    	public Player getRoundWinner() {
    		return player1;
-   		//TODO
+   		//TODO--------------------------------------------------------------------------------
    	}
    	
    	public Player getOverallWinner() {
@@ -117,6 +120,61 @@ public abstract class Game extends Observable implements Serializable{
 	
 	public Board getBoard(){
 		return board;
+	}
+	
+	public void undoLastMove() {
+		if (getCurrentPlayer().getType() == Value.HUMAN && getLastPlayer().getType() == Value.AI){ 
+			board.undoLastMove();
+		}
+	}
+	
+	public Position getValidPiecePosition() {
+		Piece piece = getValidPiece();
+		if (piece != null) {
+			return piece.getPosition();
+		} else {
+			return new Position(-1, -1);
+		}
+	}
+	
+	public boolean isValidPiecePosition(Position pos) {
+		return GameLogic.isValidPiece(board, board.getPiece(pos));
+	}
+	
+	public void addGameOverListener(ChangeListener<Boolean> listener) {
+		board.getGameOverProperty().addListener(listener);
+	}
+	
+	public void addBoardObserver(Observer observer) {
+		board.addObserver(observer);
+	}
+	
+	public String getPlayer1Name() {
+		return player1.getName().get();
+	}
+	
+	public String getPlayer2Name() {
+		return player2.getName().get();
+	}
+	
+	public void addPlayer1PointsListener(ChangeListener<Number> listener) {
+		score.getPlayer1Points().addListener(listener);
+	}
+	
+	public void addPlayer2PointsListener(ChangeListener<Number> listener) {
+		score.getPlayer2Points().addListener(listener);
+	}
+	
+	public List<Move> getValidMoves() {
+		return GameLogic.getValidMoves(board);
+	}
+	
+	public List<Move> getValidMoves(Position pos) {
+		return GameLogic.getValidMoves(board, pos);
+	}
+	
+	public Value getCurrentPlayerType() {
+		return getCurrentPlayer().getType();
 	}
 	
 	public Game(Player player1, Player player2, int points){

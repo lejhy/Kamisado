@@ -210,8 +210,7 @@ public class Board extends Observable implements Serializable{
 	    	   previousMoves.add(lastMove);
 	    	   nextPlayer();
 	    	   if (GameLogic.isGameOver(this)) {
-	    		   gameOver.set(true);
-	    		   gameOverCause = GameLogic.getGameOverCause(this);
+	    		   setGameOver(GameLogic.getGameOverCause(this));
 	    	   }
 	    	   setChanged();
 	    	   notifyObservers();

@@ -42,18 +42,19 @@ public class Core extends Observable implements Observer{
 				change();
 			} else if (game.isGameOver() && game.hasNextRound()){
 				game.nextRound();
-			} else {
+			} else if (game.isValidPiecePosition(position)){
 				selection = position;
+			} else {
+				selection = game.getValidPiecePosition();
 			}
+			change();
 		} else if (inputType == Value.HOVER){
 			
 		}
 	}
 	
 	public void undoMove() {
-		if(!game.isGameOver() && game.getCurrentPlayer().getType() == Value.HUMAN && game.getLastPlayer().getType() != Value.HUMAN) {
-			game.getBoard().undoLastMove();
-		}
+		game.undoLastMove();
 	}
 	
 	public void saveGame() {
@@ -77,7 +78,7 @@ public class Core extends Observable implements Observer{
 	public void loadGame(Game game) {
 		this.game = game;
 		game.addObserver(this);
-		selection = GameLogic.getValidPiece(game.getBoard()).getPosition();
+		selection = game.getValidPiecePosition();
 		wireGameView();
 		change();
 	}
@@ -102,10 +103,11 @@ public class Core extends Observable implements Observer{
     		this.game = new NormalGame(player1, player2, points);
     	}
     	game.addObserver(this);
-    	game.getBoard().getGameOverProperty().addListener((observable, oldValue, newValue) -> {
+    	game.addGameOverListener((observable, oldValue, newValue) -> {
     		if (game.hasNextRound() == false)
     			data.addScore(game);
     	});
+    	selection = game.getValidPiecePosition();
     	wireGameView();
     	change();
     }
@@ -113,17 +115,17 @@ public class Core extends Observable implements Observer{
     public void wireGameView() {
     	gameViewController.setGame(game);
     	game.addObserver(gameViewController);
-    	game.getBoard().addObserver(gameViewController);
+    	game.addBoardObserver(gameViewController);
     	
-    	gameViewController.setPlayer1Name(game.getPlayer1().getName().get());
-    	gameViewController.setPlayer2Name(game.getPlayer2().getName().get());
+    	gameViewController.setPlayer1Name(game.getPlayer1Name());
+    	gameViewController.setPlayer2Name(game.getPlayer2Name());
     	
     	gameViewController.setPlayer1Score(0);
     	gameViewController.setPlayer2Score(0);
-    	game.getScore().getPlayer1Points().addListener((o, ov, nv) -> {
+    	game.addPlayer1PointsListener((o, ov, nv) -> {
     		gameViewController.setPlayer1Score(nv.intValue());
     	});
-    	game.getScore().getPlayer2Points().addListener((o, ov, nv) -> {
+    	game.addPlayer2PointsListener((o, ov, nv) -> {
     		gameViewController.setPlayer2Score(nv.intValue());
     	});
 
@@ -134,14 +136,13 @@ public class Core extends Observable implements Observer{
     
     
     public List<Position> getPositionsToHighlight() {
-    	Piece piece = game.getBoard().getPiece(selection);
-    	if (piece != null && game.getCurrentPlayer().getType() == Value.HUMAN) {
-	    	List<Move> moves = GameLogic.getValidMoves(game.getBoard(), piece);
-	    	List<Position> positions = new ArrayList<Position>();
-	    	for (Move move:moves) {
-	    		positions.add(new Position(move.finish));
-	    	}
-	    	return positions;
+    	if (game.isValidPiecePosition(selection)) {
+    		List<Move> moves = game.getValidMoves(selection);
+    		List<Position> positions = new ArrayList<Position>();
+    		for (Move move : moves) {
+    			positions.add(move.finish);
+    		}
+    		return positions;
     	} else {
     		return new ArrayList<Position>();
     	}
@@ -149,7 +150,7 @@ public class Core extends Observable implements Observer{
 	
 	public void checkForAI() {
 		
-		if (game.getCurrentPlayer().getType() == Value.BEGINNER_AI) {
+		if (game.getCurrentPlayerType() == Value.BEGINNER_AI) {
 			Thread thread = new Thread(new Runnable() {
 				public void run() {
 					gameViewController.showLoader();
@@ -158,7 +159,7 @@ public class Core extends Observable implements Observer{
 					Platform.runLater(new Runnable() {
 						public void run() {
 							game.nextTurn(move, Value.BEGINNER_AI);
-							selection = GameLogic.getValidPiece(game.getBoard()).getPosition();
+							selection = game.getValidPiecePosition();
 							change();
 						}
 					});
@@ -166,7 +167,7 @@ public class Core extends Observable implements Observer{
 			});
 			thread.setDaemon(true);
 			thread.start();
-		} else if (game.getCurrentPlayer().getType() == Value.EASY_AI) {
+		} else if (game.getCurrentPlayerType() == Value.EASY_AI) {
 			Thread thread = new Thread(new Runnable() {
 				public void run() {
 					gameViewController.showLoader();
@@ -175,7 +176,7 @@ public class Core extends Observable implements Observer{
 					Platform.runLater(new Runnable() {
 						public void run() {
 							game.nextTurn(move, Value.EASY_AI);
-							selection = GameLogic.getValidPiece(game.getBoard()).getPosition();
+							selection = game.getValidPiecePosition();
 							change();
 						}
 					});
@@ -184,7 +185,7 @@ public class Core extends Observable implements Observer{
 			thread.setDaemon(true);
 			thread.start();
 			
-		} else if (game.getCurrentPlayer().getType() == Value.HARD_AI) {
+		} else if (game.getCurrentPlayerType() == Value.HARD_AI) {
 			Thread thread = new Thread(new Runnable() {
 				public void run() {
 					gameViewController.showLoader();
@@ -193,7 +194,7 @@ public class Core extends Observable implements Observer{
 					Platform.runLater(new Runnable() {
 						public void run() {
 							game.nextTurn(move, Value.HARD_AI);
-							selection = GameLogic.getValidPiece(game.getBoard()).getPosition();
+							selection = game.getValidPiecePosition();
 							change();
 						}
 					});

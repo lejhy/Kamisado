@@ -5,6 +5,9 @@ public class NormalGame extends Game {
    		if (getCurrentPlayer().getType() == type){
 		   	if (board.makeMove(move)) {
 		   		turn++;
+		   		if (board.isGameOver()) {
+		   			gameOver();
+		   		}
 		   		return true;
 		   	}
 	   	}
