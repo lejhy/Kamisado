@@ -45,7 +45,7 @@ public class SpeedGame extends Game {
 		timer.cancel();
    		timer = new Timer();
    		timer.schedule(new TimeIsUp(), timeLimit);
-   		change(Value.TIMER);
+   		change(Value.TIMER_RESET);
 	}
 	
 	private void cancelTimer() {
@@ -83,5 +83,14 @@ public class SpeedGame extends Game {
 	protected Game clone() {
 		Game game = new SpeedGame(this);
 		return game;
+	}
+	
+	@Override
+	public void purge() {
+		cancelTimer();
+		change(Value.TIMER_HIDE);
+		this.deleteObservers();
+		score.deleteObservers();
+		board.deleteObservers();
 	}
 }

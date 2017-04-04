@@ -26,8 +26,8 @@ public class Score extends Observable implements Serializable{
 	public Score(Score score) {
 		round = score.round;
 		points = score.points;
-		player1Points = score.player1Points;
-		player2Points = score.player2Points;
+		player1Points = new SimpleIntegerProperty(score.player1Points.get());
+		player2Points = new SimpleIntegerProperty(score.player2Points.get());
 	}
 	
 	public void setWinnerPlayer1() {

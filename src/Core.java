@@ -77,6 +77,8 @@ public class Core extends Observable implements Observer{
     }
 	
 	public void loadGame(Game game) {
+		if (this.game != null) 
+    		this.game.purge();
 		this.game = game;
 		game.addObserver(this);
 		selection = game.getValidPiecePosition();
@@ -98,6 +100,8 @@ public class Core extends Observable implements Observer{
     }
 	
     void newGame(Player player1, Player player2, int time, int points, Value gameMode) {
+    	if (game != null) 
+    		game.purge();
     	if (gameMode == Value.SPEED_MODE){
     		this.game = new SpeedGame(player1, player2, time, points);
     	} else {

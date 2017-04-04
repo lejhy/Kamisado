@@ -37,4 +37,11 @@ public class NormalGame extends Game {
 		Game game = new NormalGame(this);
 		return game;
 	}
+
+	@Override
+	public void purge() {
+		this.deleteObservers();
+		score.deleteObservers();
+		board.deleteObservers();
+	}
 }

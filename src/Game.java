@@ -21,6 +21,7 @@ public abstract class Game extends Observable implements Serializable{
    	public abstract boolean nextTurn(Move move, Value playerType);
    	protected abstract void gameOver();
    	protected abstract Game clone();
+   	public abstract void purge();
    	
    	public boolean nextRound() {
    		if (isGameOver() && hasNextRound()) {

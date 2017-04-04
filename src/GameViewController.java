@@ -487,8 +487,11 @@ public class GameViewController extends Controller{
 				else
 					gameOver(game.getGameOverCause(), game.getRoundWinner().getName().get(), overallWinner.getName().get());
 			}
-		} else if (game instanceof SpeedGame && arg == Value.TIMER) {
-			showTimer(((SpeedGame)game).getTimeLimit());
+		} else if (game instanceof SpeedGame) {
+			if (arg == Value.TIMER_RESET)
+				showTimer(((SpeedGame)game).getTimeLimit());
+			else if (arg == Value.TIMER_HIDE)
+				hideTimer();
 		}
 		
 		if (game.getCurrentPlayer().getType() == Value.HUMAN && game.getLastPlayer().getType() != Value.HUMAN) {

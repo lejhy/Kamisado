@@ -1,7 +1,11 @@
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+import java.util.Timer;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -10,7 +14,7 @@ public class Board extends Observable implements Serializable{
 	
 	private Value lastColor;
 	private Value lastPlayerPosition;
-	private BooleanProperty gameOver;
+	private transient BooleanProperty gameOver;
 	private Value gameOverCause;
 	private Value[][] tiles;
 	private List<Piece> pieces;
@@ -250,4 +254,14 @@ public class Board extends Observable implements Serializable{
 		   notifyObservers();
 	   }
    }
+   
+   private void writeObject(ObjectOutputStream out) throws IOException {
+		out.defaultWriteObject();
+		out.writeBoolean(gameOver.get());
+	}
+   
+   private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
+		in.defaultReadObject();
+		gameOver = new SimpleBooleanProperty(in.readBoolean());
+	}
 }
