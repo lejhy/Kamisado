@@ -6,7 +6,7 @@ public final class AI {
 	   int value = 0;
 	   Board newBoard;
 	   Move bestMove = new Move(-1,-1,-1,-1);
-	   List<Move> moves = BoardLogic.getValidMoves(board);
+	   List<Move> moves = board.getValidMoves(board);
 	   
 	   if (depth == 0) {
 		   return bestMove;
@@ -15,7 +15,7 @@ public final class AI {
 			   Move move = moves.get(i);
 			   newBoard = new Board(board);
 			   newBoard.makeMove(move);
-			   if(BoardLogic.isWinningMove(newBoard.getLastPlayerPosition(), move)) {
+			   if(newBoard.isWinningMove(newBoard.getLastPlayerPosition(), move)) {
 				   return move;
 			   } else {
 				   value = MinAB(newBoard, depth - 1, a, b);
@@ -37,17 +37,17 @@ public final class AI {
 	   } else {
 		   int value = 0;
 		   Board newBoard;
-		   List<Move> moves = BoardLogic.getValidMoves(board);
+		   List<Move> moves = board.getValidMoves(board);
 		   if (moves.size() == 0) {
 			   newBoard = new Board(board);
-			   newBoard.makeMove(BoardLogic.getDeadLockMove(newBoard));
+			   newBoard.makeMove(newBoard.getDeadLockMove(newBoard));
 			   return MaxAB(newBoard, depth - 1, a, b);
 		   } else {
 			   for (int i = 0; i < moves.size(); i++){
 				   Move move = moves.get(i);
 				   newBoard = new Board(board);
 				   newBoard.makeMove(move);
-				   if(BoardLogic.isWinningMove(newBoard.getLastPlayerPosition(), move)) {
+				   if(newBoard.isWinningMove(newBoard.getLastPlayerPosition(), move)) {
 					   return -10*depth;
 				   } else {
 					   value = MaxAB(newBoard, depth - 1, a, b);
@@ -72,17 +72,17 @@ public final class AI {
 	   } else {
 		   int value = 0;
 		   Board newBoard;
-		   List<Move> moves = BoardLogic.getValidMoves(board);
+		   List<Move> moves = board.getValidMoves(board);
 		   if (moves.size() == 0) {
 			   newBoard = new Board(board);
-			   newBoard.makeMove(BoardLogic.getDeadLockMove(newBoard));
+			   newBoard.makeMove(newBoard.getDeadLockMove(newBoard));
 			   return MinAB(newBoard, depth - 1, a, b);
 		   } else {
 			   for (int i = 0; i < moves.size(); i++){
 				   Move move = moves.get(i);
 				   newBoard = new Board(board);
 				   newBoard.makeMove(move);
-				   if(BoardLogic.isWinningMove(newBoard.getLastPlayerPosition(), move)) {
+				   if(newBoard.isWinningMove(newBoard.getLastPlayerPosition(), move)) {
 					   return 10*depth;
 				   } else {
 					   value = MinAB(newBoard, depth - 1, a, b);
