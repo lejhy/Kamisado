@@ -6,7 +6,7 @@ public final class AI {
 	   int value = 0;
 	   Board newBoard;
 	   Move bestMove = new Move(-1,-1,-1,-1);
-	   List<Move> moves = board.getValidMoves(board);
+	   List<Move> moves = board.getValidMoves();
 	   
 	   if (depth == 0) {
 		   return bestMove;
@@ -37,10 +37,10 @@ public final class AI {
 	   } else {
 		   int value = 0;
 		   Board newBoard;
-		   List<Move> moves = board.getValidMoves(board);
+		   List<Move> moves = board.getValidMoves();
 		   if (moves.size() == 0) {
 			   newBoard = new Board(board);
-			   newBoard.makeMove(newBoard.getDeadLockMove(newBoard));
+			   newBoard.makeMove(newBoard.getDeadLockMove());
 			   return MaxAB(newBoard, depth - 1, a, b);
 		   } else {
 			   for (int i = 0; i < moves.size(); i++){
@@ -72,10 +72,10 @@ public final class AI {
 	   } else {
 		   int value = 0;
 		   Board newBoard;
-		   List<Move> moves = board.getValidMoves(board);
+		   List<Move> moves = board.getValidMoves();
 		   if (moves.size() == 0) {
 			   newBoard = new Board(board);
-			   newBoard.makeMove(newBoard.getDeadLockMove(newBoard));
+			   newBoard.makeMove(newBoard.getDeadLockMove());
 			   return MinAB(newBoard, depth - 1, a, b);
 		   } else {
 			   for (int i = 0; i < moves.size(); i++){
