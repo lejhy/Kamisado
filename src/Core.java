@@ -55,7 +55,10 @@ public class Core extends Observable implements Observer{
 	}
 	
 	public void undoMove() {
-		game.undoLastMove();
+		if (game.undoLastMove()) {
+			selection = game.getValidPiecePosition();
+			change();
+		}
 	}
 	
 	public void saveGame() {

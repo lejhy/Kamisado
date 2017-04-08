@@ -233,7 +233,7 @@ public class Board extends Observable implements Serializable{
        return false;
    }
    
-   public void undoLastMove() {
+   public boolean undoLastMove() {
 	   if (previousMoves.isEmpty() == false) {
 		   Move move = getLastMove();
 		   previousMoves.remove(previousMoves.size()-1);	   
@@ -252,7 +252,9 @@ public class Board extends Observable implements Serializable{
 		   }
 		   setChanged();
 		   notifyObservers();
+		   return true;
 	   }
+	   return false;
    }
    
    private void writeObject(ObjectOutputStream out) throws IOException {
