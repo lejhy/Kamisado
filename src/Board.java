@@ -95,7 +95,7 @@ public class Board extends Observable implements Serializable{
 	private void initPieces(List<Piece> pieces) {
 		this.pieces = new ArrayList<Piece>();
 		for (Piece piece: pieces){
-			this.pieces.add(piece.clone(pieces));
+			this.pieces.add(piece.clone(this.pieces));
 		}
 	}
 	
@@ -216,14 +216,14 @@ public class Board extends Observable implements Serializable{
 	
 	public boolean makeMove(Move move) {
 	   Piece piece = findPiece(move.start);
-	   if (GameLogic.isValidPiece(this, piece)) {
+	   if (BoardLogic.isValidPiece(this, piece)) {
 	       if (piece.makeMove(new Position(move.finish))) {
 	    	   lastColor = tiles[piece.getPosition().x][piece.getPosition().y];
 	    	   Move lastMove = new Move(move);
 	    	   previousMoves.add(lastMove);
 	    	   nextPlayer();
-	    	   if (GameLogic.isGameOver(this)) {
-	    		   setGameOver(GameLogic.getGameOverCause(this));
+	    	   if (BoardLogic.isGameOver(this)) {
+	    		   setGameOver(BoardLogic.getGameOverCause(this));
 	    	   }
 	    	   setChanged();
 	    	   notifyObservers();

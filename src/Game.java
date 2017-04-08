@@ -69,7 +69,7 @@ public abstract class Game extends Observable implements Serializable{
    	}
    	
    	public Piece getValidPiece() {
-   		return GameLogic.getValidPiece(board);
+   		return BoardLogic.getValidPiece(board);
    	}
    	
    	public Player getPlayer1() {
@@ -142,7 +142,7 @@ public abstract class Game extends Observable implements Serializable{
 	}
 	
 	public boolean isValidPiecePosition(Position pos) {
-		return GameLogic.isValidPiece(board, board.getPiece(pos));
+		return BoardLogic.isValidPiece(board, board.getPiece(pos));
 	}
 	
 	public void addGameOverListener(ChangeListener<Boolean> listener) {
@@ -170,11 +170,11 @@ public abstract class Game extends Observable implements Serializable{
 	}
 	
 	public List<Move> getValidMoves() {
-		return GameLogic.getValidMoves(board);
+		return BoardLogic.getValidMoves(board);
 	}
 	
 	public List<Move> getValidMoves(Position pos) {
-		return GameLogic.getValidMoves(board, pos);
+		return BoardLogic.getValidMoves(board, pos);
 	}
 	
 	public Value getCurrentPlayerType() {
