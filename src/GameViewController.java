@@ -42,6 +42,7 @@ public class GameViewController extends Controller{
 	private Image RED;
 	private Image GREEN;
 	private Image BROWN;
+	
 	private Image ORANGE_WHITE;
 	private Image BLUE_WHITE;
 	private Image PURPLE_WHITE;
@@ -59,6 +60,78 @@ public class GameViewController extends Controller{
 	private Image RED_BLACK;
 	private Image GREEN_BLACK;
 	private Image BROWN_BLACK;
+	
+	private Image ORANGE_WHITE_ONE;
+	private Image BLUE_WHITE_ONE;
+	private Image PURPLE_WHITE_ONE;
+	private Image PINK_WHITE_ONE;
+	private Image YELLOW_WHITE_ONE;
+	private Image RED_WHITE_ONE;
+	private Image GREEN_WHITE_ONE;
+	private Image BROWN_WHITE_ONE;
+	
+	private Image ORANGE_BLACK_ONE;
+	private Image BLUE_BLACK_ONE;
+	private Image PURPLE_BLACK_ONE;
+	private Image PINK_BLACK_ONE;
+	private Image YELLOW_BLACK_ONE;
+	private Image RED_BLACK_ONE;
+	private Image GREEN_BLACK_ONE;
+	private Image BROWN_BLACK_ONE;
+	
+	private Image ORANGE_WHITE_TWO;
+	private Image BLUE_WHITE_TWO;
+	private Image PURPLE_WHITE_TWO;
+	private Image PINK_WHITE_TWO;
+	private Image YELLOW_WHITE_TWO;
+	private Image RED_WHITE_TWO;
+	private Image GREEN_WHITE_TWO;
+	private Image BROWN_WHITE_TWO;
+	
+	private Image ORANGE_BLACK_TWO;
+	private Image BLUE_BLACK_TWO;
+	private Image PURPLE_BLACK_TWO;
+	private Image PINK_BLACK_TWO;
+	private Image YELLOW_BLACK_TWO;
+	private Image RED_BLACK_TWO;
+	private Image GREEN_BLACK_TWO;
+	private Image BROWN_BLACK_TWO;
+	
+	private Image ORANGE_WHITE_THREE;
+	private Image BLUE_WHITE_THREE;
+	private Image PURPLE_WHITE_THREE;
+	private Image PINK_WHITE_THREE;
+	private Image YELLOW_WHITE_THREE;
+	private Image RED_WHITE_THREE;
+	private Image GREEN_WHITE_THREE;
+	private Image BROWN_WHITE_THREE;
+	
+	private Image ORANGE_BLACK_THREE;
+	private Image BLUE_BLACK_THREE;
+	private Image PURPLE_BLACK_THREE;
+	private Image PINK_BLACK_THREE;
+	private Image YELLOW_BLACK_THREE;
+	private Image RED_BLACK_THREE;
+	private Image GREEN_BLACK_THREE;
+	private Image BROWN_BLACK_THREE;
+	
+	private Image ORANGE_WHITE_FOUR;
+	private Image BLUE_WHITE_FOUR;
+	private Image PURPLE_WHITE_FOUR;
+	private Image PINK_WHITE_FOUR;
+	private Image YELLOW_WHITE_FOUR;
+	private Image RED_WHITE_FOUR;
+	private Image GREEN_WHITE_FOUR;
+	private Image BROWN_WHITE_FOUR;
+	
+	private Image ORANGE_BLACK_FOUR;
+	private Image BLUE_BLACK_FOUR;
+	private Image PURPLE_BLACK_FOUR;
+	private Image PINK_BLACK_FOUR;
+	private Image YELLOW_BLACK_FOUR;
+	private Image RED_BLACK_FOUR;
+	private Image GREEN_BLACK_FOUR;
+	private Image BROWN_BLACK_FOUR;
 
     @FXML
     private ResourceBundle resources;
@@ -209,6 +282,7 @@ public class GameViewController extends Controller{
     	RED = new Image("img/RED.png");
     	GREEN = new Image("img/GREEN.png");
     	BROWN = new Image("img/BROWN.png");
+    	
     	ORANGE_WHITE = new Image("img/ORANGE_WHITE.png");
     	BLUE_WHITE = new Image("img/BLUE_WHITE.png");
     	PURPLE_WHITE = new Image("img/PURPLE_WHITE.png");
@@ -226,6 +300,78 @@ public class GameViewController extends Controller{
     	RED_BLACK = new Image("img/RED_BLACK.png");
     	GREEN_BLACK = new Image("img/GREEN_BLACK.png");
     	BROWN_BLACK = new Image("img/BROWN_BLACK.png");
+    	
+    	ORANGE_WHITE_ONE = new Image("img/ORANGE_WHITE_ONE.png");
+    	BLUE_WHITE_ONE = new Image("img/BLUE_WHITE_ONE.png");
+    	PURPLE_WHITE_ONE = new Image("img/PURPLE_WHITE_ONE.png");
+    	PINK_WHITE_ONE = new Image("img/PINK_WHITE_ONE.png");
+    	YELLOW_WHITE_ONE = new Image("img/YELLOW_WHITE_ONE.png");
+    	RED_WHITE_ONE = new Image("img/RED_WHITE_ONE.png");
+    	GREEN_WHITE_ONE = new Image("img/GREEN_WHITE_ONE.png");
+    	BROWN_WHITE_ONE = new Image("img/BROWN_WHITE_ONE.png");
+    	
+    	ORANGE_BLACK_ONE = new Image("img/ORANGE_BLACK_ONE.png");
+    	BLUE_BLACK_ONE = new Image("img/BLUE_BLACK_ONE.png");
+    	PURPLE_BLACK_ONE = new Image("img/PURPLE_BLACK_ONE.png");
+    	PINK_BLACK_ONE = new Image("img/PINK_BLACK_ONE.png");
+    	YELLOW_BLACK_ONE = new Image("img/YELLOW_BLACK_ONE.png");
+    	RED_BLACK_ONE = new Image("img/RED_BLACK_ONE.png");
+    	GREEN_BLACK_ONE = new Image("img/GREEN_BLACK_ONE.png");
+    	BROWN_BLACK_ONE = new Image("img/BROWN_BLACK_ONE.png");
+    	
+    	ORANGE_WHITE_TWO = new Image("img/ORANGE_WHITE_TWO.png");
+    	BLUE_WHITE_TWO = new Image("img/BLUE_WHITE_TWO.png");
+    	PURPLE_WHITE_TWO = new Image("img/PURPLE_WHITE_TWO.png");
+    	PINK_WHITE_TWO = new Image("img/PINK_WHITE_TWO.png");
+    	YELLOW_WHITE_TWO = new Image("img/YELLOW_WHITE_TWO.png");
+    	RED_WHITE_TWO = new Image("img/RED_WHITE_TWO.png");
+    	GREEN_WHITE_TWO = new Image("img/GREEN_WHITE_TWO.png");
+    	BROWN_WHITE_TWO = new Image("img/BROWN_WHITE_TWO.png");
+    	
+    	ORANGE_BLACK_TWO = new Image("img/ORANGE_BLACK_TWO.png");
+    	BLUE_BLACK_TWO = new Image("img/BLUE_BLACK_TWO.png");
+    	PURPLE_BLACK_TWO = new Image("img/PURPLE_BLACK_TWO.png");
+    	PINK_BLACK_TWO = new Image("img/PINK_BLACK_TWO.png");
+    	YELLOW_BLACK_TWO = new Image("img/YELLOW_BLACK_TWO.png");
+    	RED_BLACK_TWO = new Image("img/RED_BLACK_TWO.png");
+    	GREEN_BLACK_TWO = new Image("img/GREEN_BLACK_TWO.png");
+    	BROWN_BLACK_TWO = new Image("img/BROWN_BLACK_TWO.png");
+    	
+    	ORANGE_WHITE_THREE = new Image("img/ORANGE_WHITE_THREE.png");
+    	BLUE_WHITE_THREE = new Image("img/BLUE_WHITE_THREE.png");
+    	PURPLE_WHITE_THREE = new Image("img/PURPLE_WHITE_THREE.png");
+    	PINK_WHITE_THREE = new Image("img/PINK_WHITE_THREE.png");
+    	YELLOW_WHITE_THREE = new Image("img/YELLOW_WHITE_THREE.png");
+    	RED_WHITE_THREE = new Image("img/RED_WHITE_THREE.png");
+    	GREEN_WHITE_THREE = new Image("img/GREEN_WHITE_THREE.png");
+    	BROWN_WHITE_THREE = new Image("img/BROWN_WHITE_THREE.png");
+    	
+    	ORANGE_BLACK_THREE = new Image("img/ORANGE_BLACK_THREE.png");
+    	BLUE_BLACK_THREE = new Image("img/BLUE_BLACK_THREE.png");
+    	PURPLE_BLACK_THREE = new Image("img/PURPLE_BLACK_THREE.png");
+    	PINK_BLACK_THREE = new Image("img/PINK_BLACK_THREE.png");
+    	YELLOW_BLACK_THREE = new Image("img/YELLOW_BLACK_THREE.png");
+    	RED_BLACK_THREE = new Image("img/RED_BLACK_THREE.png");
+    	GREEN_BLACK_THREE = new Image("img/GREEN_BLACK_THREE.png");
+    	BROWN_BLACK_THREE = new Image("img/BROWN_BLACK_THREE.png");
+    	
+    	ORANGE_WHITE_FOUR = new Image("img/ORANGE_WHITE_FOUR.png");
+    	BLUE_WHITE_FOUR = new Image("img/BLUE_WHITE_FOUR.png");
+    	PURPLE_WHITE_FOUR = new Image("img/PURPLE_WHITE_FOUR.png");
+    	PINK_WHITE_FOUR = new Image("img/PINK_WHITE_FOUR.png");
+    	YELLOW_WHITE_FOUR = new Image("img/YELLOW_WHITE_FOUR.png");
+    	RED_WHITE_FOUR = new Image("img/RED_WHITE_FOUR.png");
+    	GREEN_WHITE_FOUR = new Image("img/GREEN_WHITE_FOUR.png");
+    	BROWN_WHITE_FOUR = new Image("img/BROWN_WHITE_FOUR.png");
+    	
+    	ORANGE_BLACK_FOUR = new Image("img/ORANGE_BLACK_FOUR.png");
+    	BLUE_BLACK_FOUR = new Image("img/BLUE_BLACK_FOUR.png");
+    	PURPLE_BLACK_FOUR = new Image("img/PURPLE_BLACK_FOUR.png");
+    	PINK_BLACK_FOUR = new Image("img/PINK_BLACK_FOUR.png");
+    	YELLOW_BLACK_FOUR = new Image("img/YELLOW_BLACK_FOUR.png");
+    	RED_BLACK_FOUR = new Image("img/RED_BLACK_FOUR.png");
+    	GREEN_BLACK_FOUR = new Image("img/GREEN_BLACK_FOUR.png");
+    	BROWN_BLACK_FOUR = new Image("img/BROWN_BLACK_FOUR.png");
     }
     
     public void roundOver(Value cause, String roundWinner) {
@@ -415,51 +561,195 @@ public class GameViewController extends Controller{
     		switch(piece.getColor()) {
     		case ORANGE:
     			if (piece.getPlayerPosition() == Value.BOTTOM)
-    				gc.drawImage(ORANGE_WHITE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+    				if (piece instanceof Sumo)
+    					gc.drawImage(ORANGE_WHITE_ONE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+    				else if (piece instanceof DoubleSumo)
+    					gc.drawImage(ORANGE_WHITE_TWO, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else if (piece instanceof TripleSumo)
+						gc.drawImage(ORANGE_WHITE_THREE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else if (piece instanceof QuadrupleSumo)
+						gc.drawImage(ORANGE_WHITE_FOUR, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else
+    					gc.drawImage(ORANGE_WHITE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
     			else
-    				gc.drawImage(ORANGE_BLACK, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+    				if (piece instanceof Sumo)
+    					gc.drawImage(ORANGE_BLACK_ONE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+    				else if (piece instanceof DoubleSumo)
+    					gc.drawImage(ORANGE_BLACK_TWO, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else if (piece instanceof TripleSumo)
+						gc.drawImage(ORANGE_BLACK_THREE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else if (piece instanceof QuadrupleSumo)
+						gc.drawImage(ORANGE_BLACK_FOUR, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else
+    					gc.drawImage(ORANGE_BLACK, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
 				break;
 			case BLUE:
 				if (piece.getPlayerPosition() == Value.BOTTOM)
-    				gc.drawImage(BLUE_WHITE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					if (piece instanceof Sumo)
+    					gc.drawImage(BLUE_WHITE_ONE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+    				else if (piece instanceof DoubleSumo)
+    					gc.drawImage(BLUE_WHITE_TWO, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else if (piece instanceof TripleSumo)
+						gc.drawImage(BLUE_WHITE_THREE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else if (piece instanceof QuadrupleSumo)
+						gc.drawImage(BLUE_WHITE_FOUR, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else
+    					gc.drawImage(BLUE_WHITE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
     			else
-    				gc.drawImage(BLUE_BLACK, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+    				if (piece instanceof Sumo)
+    					gc.drawImage(BLUE_BLACK_ONE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+    				else if (piece instanceof DoubleSumo)
+    					gc.drawImage(BLUE_BLACK_TWO, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else if (piece instanceof TripleSumo)
+						gc.drawImage(BLUE_BLACK_THREE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else if (piece instanceof QuadrupleSumo)
+						gc.drawImage(BLUE_BLACK_FOUR, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else
+    					gc.drawImage(BLUE_BLACK, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
 				break;
 			case PURPLE:
 				if (piece.getPlayerPosition() == Value.BOTTOM)
-    				gc.drawImage(PURPLE_WHITE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					if (piece instanceof Sumo)
+    					gc.drawImage(PURPLE_WHITE_ONE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+    				else if (piece instanceof DoubleSumo)
+    					gc.drawImage(PURPLE_WHITE_TWO, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else if (piece instanceof TripleSumo)
+						gc.drawImage(PURPLE_WHITE_THREE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else if (piece instanceof QuadrupleSumo)
+						gc.drawImage(PURPLE_WHITE_FOUR, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else
+    					gc.drawImage(PURPLE_WHITE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
     			else
-    				gc.drawImage(PURPLE_BLACK, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+    				if (piece instanceof Sumo)
+    					gc.drawImage(PURPLE_BLACK_ONE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+    				else if (piece instanceof DoubleSumo)
+    					gc.drawImage(PURPLE_BLACK_TWO, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else if (piece instanceof TripleSumo)
+						gc.drawImage(PURPLE_BLACK_THREE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else if (piece instanceof QuadrupleSumo)
+						gc.drawImage(PURPLE_BLACK_FOUR, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else
+    					gc.drawImage(PURPLE_BLACK, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
 				break;
 			case PINK:
 				if (piece.getPlayerPosition() == Value.BOTTOM)
-    				gc.drawImage(PINK_WHITE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					if (piece instanceof Sumo)
+    					gc.drawImage(PINK_WHITE_ONE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+    				else if (piece instanceof DoubleSumo)
+    					gc.drawImage(PINK_WHITE_TWO, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else if (piece instanceof TripleSumo)
+						gc.drawImage(PINK_WHITE_THREE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else if (piece instanceof QuadrupleSumo)
+						gc.drawImage(PINK_WHITE_FOUR, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else
+    					gc.drawImage(PINK_WHITE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
     			else
-    				gc.drawImage(PINK_BLACK, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+    				if (piece instanceof Sumo)
+    					gc.drawImage(PINK_BLACK_ONE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+    				else if (piece instanceof DoubleSumo)
+    					gc.drawImage(PINK_BLACK_TWO, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else if (piece instanceof TripleSumo)
+						gc.drawImage(PINK_BLACK_THREE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else if (piece instanceof QuadrupleSumo)
+						gc.drawImage(PINK_BLACK_FOUR, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else
+    					gc.drawImage(PINK_BLACK, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
 				break;
 			case YELLOW:
 				if (piece.getPlayerPosition() == Value.BOTTOM)
-    				gc.drawImage(YELLOW_WHITE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					if (piece instanceof Sumo)
+    					gc.drawImage(YELLOW_WHITE_ONE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+    				else if (piece instanceof DoubleSumo)
+    					gc.drawImage(YELLOW_WHITE_TWO, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else if (piece instanceof TripleSumo)
+						gc.drawImage(YELLOW_WHITE_THREE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else if (piece instanceof QuadrupleSumo)
+						gc.drawImage(YELLOW_WHITE_FOUR, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else
+    					gc.drawImage(YELLOW_WHITE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
     			else
-    				gc.drawImage(YELLOW_BLACK, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+    				if (piece instanceof Sumo)
+    					gc.drawImage(YELLOW_BLACK_ONE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+    				else if (piece instanceof DoubleSumo)
+    					gc.drawImage(YELLOW_BLACK_TWO, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else if (piece instanceof TripleSumo)
+						gc.drawImage(YELLOW_BLACK_THREE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else if (piece instanceof QuadrupleSumo)
+						gc.drawImage(YELLOW_BLACK_FOUR, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else
+    					gc.drawImage(YELLOW_BLACK, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
 				break;
 			case RED:
 				if (piece.getPlayerPosition() == Value.BOTTOM)
-    				gc.drawImage(RED_WHITE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					if (piece instanceof Sumo)
+    					gc.drawImage(RED_WHITE_ONE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+    				else if (piece instanceof DoubleSumo)
+    					gc.drawImage(RED_WHITE_TWO, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else if (piece instanceof TripleSumo)
+						gc.drawImage(RED_WHITE_THREE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else if (piece instanceof QuadrupleSumo)
+						gc.drawImage(RED_WHITE_FOUR, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else
+    					gc.drawImage(RED_WHITE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
     			else
-    				gc.drawImage(RED_BLACK, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+    				if (piece instanceof Sumo)
+    					gc.drawImage(RED_BLACK_ONE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+    				else if (piece instanceof DoubleSumo)
+    					gc.drawImage(RED_BLACK_TWO, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else if (piece instanceof TripleSumo)
+						gc.drawImage(RED_BLACK_THREE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else if (piece instanceof QuadrupleSumo)
+						gc.drawImage(RED_BLACK_FOUR, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else
+    					gc.drawImage(RED_BLACK, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
 				break;
 			case GREEN:
 				if (piece.getPlayerPosition() == Value.BOTTOM)
-    				gc.drawImage(GREEN_WHITE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					if (piece instanceof Sumo)
+    					gc.drawImage(GREEN_WHITE_ONE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+    				else if (piece instanceof DoubleSumo)
+    					gc.drawImage(GREEN_WHITE_TWO, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else if (piece instanceof TripleSumo)
+						gc.drawImage(GREEN_WHITE_THREE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else if (piece instanceof QuadrupleSumo)
+						gc.drawImage(GREEN_WHITE_FOUR, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else
+    					gc.drawImage(GREEN_WHITE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
     			else
-    				gc.drawImage(GREEN_BLACK, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+    				if (piece instanceof Sumo)
+    					gc.drawImage(GREEN_BLACK_ONE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+    				else if (piece instanceof DoubleSumo)
+    					gc.drawImage(GREEN_BLACK_TWO, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else if (piece instanceof TripleSumo)
+						gc.drawImage(GREEN_BLACK_THREE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else if (piece instanceof QuadrupleSumo)
+						gc.drawImage(GREEN_BLACK_FOUR, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else
+    					gc.drawImage(GREEN_BLACK, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
 				break;
 			case BROWN:
 				if (piece.getPlayerPosition() == Value.BOTTOM)
-    				gc.drawImage(BROWN_WHITE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					if (piece instanceof Sumo)
+    					gc.drawImage(BROWN_WHITE_ONE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+    				else if (piece instanceof DoubleSumo)
+    					gc.drawImage(BROWN_WHITE_TWO, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else if (piece instanceof TripleSumo)
+						gc.drawImage(BROWN_WHITE_THREE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else if (piece instanceof QuadrupleSumo)
+						gc.drawImage(BROWN_WHITE_FOUR, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else
+    					gc.drawImage(BROWN_WHITE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
     			else
-    				gc.drawImage(BROWN_BLACK, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+    				if (piece instanceof Sumo)
+    					gc.drawImage(BROWN_BLACK_ONE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+    				else if (piece instanceof DoubleSumo)
+    					gc.drawImage(BROWN_BLACK_TWO, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else if (piece instanceof TripleSumo)
+						gc.drawImage(BROWN_BLACK_THREE, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else if (piece instanceof QuadrupleSumo)
+						gc.drawImage(BROWN_BLACK_FOUR, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
+					else
+    					gc.drawImage(BROWN_BLACK, piece.getPosition().x*squareSize, piece.getPosition().y*squareSize, squareSize, squareSize);
 				break;
 			default:
 				break;

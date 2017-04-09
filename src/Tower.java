@@ -65,7 +65,6 @@ public class Tower extends Piece {
 	public void promote() {
 		pieces.remove(this);
 		pieces.add(new Sumo(this));
-		System.out.println("promoted to Sumo");
 	}
 	
 	public boolean isDeadLockedAtTop() {
