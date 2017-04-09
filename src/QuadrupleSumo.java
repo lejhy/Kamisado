@@ -1,17 +1,17 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tower extends Piece {
+public class QuadrupleSumo extends Piece {
 	
-	public Tower(Value color, Value playerPosition, Position towerPosition, List<Piece> pieces) {
+	public QuadrupleSumo(Value color, Value playerPosition, Position towerPosition, List<Piece> pieces) {
 		super(color, playerPosition, towerPosition, pieces);
 	}
 	
-	public Tower(Piece piece,List<Piece> pieces) {
+	public QuadrupleSumo(Piece piece,List<Piece> pieces) {
 		super(piece, pieces);
 	} 
 	
-	public Tower(Piece piece) {
+	public QuadrupleSumo(Piece piece) {
 		super(piece);
 	}
 
@@ -63,9 +63,7 @@ public class Tower extends Piece {
 	
 	@Override
 	public void promote() {
-		pieces.remove(this);
-		pieces.add(new Sumo(this));
-		System.out.println("promoted to Sumo");
+		// do nothing
 	}
 	
 	public boolean isDeadLockedAtTop() {

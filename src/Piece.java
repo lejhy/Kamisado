@@ -12,6 +12,7 @@ public abstract class Piece implements Serializable{
 	public abstract boolean isDeadlocked();
 	public abstract boolean isValidMove(Move move);
 	public abstract List<Move> getValidMoves();
+	public abstract void promote();
 	
 	public abstract Piece clone();
 	public abstract Piece clone(List<Piece> pieces);
