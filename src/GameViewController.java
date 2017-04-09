@@ -494,7 +494,7 @@ public class GameViewController extends Controller{
 				hideTimer();
 		}
 		
-		if (game.getCurrentPlayer().getType() == Value.HUMAN && game.getLastPlayer().getType() != Value.HUMAN) {
+		if (!game.isGameOver() && game.getCurrentPlayer().getType() == Value.HUMAN && game.getLastPlayer().getType() != Value.HUMAN) {
 			undo.setVisible(true);
 		} else {
 			undo.setVisible(false);

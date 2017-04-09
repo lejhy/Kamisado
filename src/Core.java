@@ -39,7 +39,13 @@ public class Core extends Observable implements Observer{
 		if (inputType == Value.ACTION) {
 			Move move = new Move(selection, position);
 			if (game.nextTurn(move, Value.HUMAN)) {
-				selection = game.getValidPiece().getPosition();
+				Piece piece = game.getValidPiece();
+				if (!game.isGameOver() && piece.isDeadlocked()) {
+					move = new Move (piece.getPosition(), piece.getPosition());
+					game.nextTurn(move, Value.HUMAN);
+					piece = game.getValidPiece();
+				}
+				selection = piece.getPosition();
 				change();
 			} else if (game.isGameOver() && game.hasNextRound()){
 				game.nextRound();

@@ -321,7 +321,7 @@ public class Board extends Observable implements Serializable{
 	
 	public boolean makeMove(Move move) {
 	   Piece piece = findPiece(move.start);
-	   if (isValidPiece(piece)) {
+	   if (!isGameOver() && isValidPiece(piece)) {
 	       if (piece.makeMove(new Position(move.finish))) {
 	    	   lastColor = tiles[piece.getPosition().x][piece.getPosition().y];
 	    	   Move lastMove = new Move(move);
@@ -337,7 +337,7 @@ public class Board extends Observable implements Serializable{
    }
    
    public boolean undoLastMove() {
-	   if (previousMoves.isEmpty() == false) {
+	   if (!isGameOver() && previousMoves.isEmpty() == false) {
 		   Move move = getLastMove();
 		   previousMoves.remove(previousMoves.size()-1);	   
 		   Piece piece = findPiece(move.finish);
