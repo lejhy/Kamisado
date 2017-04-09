@@ -71,7 +71,7 @@ public class Tower extends Piece {
 			topRightObstacle = true;
 		
 		if (topLeftObstaclePos.x < 0)
-			topRightObstacle = true;
+			topLeftObstacle = true;
 		
 		for (Piece piece : pieces) {
 			if (piece.getPosition().equals(topObstaclePos))
@@ -93,16 +93,16 @@ public class Tower extends Piece {
 		Position bottomObstaclePos = new Position(position.x, position.y + 1);
 		
 		boolean bottomRightObstacle = false;
-		Position bottomRightObstaclePos = new Position(position.x - 1, position.y + 1);
+		Position bottomRightObstaclePos = new Position(position.x + 1, position.y + 1);
 		
 		boolean bottomLeftObstacle = false;
-		Position bottomLeftObstaclePos = new Position(position.x + 1, position.y + 1);
+		Position bottomLeftObstaclePos = new Position(position.x - 1, position.y + 1);
 		
 		if (bottomRightObstaclePos.x > 7)
 			bottomRightObstacle = true;
 		
-		if (bottomLeftObstaclePos.x > 0)
-			bottomRightObstacle = true;
+		if (bottomLeftObstaclePos.x < 0)
+			bottomLeftObstacle = true;
 		
 		for (Piece piece : pieces) {
 			if (piece.getPosition().equals(bottomObstaclePos))

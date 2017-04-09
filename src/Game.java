@@ -25,7 +25,7 @@ public abstract class Game extends Observable implements Serializable{
    	
    	public boolean nextRound() {
    		if (isGameOver() && hasNextRound()) {
-   			board = new Board();
+   			board.fillFromLeft();
    			score.nextRound();
    			change();
    			return true;

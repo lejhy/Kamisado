@@ -7,23 +7,26 @@ public final class AI {
 	   Board newBoard;
 	   Move bestMove = new Move(-1,-1,-1,-1);
 	   List<Move> moves = board.getValidMoves();
-	   
 	   if (depth == 0) {
 		   return bestMove;
 	   } else {
-		   for (int i = 0; i < moves.size(); i++){
-			   Move move = moves.get(i);
-			   newBoard = new Board(board);
-			   newBoard.makeMove(move);
-			   if(newBoard.isWinningMove(newBoard.getLastPlayerPosition(), move)) {
-				   return move;
-			   } else {
-				   value = MinAB(newBoard, depth - 1, a, b);
-				   if (value > a) {
-					   a = value;
-					   bestMove = move;
+		   if (moves.isEmpty()) {
+			   return board.getDeadLockMove();
+		   } else {
+			   for (int i = 0; i < moves.size(); i++){
+				   Move move = moves.get(i);
+				   newBoard = new Board(board);
+				   newBoard.makeMove(move);
+				   if(newBoard.isWinningMove(newBoard.getLastPlayerPosition(), move)) {
+					   return move;
+				   } else {
+					   value = MinAB(newBoard, depth - 1, a, b);
+					   if (value > a) {
+						   a = value;
+						   bestMove = move;
+					   }
+					  
 				   }
-				  
 			   }
 		   }
 	   }

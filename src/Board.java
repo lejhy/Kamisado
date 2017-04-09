@@ -99,6 +99,84 @@ public class Board extends Observable implements Serializable{
 		}
 	}
 	
+	public void fillFromLeft() {
+		List <Piece> topRow = new ArrayList<Piece>();
+		for (int i = 0; i <= 7; i++) {
+			for (int j = 0; j <= 7; j++) {
+				Piece piece = findPiece(new Position(j, i));
+				if (piece != null) {
+					if (piece.getPlayerPosition() == Value.TOP){
+						topRow.add(piece);
+					}
+				}
+			}
+		}
+		List <Piece> bottomRow = new ArrayList<Piece>();
+		for (int i = 7; i >= 0; i--) {
+			for (int j = 7; j >= 0; j--) {
+				Piece piece = findPiece(new Position(j, i));
+				if (piece != null) {
+					if (piece.getPlayerPosition() == Value.BOTTOM){
+						bottomRow.add(piece);
+					}
+				}
+			}
+		}
+		int i = 0;
+		for (Piece piece : topRow) {
+			piece.setPosition(new Position(i, 0));
+			i++;
+		}
+		i = 7;
+		for (Piece piece : bottomRow) {
+			piece.setPosition(new Position(i, 7));
+			i--;
+		}
+		gameOver.set(false);
+		previousMoves = new ArrayList<Move>();
+	}
+	
+	public void fillFromRight() {
+		List <Piece> topRow = new ArrayList<Piece>();
+		for (int i = 0; i <= 7; i++) {
+			for (int j = 7; j >= 0; j--) {
+				Piece piece = findPiece(new Position(j, i));
+				if (piece != null) {
+					if (piece.getPlayerPosition() == Value.TOP){
+						topRow.add(piece);
+					}
+				}
+			}
+		}
+		List <Piece> bottomRow = new ArrayList<Piece>();
+		for (int i = 7; i >= 0; i--) {
+			for (int j = 0; j <= 7; j++) {
+				Piece piece = findPiece(new Position(j, i));
+				if (piece != null) {
+					if (piece.getPlayerPosition() == Value.BOTTOM){
+						bottomRow.add(piece);
+					}
+				}
+			}
+		}
+		int i = 7;
+		for (Piece piece : topRow) {
+			piece.setPosition(new Position(i, 0));
+			i--;
+		}
+		i = 0;
+		for (Piece piece : bottomRow) {
+			piece.setPosition(new Position(i, 7));
+			i++;
+		}
+		gameOver.set(false);
+		previousMoves = new ArrayList<Move>();
+	}
+	
+	public void randomizeTiles() {
+		
+	}
+	
 	public Value getTile(int x, int y) {
 		return tiles[x][y];
 	}
@@ -222,9 +300,7 @@ public class Board extends Observable implements Serializable{
 	    	   Move lastMove = new Move(move);
 	    	   previousMoves.add(lastMove);
 	    	   nextPlayer();
-	    	   if (evaluateGameOver()) {
-	    		   setGameOver(evaluateGameOverCause());
-	    	   }
+	    	   evaluateGameOver();
 	    	   setChanged();
 	    	   notifyObservers();
 	    	   return true;
@@ -271,18 +347,13 @@ public class Board extends Observable implements Serializable{
 		Value lastPlayerPosition = getLastPlayerPosition();
 		Move lastMove = getLastMove();
 		if (lastMove != null && isWinningMove(lastPlayerPosition, lastMove)) {
+			setGameOver(Value.GAME_OVER);
 			return true;
 		} else if (isDoubleDeadLock()) {
+			setGameOver(Value.DOUBLE_DEADLOCK);
 			return true;
 		}
 		return false;
-	}
-	
-	public Value evaluateGameOverCause() {
-		if (isDoubleDeadLock())
-			return Value.DOUBLE_DEADLOCK;
-  		else 
-  			return Value.GAME_OVER;
 	}
 	
 	public boolean isDoubleDeadLock() {
