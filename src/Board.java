@@ -132,6 +132,9 @@ public class Board extends Observable implements Serializable{
 			piece.setPosition(new Position(i, 7));
 			i--;
 		}
+		initPreviousMoves();
+		lastPlayerPosition = Value.TOP;
+		lastColor = null;
 		gameOver.set(false);
 		previousMoves = new ArrayList<Move>();
 	}
@@ -169,12 +172,36 @@ public class Board extends Observable implements Serializable{
 			piece.setPosition(new Position(i, 7));
 			i++;
 		}
+		initPreviousMoves();
+		lastPlayerPosition = Value.TOP;
+		lastColor = null;
 		gameOver.set(false);
 		previousMoves = new ArrayList<Move>();
 	}
 	
 	public void randomizeTiles() {
+		int indexRange = tiles[0].length;
+		int randomIndex1;
+		int randomIndex2;
+		Value[] temp = new Value[8];
 		
+		for (int i = 0; i < 20; i++){
+			randomIndex1 = Math.round((float)Math.random()*(indexRange - 1));
+			randomIndex2 = Math.round((float)Math.random()*(indexRange - 1));
+			temp = tiles[randomIndex1].clone();
+			tiles[randomIndex1] = tiles[randomIndex2].clone();
+			tiles[randomIndex2] = temp.clone();
+		}
+		for (int i = 0; i < 20; i++){
+			randomIndex1 = Math.round((float)Math.random()*(indexRange - 1));
+			randomIndex2 = Math.round((float)Math.random()*(indexRange - 1));
+			
+			for (int j = 0; j < indexRange; j++){
+				temp[j] = tiles[j][randomIndex1];
+				tiles[j][randomIndex1] = tiles[j][randomIndex2];
+				tiles[j][randomIndex2] = temp[j];
+			}
+		}
 	}
 	
 	public Value getTile(int x, int y) {
@@ -428,7 +455,7 @@ public class Board extends Observable implements Serializable{
 	
 	public Piece getValidWhitePiece() {
 		if (getLastColor() == null) {
-			int zeroToSeven = (int) (Math.random()*7);
+			int zeroToSeven = Math.round((float)Math.random()*7);
 			return getPiece(new Position(zeroToSeven, 7));
 		} else {
 			return  getPiece(Value.BOTTOM, getLastColor());
@@ -437,7 +464,7 @@ public class Board extends Observable implements Serializable{
 	
 	public Piece getValidTopPiece() {
 		if (getLastColor() == null) {
-			int zeroToSeven = (int) (Math.random()*7);
+			int zeroToSeven = Math.round((float)Math.random()*7);
 			return getPiece(new Position(zeroToSeven, 0));
 		} else {
 			return getPiece(Value.TOP, getLastColor());
