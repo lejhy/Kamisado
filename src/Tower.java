@@ -317,4 +317,14 @@ public class Tower extends Piece {
 			return false;
 		}	
 	}
+
+	@Override
+	public boolean sumoPush(Position pos) {
+		return false;
+	}
+
+	@Override
+	public List<Move> getSumoPushMoves() {
+		return new ArrayList<Move>();
+	}
 }

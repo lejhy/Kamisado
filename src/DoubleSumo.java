@@ -67,6 +67,95 @@ public class DoubleSumo extends Piece {
 		pieces.add(new TripleSumo(this));
 	}
 	
+	@Override
+	public boolean sumoPush(Position pos) {
+		if (playerPosition == Value.BOTTOM) {
+			if (isValidBottomSumoPush(pos)) {
+				for (Piece piece : pieces) {
+					if (piece.getPosition().equals(pos)) {
+						piece.setPosition(new Position(pos.x, pos.y - 1));
+						break;
+					}
+				}
+				position.x = pos.x;
+				position.y = pos.y;
+				return true;
+			}
+		} else if (playerPosition == Value.TOP) {
+			if (isValidTopSumoPush(pos)) {
+				for (Piece piece : pieces) {
+					if (piece.getPosition().equals(pos)) {
+						piece.setPosition(new Position(pos.x, pos.y + 1));
+						break;
+					}
+				}
+				position.x = pos.x;
+				position.y = pos.y;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public List<Move> getSumoPushMoves() {
+		List<Move> moves = new ArrayList<Move>();
+		if (playerPosition == Value.BOTTOM) {
+			moves.add(new Move(position.x, position.y, position.x, position.y - 1));
+		} else {
+			moves.add(new Move(position.x, position.y, position.x, position.y + 1));
+		}
+		return moves;
+	}
+	
+	public boolean isValidBottomSumoPush(Position pos) {
+		if (position.x == pos.x && position.y == (pos.y + 1) && pos.y > 0) {
+			Piece pieceToPush = null;
+			for (Piece piece : pieces) {
+				if (piece.getPosition().equals(pos)) {
+					pieceToPush = piece;
+					break;
+				}
+			}
+			if (pieceToPush != null) {
+				if (pieceToPush instanceof Tower) {
+					Position spaceBehindTowerToPush = new Position(pos.x, pos.y - 1);
+					for (Piece piece : pieces) {
+						if (piece.getPosition().equals(spaceBehindTowerToPush)) {
+							return false;
+						}
+					}
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public boolean isValidTopSumoPush(Position pos) {
+		if (position.x == pos.x && position.y == (pos.y - 1) && pos.y < 7) {
+			Piece pieceToPush = null;
+			for (Piece piece : pieces) {
+				if (piece.getPosition().equals(pos)) {
+					pieceToPush = piece;
+					break;
+				}
+			}
+			if (pieceToPush != null) {
+				if (pieceToPush instanceof Tower) {
+					Position spaceBehindTowerToPush = new Position(pos.x, pos.y + 1);
+					for (Piece piece : pieces) {
+						if (piece.getPosition().equals(spaceBehindTowerToPush)) {
+							return false;
+						}
+					}
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 	public boolean isDeadLockedAtTop() {
 		boolean topObstacle = false;
 		Position topObstaclePos = new Position(position.x, position.y - 1);

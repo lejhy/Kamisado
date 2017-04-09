@@ -322,11 +322,24 @@ public class Board extends Observable implements Serializable{
 	public boolean makeMove(Move move) {
 	   Piece piece = findPiece(move.start);
 	   if (!isGameOver() && isValidPiece(piece)) {
-	       if (piece.makeMove(new Position(move.finish))) {
+		   if (piece.makeMove(new Position(move.finish))) {
 	    	   lastColor = tiles[piece.getPosition().x][piece.getPosition().y];
 	    	   Move lastMove = new Move(move);
 	    	   previousMoves.add(lastMove);
 	    	   nextPlayer();
+	    	   evaluateGameOver();
+	    	   setChanged();
+	    	   notifyObservers();
+	    	   return true;
+	       } else if (piece.sumoPush(move.finish)) {
+	    	   Move lastMove = new Move(move);
+	    	   previousMoves.add(lastMove);
+	    	   List<Move> pushMoves = piece.getSumoPushMoves();
+	    	   Position lastPushMoveFinish = pushMoves.get(pushMoves.size()-1).finish;
+	    	   lastColor = tiles[lastPushMoveFinish.x][lastPushMoveFinish.y];
+	    	   for(Move pushMove : pushMoves) {
+	    		   previousMoves.add(pushMove);
+	    	   }
 	    	   evaluateGameOver();
 	    	   setChanged();
 	    	   notifyObservers();
@@ -341,11 +354,17 @@ public class Board extends Observable implements Serializable{
 		   Move move = getLastMove();
 		   previousMoves.remove(previousMoves.size()-1);	   
 		   Piece piece = findPiece(move.finish);
-		   piece.setPosition(new Position(move.start));
+		   Value enemyPosition = piece.getPlayerPosition();
 		   
-		   move = getLastMove();
-		   previousMoves.remove(previousMoves.size()-1);
-		   piece = findPiece(move.finish);
+		   while (piece.getPlayerPosition() == enemyPosition) {
+			   Position temp = new Position(move.start);
+			   move = getLastMove();
+			   previousMoves.remove(previousMoves.size()-1);
+			   Piece newPiece = findPiece(move.finish);
+			   piece.setPosition(new Position(temp));
+			   piece = newPiece;
+		   }
+		   
 		   piece.setPosition(new Position(move.start));
 		   
 		   if (previousMoves.isEmpty()) {
