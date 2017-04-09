@@ -173,7 +173,7 @@ public class DoubleSumo extends Piece {
 			topLeftObstacle = true;
 		
 		for (Piece piece : pieces) {
-			if (piece.getPosition().equals(topObstaclePos))
+			if (piece.getPosition().equals(topObstaclePos) && !isValidBottomSumoPush(topObstaclePos))
 				topObstacle = true;
 			if (piece.getPosition().equals(topRightObstaclePos))
 				topRightObstacle = true;
@@ -204,7 +204,7 @@ public class DoubleSumo extends Piece {
 			bottomLeftObstacle = true;
 		
 		for (Piece piece : pieces) {
-			if (piece.getPosition().equals(bottomObstaclePos))
+			if (piece.getPosition().equals(bottomObstaclePos) && !isValidTopSumoPush(bottomObstaclePos))
 				bottomObstacle = true;
 			if (piece.getPosition().equals(bottomRightObstaclePos))
 				bottomRightObstacle = true;
@@ -243,6 +243,9 @@ public class DoubleSumo extends Piece {
 		List <Move> moves = new ArrayList<Move>();
 		moves.addAll(getValidWhiteStraightMoves());
 		moves.addAll(getValidWhiteDiagonalMoves());
+		if (isValidBottomSumoPush(new Position(position.x, position.y - 1))) {
+			moves.add(new Move(position.x, position.y, position.x, position.y - 1));
+		}
 		return moves;
 	}
 	
@@ -281,6 +284,9 @@ public class DoubleSumo extends Piece {
 		List <Move> moves = new ArrayList<Move>();
 		moves.addAll(getValidTopStraightMoves());
 		moves.addAll(getValidTopDiagonalMoves());
+		if (isValidBottomSumoPush(new Position(position.x, position.y + 1))) {
+			moves.add(new Move(position.x, position.y, position.x, position.y + 1));
+		}
 		return moves;
 	}
 	
@@ -316,7 +322,7 @@ public class DoubleSumo extends Piece {
 	}
 	
 	public boolean isValidBottom(Move move) {
-	   if (isValidBottomStraight(move) || isValidBottomDiagonal(move)) {
+	   if ((move.start.y - move.finish.y) <= 3 && (isValidBottomStraight(move) || isValidBottomDiagonal(move))) {
 		   	return true;
 	   } else {
 		   return false;
@@ -324,7 +330,7 @@ public class DoubleSumo extends Piece {
 	}
 	
 	public boolean isValidTop(Move move) {
-	   if (isValidTopStraight(move) || isValidTopDiagonal(move)) {
+	   if ((move.finish.y - move.start.y) <= 3 && (isValidTopStraight(move) || isValidTopDiagonal(move))) {
 		   	return true;
 	   } else {
 		   return false;

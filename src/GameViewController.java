@@ -495,19 +495,14 @@ public class GameViewController extends Controller{
     	}
     }
     
-    public void drawBoard() {
+    public void drawBoard(List<Position> positions) {
     	drawTiles(game.getBoard().getTiles());
+    	drawHighlights(positions);
     	drawPieces(game.getBoard().getPieces());
     	
     	GraphicsContext gc = gameView.getGraphicsContext2D();
     	double squareSize = gameView.getWidth()/8;
     	gc.drawImage(GRUDGE, 0, 0, squareSize*8, squareSize*8);
-    	
-    	if(position != null) {
-    		List<Position> positions = new ArrayList<Position>();
-    		positions.add(position);
-    		drawHighlights(positions);
-    	}
     }	
     	
 	public void drawTiles(Value[][] tiles){
@@ -760,12 +755,11 @@ public class GameViewController extends Controller{
 	@Override
 	public void update(Observable o, Object arg) {
 		
-		drawBoard();
 		List<Position> positions = core.getPositionsToHighlight();
-		drawHighlights(positions);
 		if (position != null) {
-			drawHighlight(position);
+			positions.add(position);
 		}
+		drawBoard(positions);
 		
 		if (game.isGameOver()) {
 			if (game.hasNextRound())
