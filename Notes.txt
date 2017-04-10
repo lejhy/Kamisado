@@ -1,15 +1,10 @@
-Controller observes Board
-Controller asks Game if its the valid move
-Add observer, then initialise
-Ideally specific view part observes specific parts of the model
-Core only sets everything up and wire everything up
-
-Bugs:
-	In SpeedGame, when go back and then resume again, timerUI is reset, but the actual Timer is not, resulting in a TIME UP when the timerUI is still in progress.
-	
 TODO:
+	Points should be calculated from the Sumo Tower values
 	Confirmation message on saveGame
 	notify user about invalid moves
-	undo doesnt work after deadlock on win
-	timer in view is not hidden on new or load game, gameOver is displayed on the background from the last game when its timer runs out
-	speed game time up, inconsistent round and game winner
+
+Bugs:
+	TripleSumo and QuadrupleSumo pushes three pieces in front of it even if there is a gap between the first and the second (should only push what is necessary)
+	SumoPush does not differ between friendly and enemy towers (should only push enemy)
+	AI does not do SumoPush moves, when a Sumo is locked but can do push AI stops working, it also does not differ whose turn it is and presumes they rotate (probably related to each other)
+	
