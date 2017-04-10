@@ -98,7 +98,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </RadioButton>
-            <CheckBox fx:id="randomBoard" minHeight="25.0" minWidth="105.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Random Board" />
+            <CheckBox fx:id="randomBoard" minHeight="25.0" minWidth="105.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Randomize" />
             <Button minHeight="40.0" minWidth="125.0" mnemonicParsing="false" onAction="#mainMenu" text="Back [B]">
                <VBox.margin>
                   <Insets bottom="80.0" top="30.0" />
