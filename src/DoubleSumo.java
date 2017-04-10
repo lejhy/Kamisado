@@ -126,7 +126,7 @@ public class DoubleSumo extends Piece {
 						break;
 					}
 				}
-				if (pieceToPush != null && (pieceToPush instanceof Tower || pieceToPush instanceof Sumo)) {
+				if (pieceToPush != null && (pieceToPush instanceof Tower || pieceToPush instanceof Sumo) && pieceToPush.getPlayerPosition() != this.getPlayerPosition()) {
 					Position spaceBehindTowerToPush = new Position(pos.x, pos.y - i - 1);
 					pieceToPush = null;
 					for (Piece piece : pieces) {
@@ -158,7 +158,7 @@ public class DoubleSumo extends Piece {
 						break;
 					}
 				}
-				if (pieceToPush != null && (pieceToPush instanceof Tower || pieceToPush instanceof Sumo)) {
+				if (pieceToPush != null && (pieceToPush instanceof Tower || pieceToPush instanceof Sumo && pieceToPush.getPlayerPosition() != this.getPlayerPosition())) {
 					Position spaceBehindTowerToPush = new Position(pos.x, pos.y + i + 1);
 					pieceToPush = null;
 					for (Piece piece : pieces) {

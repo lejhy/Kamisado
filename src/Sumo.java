@@ -118,7 +118,7 @@ public class Sumo extends Piece {
 				}
 			}
 			if (pieceToPush != null) {
-				if (pieceToPush instanceof Tower) {
+				if (pieceToPush instanceof Tower && pieceToPush.getPlayerPosition() != this.getPlayerPosition()) {
 					Position spaceBehindTowerToPush = new Position(pos.x, pos.y - 1);
 					for (Piece piece : pieces) {
 						if (piece.getPosition().equals(spaceBehindTowerToPush)) {
@@ -142,7 +142,7 @@ public class Sumo extends Piece {
 				}
 			}
 			if (pieceToPush != null) {
-				if (pieceToPush instanceof Tower) {
+				if (pieceToPush instanceof Tower && pieceToPush.getPlayerPosition() != this.getPlayerPosition()) {
 					Position spaceBehindTowerToPush = new Position(pos.x, pos.y + 1);
 					for (Piece piece : pieces) {
 						if (piece.getPosition().equals(spaceBehindTowerToPush)) {
