@@ -4,7 +4,5 @@ TODO:
 	notify user about invalid moves
 
 Bugs:
-	TripleSumo and QuadrupleSumo pushes three pieces in front of it even if there is a gap between the first and the second (should only push what is necessary)
-	SumoPush does not differ between friendly and enemy towers (should only push enemy)
 	AI does not do SumoPush moves, when a Sumo is locked but can do push AI stops working, it also does not differ whose turn it is and presumes they rotate (probably related to each other)
 	

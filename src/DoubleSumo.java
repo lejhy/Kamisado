@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DoubleSumo extends Piece {
+	
+	List<Move> lastSumoPushMoves = null;
 
 	public DoubleSumo(Value color, Value playerPosition, Position towerPosition, List<Piece> pieces) {
 		super(color, playerPosition, towerPosition, pieces);
@@ -71,24 +73,53 @@ public class DoubleSumo extends Piece {
 	public boolean sumoPush(Position pos) {
 		if (playerPosition == Value.BOTTOM) {
 			if (isValidBottomSumoPush(pos)) {
-				Move move = new Move (pos.x, pos.y - 1, pos.x, pos.y - 2);
-				moveOtherPiece(move);
+				lastSumoPushMoves = new ArrayList<Move>();
+				Move move = null;
+				if (pieceExists(pos.x, pos.y - 1)) {
+					move = new Move (pos.x, pos.y - 1, pos.x, pos.y - 2);
+					moveOtherPiece(move);
+					lastSumoPushMoves.add(move);
+				}
 				move = new Move (pos.x, pos.y, pos.x, pos.y - 1);
 				moveOtherPiece(move);
+				lastSumoPushMoves.add(move);
 				position.x = pos.x;
 				position.y = pos.y;
 				return true;
 			}
 		} else if (playerPosition == Value.TOP) {
 			if (isValidTopSumoPush(pos)) {
-				Move move = new Move (pos.x, pos.y + 1, pos.x, pos.y + 2);
-				moveOtherPiece(move);
+				lastSumoPushMoves = new ArrayList<Move>();
+				Move move = null;
+				if (pieceExists(pos.x, pos.y + 1)) {
+					move = new Move (pos.x, pos.y + 1, pos.x, pos.y + 2);
+					moveOtherPiece(move);
+					lastSumoPushMoves.add(move);
+				}
 				move = new Move (pos.x, pos.y, pos.x, pos.y + 1);
 				moveOtherPiece(move);
+				lastSumoPushMoves.add(move);
 				position.x = pos.x;
 				position.y = pos.y;
 				return true;
 			}
+		}
+		return false;
+	}
+	
+	private boolean pieceExists(Position pos) {
+		for (Piece piece : pieces) {
+			if (piece.getPosition().equals(pos))
+				return true;
+		}
+		return false;
+	}
+	
+	private boolean pieceExists(int posX, int posY) {
+		Position pos = new Position(posX, posY);
+		for (Piece piece : pieces) {
+			if (piece.getPosition().equals(pos))
+				return true;
 		}
 		return false;
 	}
@@ -104,15 +135,7 @@ public class DoubleSumo extends Piece {
 
 	@Override
 	public List<Move> getSumoPushUndoMoves() {
-		List<Move> moves = new ArrayList<Move>();
-		if (playerPosition == Value.BOTTOM) {
-			moves.add(new Move(position.x, position.y - 1, position.x, position.y - 2));
-			moves.add(new Move(position.x, position.y, position.x, position.y - 1));
-		} else {
-			moves.add(new Move(position.x, position.y + 1, position.x, position.y + 2));
-			moves.add(new Move(position.x, position.y, position.x, position.y + 1));
-		}
-		return moves;
+		return lastSumoPushMoves;
 	}
 	
 	public boolean isValidBottomSumoPush(Position pos) {
