@@ -340,7 +340,7 @@ public class TripleSumo extends Piece {
 		List <Move> moves = new ArrayList<Move>();
 		moves.addAll(getValidTopStraightMoves());
 		moves.addAll(getValidTopDiagonalMoves());
-		if (isValidBottomSumoPush(new Position(position.x, position.y + 1))) {
+		if (isValidTopSumoPush(new Position(position.x, position.y + 1))) {
 			moves.add(new Move(position.x, position.y, position.x, position.y + 1));
 		}
 		return moves;
