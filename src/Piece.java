@@ -10,7 +10,7 @@ public abstract class Piece implements Serializable{
 	
 	public abstract boolean makeMove(Position pos);
 	public abstract boolean sumoPush(Position pos);
-	public abstract List<Move> getSumoPushMoves();
+	public abstract List<Move> getSumoPushUndoMoves();
 	public abstract boolean isDeadlocked();
 	public abstract boolean isValidMove(Move move);
 	public abstract List<Move> getValidMoves();

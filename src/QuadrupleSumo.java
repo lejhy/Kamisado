@@ -53,12 +53,12 @@ public class QuadrupleSumo extends Piece {
 	
 	@Override
 	public Piece clone() {
-		return new Tower(this);
+		return new QuadrupleSumo(this);
 	}
 	
 	@Override
 	public Piece clone(List<Piece> pieces) {
-		return new Tower(this, pieces);
+		return new QuadrupleSumo(this, pieces);
 	}
 	
 	@Override
@@ -70,24 +70,28 @@ public class QuadrupleSumo extends Piece {
 	public boolean sumoPush(Position pos) {
 		if (playerPosition == Value.BOTTOM) {
 			if (isValidBottomSumoPush(pos)) {
-				for (Piece piece : pieces) {
-					if (piece.getPosition().equals(pos)) {
-						piece.setPosition(new Position(pos.x, pos.y - 1));
-						break;
-					}
-				}
+				Move move = new Move(pos.x, pos.y - 3, pos.x, pos.y - 4);
+				moveOtherPiece(move);
+				move = new Move  (pos.x, pos.y - 2, pos.x, pos.y - 3);
+				moveOtherPiece(move);
+				move = new Move(pos.x, pos.y - 1, pos.x, pos.y - 2);
+				moveOtherPiece(move);
+				move = new Move (pos.x, pos.y, pos.x, pos.y - 1);
+				moveOtherPiece(move);
 				position.x = pos.x;
 				position.y = pos.y;
 				return true;
 			}
 		} else if (playerPosition == Value.TOP) {
 			if (isValidTopSumoPush(pos)) {
-				for (Piece piece : pieces) {
-					if (piece.getPosition().equals(pos)) {
-						piece.setPosition(new Position(pos.x, pos.y + 1));
-						break;
-					}
-				}
+				Move move = new Move(pos.x, pos.y + 3, pos.x, pos.y + 4);
+				moveOtherPiece(move);
+				move = new Move  (pos.x, pos.y + 2, pos.x, pos.y + 3);
+				moveOtherPiece(move);
+				move = new Move(pos.x, pos.y + 1, pos.x, pos.y + 2);
+				moveOtherPiece(move);
+				move = new Move (pos.x, pos.y, pos.x, pos.y + 1);
+				moveOtherPiece(move);
 				position.x = pos.x;
 				position.y = pos.y;
 				return true;
@@ -95,13 +99,28 @@ public class QuadrupleSumo extends Piece {
 		}
 		return false;
 	}
+	
+	private void moveOtherPiece (Move move) {
+		for (Piece piece : pieces) {
+			if (piece.getPosition().equals(move.start)) {
+				piece.setPosition(move.finish);
+				break;
+			}
+		}
+	}
 
 	@Override
-	public List<Move> getSumoPushMoves() {
+	public List<Move> getSumoPushUndoMoves() {
 		List<Move> moves = new ArrayList<Move>();
 		if (playerPosition == Value.BOTTOM) {
+			moves.add(new Move(position.x, position.y - 3, position.x, position.y - 4));
+			moves.add(new Move(position.x, position.y - 2, position.x, position.y - 3));
+			moves.add(new Move(position.x, position.y - 1, position.x, position.y - 2));
 			moves.add(new Move(position.x, position.y, position.x, position.y - 1));
 		} else {
+			moves.add(new Move(position.x, position.y + 3, position.x, position.y + 4));
+			moves.add(new Move(position.x, position.y + 2, position.x, position.y + 3));
+			moves.add(new Move(position.x, position.y + 1, position.x, position.y + 2));
 			moves.add(new Move(position.x, position.y, position.x, position.y + 1));
 		}
 		return moves;
@@ -109,23 +128,31 @@ public class QuadrupleSumo extends Piece {
 	
 	public boolean isValidBottomSumoPush(Position pos) {
 		if (position.x == pos.x && position.y == (pos.y + 1) && pos.y > 0) {
-			Piece pieceToPush = null;
-			for (Piece piece : pieces) {
-				if (piece.getPosition().equals(pos)) {
-					pieceToPush = piece;
-					break;
+			int i = 0;
+			while (true) {
+				Piece pieceToPush = null;
+				for (Piece piece : pieces) {
+					if (piece.getPosition().equals(new Position(pos.x, pos.y - i))) {
+						pieceToPush = piece;
+						break;
+					}
 				}
-			}
-			if (pieceToPush != null) {
-				if (pieceToPush instanceof Tower) {
-					Position spaceBehindTowerToPush = new Position(pos.x, pos.y - 1);
+				if (pieceToPush != null && (pieceToPush instanceof Tower || pieceToPush instanceof Sumo || pieceToPush instanceof DoubleSumo)) {
+					Position spaceBehindTowerToPush = new Position(pos.x, pos.y - i - 1);
+					pieceToPush = null;
 					for (Piece piece : pieces) {
 						if (piece.getPosition().equals(spaceBehindTowerToPush)) {
-							return false;
+							pieceToPush = piece;
+							break;
 						}
 					}
-					return true;
+					if (pieceToPush == null && spaceBehindTowerToPush.y >= 0) {
+						return true;
+					} else if (++i < 4){
+						continue;
+					}
 				}
+				return false;
 			}
 		}
 		return false;
@@ -133,23 +160,31 @@ public class QuadrupleSumo extends Piece {
 	
 	public boolean isValidTopSumoPush(Position pos) {
 		if (position.x == pos.x && position.y == (pos.y - 1) && pos.y < 7) {
-			Piece pieceToPush = null;
-			for (Piece piece : pieces) {
-				if (piece.getPosition().equals(pos)) {
-					pieceToPush = piece;
-					break;
+			int i = 0;
+			while (true) {
+				Piece pieceToPush = null;
+				for (Piece piece : pieces) {
+					if (piece.getPosition().equals(new Position(pos.x, pos.y + i))) {
+						pieceToPush = piece;
+						break;
+					}
 				}
-			}
-			if (pieceToPush != null) {
-				if (pieceToPush instanceof Tower) {
-					Position spaceBehindTowerToPush = new Position(pos.x, pos.y + 1);
+				if (pieceToPush != null && (pieceToPush instanceof Tower || pieceToPush instanceof Sumo || pieceToPush instanceof DoubleSumo)) {
+					Position spaceBehindTowerToPush = new Position(pos.x, pos.y + i + 1);
+					pieceToPush = null;
 					for (Piece piece : pieces) {
 						if (piece.getPosition().equals(spaceBehindTowerToPush)) {
-							return false;
+							pieceToPush = piece;
+							break;
 						}
 					}
-					return true;
+					if (pieceToPush == null && spaceBehindTowerToPush.y <= 7) {
+						return true;
+					} else if (++i < 4){
+						continue;
+					}
 				}
+				return false;
 			}
 		}
 		return false;

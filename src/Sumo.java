@@ -98,7 +98,7 @@ public class Sumo extends Piece {
 	}
 
 	@Override
-	public List<Move> getSumoPushMoves() {
+	public List<Move> getSumoPushUndoMoves() {
 		List<Move> moves = new ArrayList<Move>();
 		if (playerPosition == Value.BOTTOM) {
 			moves.add(new Move(position.x, position.y, position.x, position.y - 1));

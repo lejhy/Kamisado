@@ -18,7 +18,7 @@ public class Board extends Observable implements Serializable{
 	private Value gameOverCause;
 	private Value[][] tiles;
 	private List<Piece> pieces;
-	private List<Move> previousMoves;
+	private List<List<Move>> previousMoves;
 	
 	public List<Piece> getPieces() {
 		return pieces;
@@ -49,13 +49,17 @@ public class Board extends Observable implements Serializable{
 	}
 	
 	private void initPreviousMoves() {
-		this.previousMoves = new ArrayList<Move>();
+		this.previousMoves = new ArrayList<List<Move>>();
 	}
 	
-	private void initPreviousMoves(List<Move> moves) {
-		this.previousMoves = new ArrayList<Move>();
-		for (Move move: moves) {
-			this.previousMoves.add(new Move(move));
+	private void initPreviousMoves(List<List<Move>> moves) {
+		this.previousMoves = new ArrayList<List<Move>>();
+		for (List<Move> list : moves){
+			List<Move> listCopy = new ArrayList<Move>();
+			this.previousMoves.add(listCopy);
+			for (Move move: list) {
+				listCopy.add(new Move(move));
+			}
 		}
 	}
 	
@@ -136,7 +140,6 @@ public class Board extends Observable implements Serializable{
 		lastPlayerPosition = Value.TOP;
 		lastColor = null;
 		gameOver.set(false);
-		previousMoves = new ArrayList<Move>();
 	}
 	
 	public void fillFromRight() {
@@ -176,7 +179,6 @@ public class Board extends Observable implements Serializable{
 		lastPlayerPosition = Value.TOP;
 		lastColor = null;
 		gameOver.set(false);
-		previousMoves = new ArrayList<Move>();
 	}
 	
 	public void randomizeTiles() {
@@ -283,11 +285,21 @@ public class Board extends Observable implements Serializable{
 		return lastColor;
 	}
 	
-	public Move getLastMove () {
+	public List<Move> getLastMoveList () {
 		if (previousMoves.isEmpty())
 			return null;
 		else
-			return new Move(previousMoves.get(previousMoves.size() - 1));
+			return previousMoves.get(previousMoves.size() - 1);
+	}
+	
+	public Move getLastMove() {
+		if (previousMoves.isEmpty())
+			return null;
+		else {
+			List <Move> moves= previousMoves.get(previousMoves.size() - 1);
+			return moves.get(moves.size() - 1);
+		}
+			
 	}
 	
 	public void nextPlayer(){
@@ -298,7 +310,7 @@ public class Board extends Observable implements Serializable{
 		}
 	}
    
-	public List<Move> getPreviousMoves() {
+	public List<List<Move>> getPreviousMoves() {
 		return previousMoves;
 	}
    
@@ -325,7 +337,9 @@ public class Board extends Observable implements Serializable{
 		   if (piece.makeMove(new Position(move.finish))) {
 	    	   lastColor = tiles[piece.getPosition().x][piece.getPosition().y];
 	    	   Move lastMove = new Move(move);
-	    	   previousMoves.add(lastMove);
+	    	   List<Move> lastMoveList = new ArrayList<Move>();
+	    	   lastMoveList.add(lastMove);
+	    	   previousMoves.add(lastMoveList);
 	    	   nextPlayer();
 	    	   evaluateGameOver();
 	    	   setChanged();
@@ -333,13 +347,13 @@ public class Board extends Observable implements Serializable{
 	    	   return true;
 	       } else if (piece.sumoPush(move.finish)) {
 	    	   Move lastMove = new Move(move);
-	    	   previousMoves.add(lastMove);
-	    	   List<Move> pushMoves = piece.getSumoPushMoves();
-	    	   Position lastPushMoveFinish = pushMoves.get(pushMoves.size()-1).finish;
+	    	   List<Move> pushMoves = piece.getSumoPushUndoMoves();
+	    	   Position lastPushMoveFinish = pushMoves.get(0).finish;
 	    	   lastColor = tiles[lastPushMoveFinish.x][lastPushMoveFinish.y];
-	    	   for(Move pushMove : pushMoves) {
-	    		   previousMoves.add(pushMove);
-	    	   }
+	    	   List<Move> lastMoveList = new ArrayList<Move>();
+	    	   lastMoveList.addAll(pushMoves);
+	    	   lastMoveList.add(lastMove);
+	    	   previousMoves.add(lastMoveList);
 	    	   evaluateGameOver();
 	    	   setChanged();
 	    	   notifyObservers();
@@ -350,26 +364,18 @@ public class Board extends Observable implements Serializable{
    }
    
    public boolean undoLastMove() {
-	   if (!isGameOver() && previousMoves.isEmpty() == false) {
-		   Move move = getLastMove();
-		   previousMoves.remove(previousMoves.size()-1);	   
-		   Piece piece = findPiece(move.finish);
-		   Value enemyPosition = piece.getPlayerPosition();
-		   
-		   while (piece.getPlayerPosition() == enemyPosition) {
-			   Position temp = new Position(move.start);
-			   move = getLastMove();
+	   if (!isGameOver() && previousMoves.size() >= 2) {
+		   List<Move> moves = null;
+		   do {
+			   moves = getLastMoveList();
 			   previousMoves.remove(previousMoves.size()-1);
-			   Piece newPiece = findPiece(move.finish);
-			   piece.setPosition(new Position(temp));
-			   piece = newPiece;
-		   }
-		   
-		   piece.setPosition(new Position(move.start));
+			   revertMoves(moves);	
+		   } while (findPiece(moves.get(moves.size() - 1).start).getPlayerPosition() != getCurrentPlayerPosition() && !previousMoves.isEmpty());
 		   
 		   if (previousMoves.isEmpty()) {
 			   lastColor = null;
 		   } else {
+			   Piece piece = findPiece(moves.get(moves.size() - 1).start);
 			   lastColor = piece.getColor();
 		   }
 		   setChanged();
@@ -377,6 +383,15 @@ public class Board extends Observable implements Serializable{
 		   return true;
 	   }
 	   return false;
+   }
+   
+   private void revertMoves(List<Move> moves) {
+	   Piece piece = null;
+	   for (int i = moves.size() - 1; i >= 0; i--) {
+		   piece = findPiece(moves.get(i).finish);
+		   if (piece != null)
+			   piece.setPosition(moves.get(i).start);
+	   }
    }
    
    private void writeObject(ObjectOutputStream out) throws IOException {

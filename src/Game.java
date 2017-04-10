@@ -128,7 +128,7 @@ public abstract class Game extends Observable implements Serializable{
 	}
 	
 	public boolean undoLastMove() {
-		if (getCurrentPlayer().getType() == Value.HUMAN && (getLastPlayer().getType() == Value.HARD_AI || getLastPlayer().getType() == Value.EASY_AI || getLastPlayer().getType() == Value.BEGINNER_AI)){ 
+		if (true || getCurrentPlayer().getType() == Value.HUMAN && (getLastPlayer().getType() == Value.HARD_AI || getLastPlayer().getType() == Value.EASY_AI || getLastPlayer().getType() == Value.BEGINNER_AI)){ 
 			if (board.undoLastMove()) {
 				return true;
 			}

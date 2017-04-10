@@ -22,7 +22,7 @@ public class DoubleSumo extends Piece {
 		} else {
 			Move move = new Move(this.position, pos);
 			if (playerPosition == Value.BOTTOM) {
-				if (isValidBottomStraight(move) || isValidBottomDiagonal(move)) {
+				if (isValidBottom(move)) {
 					position.x = pos.x;
 					position.y = pos.y;
 					if (position.y == 0)
@@ -30,7 +30,7 @@ public class DoubleSumo extends Piece {
 					return true;
 				}
 			} else if (playerPosition == Value.TOP) {
-				if (isValidTopStraight(move) || isValidTopDiagonal(move)) {
+				if (isValidTop(move)) {
 					position.x = pos.x;
 					position.y = pos.y;
 					if (position.y == 7)
@@ -53,12 +53,12 @@ public class DoubleSumo extends Piece {
 	
 	@Override
 	public Piece clone() {
-		return new Tower(this);
+		return new DoubleSumo(this);
 	}
 	
 	@Override
 	public Piece clone(List<Piece> pieces) {
-		return new Tower(this, pieces);
+		return new DoubleSumo(this, pieces);
 	}
 	
 	@Override
@@ -71,24 +71,20 @@ public class DoubleSumo extends Piece {
 	public boolean sumoPush(Position pos) {
 		if (playerPosition == Value.BOTTOM) {
 			if (isValidBottomSumoPush(pos)) {
-				for (Piece piece : pieces) {
-					if (piece.getPosition().equals(pos)) {
-						piece.setPosition(new Position(pos.x, pos.y - 1));
-						break;
-					}
-				}
+				Move move = new Move (pos.x, pos.y - 1, pos.x, pos.y - 2);
+				moveOtherPiece(move);
+				move = new Move (pos.x, pos.y, pos.x, pos.y - 1);
+				moveOtherPiece(move);
 				position.x = pos.x;
 				position.y = pos.y;
 				return true;
 			}
 		} else if (playerPosition == Value.TOP) {
 			if (isValidTopSumoPush(pos)) {
-				for (Piece piece : pieces) {
-					if (piece.getPosition().equals(pos)) {
-						piece.setPosition(new Position(pos.x, pos.y + 1));
-						break;
-					}
-				}
+				Move move = new Move (pos.x, pos.y + 1, pos.x, pos.y + 2);
+				moveOtherPiece(move);
+				move = new Move (pos.x, pos.y, pos.x, pos.y + 1);
+				moveOtherPiece(move);
 				position.x = pos.x;
 				position.y = pos.y;
 				return true;
@@ -96,13 +92,24 @@ public class DoubleSumo extends Piece {
 		}
 		return false;
 	}
+	
+	private void moveOtherPiece (Move move) {
+		for (Piece piece : pieces) {
+			if (piece.getPosition().equals(move.start)) {
+				piece.setPosition(move.finish);
+				break;
+			}
+		}
+	}
 
 	@Override
-	public List<Move> getSumoPushMoves() {
+	public List<Move> getSumoPushUndoMoves() {
 		List<Move> moves = new ArrayList<Move>();
 		if (playerPosition == Value.BOTTOM) {
+			moves.add(new Move(position.x, position.y - 1, position.x, position.y - 2));
 			moves.add(new Move(position.x, position.y, position.x, position.y - 1));
 		} else {
+			moves.add(new Move(position.x, position.y + 1, position.x, position.y + 2));
 			moves.add(new Move(position.x, position.y, position.x, position.y + 1));
 		}
 		return moves;
@@ -110,47 +117,63 @@ public class DoubleSumo extends Piece {
 	
 	public boolean isValidBottomSumoPush(Position pos) {
 		if (position.x == pos.x && position.y == (pos.y + 1) && pos.y > 0) {
-			Piece pieceToPush = null;
-			for (Piece piece : pieces) {
-				if (piece.getPosition().equals(pos)) {
-					pieceToPush = piece;
-					break;
+			int i = 0;
+			while (true) {
+				Piece pieceToPush = null;
+				for (Piece piece : pieces) {
+					if (piece.getPosition().equals(new Position(pos.x, pos.y - i))) {
+						pieceToPush = piece;
+						break;
+					}
 				}
-			}
-			if (pieceToPush != null) {
-				if (pieceToPush instanceof Tower) {
-					Position spaceBehindTowerToPush = new Position(pos.x, pos.y - 1);
+				if (pieceToPush != null && (pieceToPush instanceof Tower || pieceToPush instanceof Sumo)) {
+					Position spaceBehindTowerToPush = new Position(pos.x, pos.y - i - 1);
+					pieceToPush = null;
 					for (Piece piece : pieces) {
 						if (piece.getPosition().equals(spaceBehindTowerToPush)) {
-							return false;
+							pieceToPush = piece;
+							break;
 						}
 					}
-					return true;
+					if (pieceToPush == null && spaceBehindTowerToPush.y >= 0) {
+						return true;
+					} else if (++i < 2){
+						continue;
+					}
 				}
+				return false;
 			}
 		}
 		return false;
 	}
 	
 	public boolean isValidTopSumoPush(Position pos) {
-		if (position.x == pos.x && position.y == (pos.y - 1) && pos.y < 7) {
-			Piece pieceToPush = null;
-			for (Piece piece : pieces) {
-				if (piece.getPosition().equals(pos)) {
-					pieceToPush = piece;
-					break;
+		if (position.x == pos.x && position.y == (pos.y - 1) && pos.y > 0) {
+			int i = 0;
+			while (true) {
+				Piece pieceToPush = null;
+				for (Piece piece : pieces) {
+					if (piece.getPosition().equals(new Position(pos.x, pos.y + i))) {
+						pieceToPush = piece;
+						break;
+					}
 				}
-			}
-			if (pieceToPush != null) {
-				if (pieceToPush instanceof Tower) {
-					Position spaceBehindTowerToPush = new Position(pos.x, pos.y + 1);
+				if (pieceToPush != null && (pieceToPush instanceof Tower || pieceToPush instanceof Sumo)) {
+					Position spaceBehindTowerToPush = new Position(pos.x, pos.y + i + 1);
+					pieceToPush = null;
 					for (Piece piece : pieces) {
 						if (piece.getPosition().equals(spaceBehindTowerToPush)) {
-							return false;
+							pieceToPush = piece;
+							break;
 						}
 					}
-					return true;
+					if (pieceToPush == null && spaceBehindTowerToPush.y <= 7) {
+						return true;
+					} else if (++i < 2){
+						continue;
+					}
 				}
+				return false;
 			}
 		}
 		return false;

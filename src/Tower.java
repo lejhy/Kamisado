@@ -324,7 +324,7 @@ public class Tower extends Piece {
 	}
 
 	@Override
-	public List<Move> getSumoPushMoves() {
+	public List<Move> getSumoPushUndoMoves() {
 		return new ArrayList<Move>();
 	}
 }
