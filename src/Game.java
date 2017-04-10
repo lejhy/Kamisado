@@ -15,6 +15,7 @@ public abstract class Game extends Observable implements Serializable{
 	protected Player player1;
 	protected Player player2;
 	protected Board board;
+	protected boolean randomBoard;
 	protected int turn;
 	protected Score score;
    
@@ -23,10 +24,14 @@ public abstract class Game extends Observable implements Serializable{
    	protected abstract Game clone();
    	public abstract void purge();
    	
-   	public boolean nextRound() {
+   	public boolean nextRound(Value fillDirection) {
    		if (isGameOver() && hasNextRound()) {
-   			board.fillFromLeft();
-   			board.randomizeTiles();
+   			if (fillDirection == Value.RIGHT)
+   				board.fillFromRight();
+   			else if (fillDirection == Value.LEFT)
+   				board.fillFromLeft();
+   			if (randomBoard)
+   				board.randomizeTiles();
    			score.nextRound();
    			change();
    			return true;
@@ -185,9 +190,10 @@ public abstract class Game extends Observable implements Serializable{
 		return getCurrentPlayer().getType();
 	}
 	
-	public Game(Player player1, Player player2, int points){
+	public Game(Player player1, Player player2, int points, boolean randomBoard){
 		this.player1 = player1;
 		this.player2 = player2;
+		this.randomBoard = randomBoard;
 		board = new Board();
 		turn = 0;
 		score = new Score(points);
@@ -196,6 +202,7 @@ public abstract class Game extends Observable implements Serializable{
 	public Game(Game game) {
 		this.player1 = new Player(game.getPlayer1());
 		this.player2 = new Player(game.getPlayer2());
+		this.randomBoard = game.randomBoard;
 		board = new Board(game.getBoard());
 		turn = game.getTurn();
 		score = new Score(game.getScore());

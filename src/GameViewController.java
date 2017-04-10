@@ -382,6 +382,11 @@ public class GameViewController extends Controller{
 				canvasWidth/2, 
 				(canvasHeight + 3*squareSize)/2
 		);
+		gc.fillText(
+				"\uD83E\uDC78 \uD83E\uDC70 \uD83E\uDC60 Fill from right or left? \uD83E\uDC62 \uD83E\uDC72 \uD83E\uDC7A", 
+				canvasWidth/2, 
+				(canvasHeight + 5*squareSize)/2
+		);
 	}
     
     public void gameOver(Value cause, String roundWinner, String gameWinner) {

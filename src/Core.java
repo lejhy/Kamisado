@@ -48,7 +48,10 @@ public class Core extends Observable implements Observer{
 				selection = piece.getPosition();
 				change();
 			} else if (game.isGameOver() && game.hasNextRound()){
-				game.nextRound();
+				if (position.x <= 3)
+					game.nextRound(Value.LEFT);
+				else 
+					game.nextRound(Value.RIGHT);
 			} else if (game.isValidPiecePosition(position)){
 				selection = position;
 			} else {
@@ -108,13 +111,13 @@ public class Core extends Observable implements Observer{
     	view.displayScene(mainMenuViewController);
     }
 	
-    void newGame(Player player1, Player player2, int time, int points, Value gameMode) {
+    void newGame(Player player1, Player player2, int time, int points, boolean randomBoard, Value gameMode) {
     	if (game != null) 
     		game.purge();
     	if (gameMode == Value.SPEED_MODE){
-    		this.game = new SpeedGame(player1, player2, time, points);
+    		this.game = new SpeedGame(player1, player2, time, points, randomBoard);
     	} else {
-    		this.game = new NormalGame(player1, player2, points);
+    		this.game = new NormalGame(player1, player2, points, randomBoard);
     	}
     	game.addObserver(this);
     	game.addPlayer1PointsListener((observable, oldValue, newValue) -> {

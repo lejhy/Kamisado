@@ -103,7 +103,7 @@ public class Board extends Observable implements Serializable{
 		}
 	}
 	
-	public void fillFromLeft() {
+	public void fillFromRight() {
 		List <Piece> topRow = new ArrayList<Piece>();
 		for (int i = 0; i <= 7; i++) {
 			for (int j = 0; j <= 7; j++) {
@@ -142,7 +142,7 @@ public class Board extends Observable implements Serializable{
 		gameOver.set(false);
 	}
 	
-	public void fillFromRight() {
+	public void fillFromLeft() {
 		List <Piece> topRow = new ArrayList<Piece>();
 		for (int i = 0; i <= 7; i++) {
 			for (int j = 7; j >= 0; j--) {

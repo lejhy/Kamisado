@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
@@ -29,6 +30,9 @@ public class NewGameViewController extends Controller{
 
     @FXML
     private ToggleGroup gameMode;
+    
+    @FXML
+    private CheckBox randomBoard;
 
     @FXML
     private TextField player2NameInput;
@@ -116,6 +120,7 @@ public class NewGameViewController extends Controller{
     	Value player1TypeValue = getRBSelectionValue (player1Type);
     	Value player2TypeValue = getRBSelectionValue (player2Type);
     	Value gameModeValue = getRBSelectionValue (gameMode);
+    	boolean randomBoardValue = randomBoard.isSelected();
     	int time = (int)timeInput.getValue() * 1000;
     	int points = (int)pointsInput.getValue();
     	
@@ -132,7 +137,7 @@ public class NewGameViewController extends Controller{
     	Player player1 = new Player (player1Name, player1TypeValue);
     	Player player2 = new Player (player2Name, player2TypeValue);
     	
-    	core.newGame(player1, player2, time, points,  gameModeValue);
+    	core.newGame(player1, player2, time, points, randomBoardValue, gameModeValue);
     }
     
     public Value getRBSelectionValue (ToggleGroup toggleGroup) {

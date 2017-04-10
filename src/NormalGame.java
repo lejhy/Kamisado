@@ -25,8 +25,8 @@ public class NormalGame extends Game {
    		change();
 	}
 
-	public NormalGame(Player player1, Player player2, int points) {
-		super(player1, player2, points);
+	public NormalGame(Player player1, Player player2, int points, boolean randomBoard) {
+		super(player1, player2, points, randomBoard);
 	}
 	
 	public NormalGame(NormalGame game) {

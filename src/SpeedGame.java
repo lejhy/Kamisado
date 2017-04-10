@@ -63,8 +63,8 @@ public class SpeedGame extends Game {
 		}
 	}
 
-	public SpeedGame(Player player1, Player player2, int time, int points) {
-		super(player1, player2, points);
+	public SpeedGame(Player player1, Player player2, int time, int points, boolean randomBoard) {
+		super(player1, player2, points, randomBoard);
 		timeLimit = time;
 		timer = new Timer();
 	}
