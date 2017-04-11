@@ -412,4 +412,9 @@ public class Sumo extends Piece {
 			return false;
 		}	
 	}
+
+	@Override
+	public int getPoints() {
+		return 1;
+	}
 }

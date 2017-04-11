@@ -477,4 +477,9 @@ public class QuadrupleSumo extends Piece {
 			return false;
 		}	
 	}
+	
+	@Override
+	public int getPoints() {
+		return 15;
+	}
 }

@@ -468,4 +468,9 @@ public class TripleSumo extends Piece {
 			return false;
 		}	
 	}
+	
+	@Override
+	public int getPoints() {
+		return 7;
+	}
 }

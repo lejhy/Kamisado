@@ -80,7 +80,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </Label>
-            <Slider fx:id="pointsInput" blockIncrement="1.0" max="20.0" min="1.0" value="1.0">
+            <Slider fx:id="pointsInput" blockIncrement="1.0" max="50.0" min="1.0" value="1.0">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>

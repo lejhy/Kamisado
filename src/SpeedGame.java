@@ -29,11 +29,7 @@ public class SpeedGame extends Game {
 	protected void gameOver() {
 		System.out.println("game over in speedGame");
    		cancelTimer();
-   		if (board.getWinnerPosition() == Value.BOTTOM){
-   			score.setWinnerPlayer1();
-   		} else {
-   			score.setWinnerPlayer2();
-   		}
+   		score.updatePoints(board.getPieces());
    		change();
 	}
 	

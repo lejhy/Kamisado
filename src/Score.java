@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Observable;
 import java.util.Timer;
 
@@ -38,8 +39,22 @@ public class Score extends Observable implements Serializable{
 		player2Points.set(player2Points.get() + 1);
 	}
 	
+	public void updatePoints(List<Piece> pieces) {
+		int player1Points = 0;
+		int player2Points = 0;
+		for (Piece piece : pieces) {
+			if (piece.getPlayerPosition() == Value.BOTTOM) {
+				player1Points += piece.getPoints();
+			} else {
+				player2Points += piece.getPoints();
+			}
+		}
+		this.player1Points.set(player1Points);
+		this.player2Points.set(player2Points);
+	}
+	
 	public boolean hasNextRound() {
-		if (round < points) {
+		if (player1Points.get() < points && player2Points.get() < points) {
 			return true;
 		} else {
 			return false;

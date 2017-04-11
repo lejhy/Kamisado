@@ -786,7 +786,7 @@ public class GameViewController extends Controller{
 		if (!game.isGameOver() && game.getCurrentPlayer().getType() == Value.HUMAN && game.getLastPlayer().getType() != Value.HUMAN) {
 			undo.setVisible(true);
 		} else {
-			undo.setVisible(true);
+			undo.setVisible(false);
 		}
 	}
 }
