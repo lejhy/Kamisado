@@ -20,13 +20,19 @@
       </Label>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#previousSong" text="⏪" />
-            <Label fx:id="currentlyPlaying" styleClass="title" text="Currently playing">
+            <Button mnemonicParsing="false" onAction="#previousSong" text="⏪">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin></Button>
+            <Label fx:id="currentlyPlaying" maxWidth="500.0" styleClass="title" text="Currently playing">
                <HBox.margin>
                   <Insets left="10.0" right="10.0" />
                </HBox.margin>
             </Label>
-            <Button mnemonicParsing="false" onAction="#nextSong" text="⏩" />
+            <Button mnemonicParsing="false" onAction="#nextSong" text="⏩">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin></Button>
          </children>
       </HBox>
       <Slider fx:id="volume" blockIncrement="0.01" max="1.0" maxWidth="500.0" value="1.0" />

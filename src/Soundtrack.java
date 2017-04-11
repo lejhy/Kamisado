@@ -30,12 +30,12 @@ public class Soundtrack {
 	}
 	
 	public void nextTrack () {
-		currentTrack.add(1).divide(mediaFeed.size());
+		currentTrack.set((currentTrack.get() + 1)%mediaFeed.size());
 		playCurrentTrack();
 	}
 	
 	public void previousTrack() {
-		currentTrack.subtract(1).add(mediaFeed.size()).divide(mediaFeed.size());
+		currentTrack.set((currentTrack.get() - 1 + mediaFeed.size())%mediaFeed.size());
 		playCurrentTrack();
 	}
 	
