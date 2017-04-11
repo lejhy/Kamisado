@@ -29,6 +29,9 @@ public class MainMenuViewController extends Controller{
     	case L:
     		core.loadGameMenu();
     		break;
+    	case T:
+    		core.settingsMenu();
+    		break;
     	case S:
     		core.scoreMenu();
     		break;
@@ -53,6 +56,11 @@ public class MainMenuViewController extends Controller{
     @FXML
     void loadGameMenu(ActionEvent event) {
     	core.loadGameMenu();
+    }
+    
+    @FXML
+    void settings(ActionEvent event){
+    	core.settingsMenu();
     }
     
     @FXML

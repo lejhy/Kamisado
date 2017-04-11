@@ -1,17 +1,25 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.WindowEvent;
 
 
 public class Core extends Observable implements Observer{
 	private FileData data;
+	private Soundtrack soundtrack;
 	private Game game;
 	private Position selection;
 	
@@ -20,11 +28,17 @@ public class Core extends Observable implements Observer{
 	private NewGameViewController newGameViewController;
 	private LoadGameViewController loadGameViewController;
 	private ScoreViewController scoreViewController;
+	private SettingsViewController settingsViewController;
 	private GameViewController gameViewController;
-	
 	
 	public Core () {
 		data = new FileData("Kamisado.config");
+		try {
+			soundtrack = new Soundtrack(getClass().getResourceAsStream("Playlist.txt"));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			exit();
+		}
 		this.game = null;
 		this.selection = new Position(-1,-1);
 	}
@@ -101,6 +115,10 @@ public class Core extends Observable implements Observer{
 	public void scoreMenu() {
 		view.displayScene(scoreViewController);
     }
+	
+	public void settingsMenu() {
+		view.displayScene(settingsViewController);
+	}
 	
 	public void exit() {
 		data.saveDataToFile();
@@ -269,6 +287,12 @@ public class Core extends Observable implements Observer{
 		this.scoreViewController = (ScoreViewController)scoreViewController;
 		this.scoreViewController.setCore(this);
 		this.scoreViewController.setScoreList(data.getScoreList());
+	}
+	
+	public void setSettingsViewController(Controller settingsViewController) {
+		this.settingsViewController = (SettingsViewController)settingsViewController;
+		this.settingsViewController.setCore(this);
+		this.settingsViewController.setSoundtrack(soundtrack);
 	}
 
 	public void setGameViewController(Controller gameViewController) {

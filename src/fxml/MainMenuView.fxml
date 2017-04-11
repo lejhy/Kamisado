@@ -10,7 +10,7 @@
    <children>
       <Label styleClass="header" text="Main Menu">
          <VBox.margin>
-            <Insets bottom="50.0" />
+            <Insets bottom="30.0" />
          </VBox.margin>
          <font>
             <Font size="42.0" />
@@ -27,6 +27,11 @@
          </VBox.margin>
       </Button>
       <Button cancelButton="true" minHeight="50.0" minWidth="250.0" mnemonicParsing="false" onAction="#loadGameMenu" text="Load Game [L]">
+         <VBox.margin>
+            <Insets bottom="20.0" />
+         </VBox.margin>
+      </Button>
+      <Button minHeight="50.0" minWidth="250.0" mnemonicParsing="false" onAction="#settings" text="Settings [T]">
          <VBox.margin>
             <Insets bottom="20.0" />
          </VBox.margin>

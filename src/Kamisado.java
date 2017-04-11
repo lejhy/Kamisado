@@ -18,6 +18,7 @@ public class Kamisado extends Application{
 		core.setNewGameViewController(view.loadFXML("fxml/NewGameView.fxml", "Kamisado.css"));
 		core.setLoadGameViewController(view.loadFXML("fxml/LoadGameView.fxml", "Kamisado.css"));
 		core.setScoreViewController(view.loadFXML("fxml/ScoreView.fxml", "Kamisado.css"));
+		core.setSettingsViewController(view.loadFXML("fxml/SettingsView.fxml", "Kamisado.css"));
 		core.setGameViewController(view.loadFXML("fxml/GameView.fxml", "Kamisado.css"));
 		
 		primaryStage.setResizable(false);
