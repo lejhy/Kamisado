@@ -2,6 +2,4 @@ TODO:
 	Points should be calculated from the Sumo Tower values
 	Confirmation message on saveGame
 	notify user about invalid moves
-
-Bugs:
-	AI does not differ whose turn it is and presumes they rotate
+	Deadlock move should be on the list of valid moves (will break AI)
