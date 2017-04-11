@@ -5,4 +5,3 @@ TODO:
 
 Bugs:
 	AI does not differ whose turn it is and presumes they rotate
-	Two consecutive deadlocks are evaluated as a game over even when the game would continue normally after the second deadlock (game over should only occur if there would be infinite deadlock situation) - could be solved by increasing the gameover deadlock count to three from two

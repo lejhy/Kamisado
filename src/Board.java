@@ -424,7 +424,12 @@ public class Board extends Observable implements Serializable{
 			Value nextColor = getTile(piece.getPosition());
 			piece = getPiece(nextPlayerPosition, nextColor);
 			if (piece.isDeadlocked()) {
-				return true;
+				nextPlayerPosition = getLastPlayerPosition();
+				nextColor = getTile(piece.getPosition());
+				piece = getPiece(nextPlayerPosition, nextColor);
+				if (piece.isDeadlocked()) {
+					return true;
+				}
 			}
 		}
 		return false;
