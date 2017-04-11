@@ -1,5 +1,6 @@
 TODO:
 	Points should be calculated from the Sumo Tower values
+	Sound effects! :)
 	Confirmation message on saveGame
 	notify user about invalid moves
 	Deadlock move should be on the list of valid moves (will break AI)
