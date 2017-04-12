@@ -302,6 +302,9 @@ public class TripleSumo extends Piece {
 		if (isValidBottomSumoPush(new Position(position.x, position.y - 1))) {
 			moves.add(new Move(position.x, position.y, position.x, position.y - 1));
 		}
+		if  (moves.isEmpty() && isDeadLockedAtTop()) {
+			moves.add(new Move(position, position));
+		}
 		return moves;
 	}
 	
@@ -342,6 +345,9 @@ public class TripleSumo extends Piece {
 		moves.addAll(getValidTopDiagonalMoves());
 		if (isValidTopSumoPush(new Position(position.x, position.y + 1))) {
 			moves.add(new Move(position.x, position.y, position.x, position.y + 1));
+		}
+		if  (moves.isEmpty() && isDeadLockedAtBottom()) {
+			moves.add(new Move(position, position));
 		}
 		return moves;
 	}

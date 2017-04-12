@@ -154,6 +154,9 @@ public class Tower extends Piece {
 		List <Move> moves = new ArrayList<Move>();
 		moves.addAll(getValidWhiteStraightMoves());
 		moves.addAll(getValidWhiteDiagonalMoves());
+		if  (moves.isEmpty() && isDeadLockedAtTop()) {
+			moves.add(new Move(position, position));
+		}
 		return moves;
 	}
 	
@@ -192,6 +195,9 @@ public class Tower extends Piece {
 		List <Move> moves = new ArrayList<Move>();
 		moves.addAll(getValidTopStraightMoves());
 		moves.addAll(getValidTopDiagonalMoves());
+		if  (moves.isEmpty() && isDeadLockedAtBottom()) {
+			moves.add(new Move(position, position));
+		}
 		return moves;
 	}
 	
