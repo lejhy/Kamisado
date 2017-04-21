@@ -32,30 +32,30 @@
                   <Insets bottom="50.0" />
                </VBox.margin>
             </Label>
-            <TextField fx:id="player1NameInput" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="25.0" minWidth="200.0">
+            <TextField fx:id="whitePlayerNameInput" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="25.0" minWidth="200.0">
                <VBox.margin>
                   <Insets bottom="50.0" />
                </VBox.margin>
             </TextField>
             <RadioButton minHeight="25.0" minWidth="100.0" mnemonicParsing="false" selected="true" text="Human">
                <toggleGroup>
-                  <ToggleGroup fx:id="player1Type" />
+                  <ToggleGroup fx:id="whitePlayerType" />
                </toggleGroup>
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
             </RadioButton>
-            <RadioButton minHeight="25.0" minWidth="100.0" mnemonicParsing="false" text="Hard AI" toggleGroup="$player1Type">
+            <RadioButton minHeight="25.0" minWidth="100.0" mnemonicParsing="false" text="Hard AI" toggleGroup="$whitePlayerType">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
             </RadioButton>
-            <RadioButton minHeight="25.0" minWidth="100.0" mnemonicParsing="false" text="Easy AI" toggleGroup="$player1Type">
+            <RadioButton minHeight="25.0" minWidth="100.0" mnemonicParsing="false" text="Easy AI" toggleGroup="$whitePlayerType">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
             </RadioButton>
-            <RadioButton minHeight="25.0" minWidth="100.0" mnemonicParsing="false" text="Beginner AI" toggleGroup="$player1Type" />
+            <RadioButton minHeight="25.0" minWidth="100.0" mnemonicParsing="false" text="Beginner AI" toggleGroup="$whitePlayerType" />
          </children>
       </VBox>
       <VBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -113,30 +113,30 @@
                   <Insets bottom="50.0" />
                </VBox.margin>
             </Label>
-            <TextField fx:id="player2NameInput" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="25.0" minWidth="200.0">
+            <TextField fx:id="blackPlayerNameInput" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="25.0" minWidth="200.0">
                <VBox.margin>
                   <Insets bottom="50.0" />
                </VBox.margin>
             </TextField>
             <RadioButton minHeight="25.0" minWidth="100.0" mnemonicParsing="false" selected="true" text="Human">
                <toggleGroup>
-                  <ToggleGroup fx:id="player2Type" />
+                  <ToggleGroup fx:id="blackPlayerType" />
                </toggleGroup>
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
             </RadioButton>
-            <RadioButton minHeight="25.0" minWidth="100.0" mnemonicParsing="false" text="Hard AI" toggleGroup="$player2Type">
+            <RadioButton minHeight="25.0" minWidth="100.0" mnemonicParsing="false" text="Hard AI" toggleGroup="$blackPlayerType">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
             </RadioButton>
-            <RadioButton minHeight="25.0" minWidth="100.0" mnemonicParsing="false" text="Easy AI" toggleGroup="$player2Type">
+            <RadioButton minHeight="25.0" minWidth="100.0" mnemonicParsing="false" text="Easy AI" toggleGroup="$blackPlayerType">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
             </RadioButton>
-            <RadioButton minHeight="25.0" minWidth="100.0" mnemonicParsing="false" text="Beginner AI" toggleGroup="$player2Type" />
+            <RadioButton minHeight="25.0" minWidth="100.0" mnemonicParsing="false" text="Beginner AI" toggleGroup="$blackPlayerType" />
          </children>
       </VBox>
    </children>

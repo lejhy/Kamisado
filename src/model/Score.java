@@ -15,41 +15,41 @@ public class Score extends Observable implements Serializable {
 	private static final long serialVersionUID = 4941493498034387048L;
 	protected int round;
 	protected int points;
-	protected transient IntegerProperty player1Points;
-	protected transient IntegerProperty player2Points;
+	protected transient IntegerProperty whitePoints;
+	protected transient IntegerProperty blackPoints;
 
 	public Score(int points) {
 		round = 1;
 		this.points = points;
-		player1Points = new SimpleIntegerProperty();
-		player1Points.set(0);
-		player2Points = new SimpleIntegerProperty();
-		player2Points.set(0);
+		whitePoints = new SimpleIntegerProperty();
+		whitePoints.set(0);
+		blackPoints = new SimpleIntegerProperty();
+		blackPoints.set(0);
 	}
 
 	public Score(Score score) {
 		round = score.round;
 		points = score.points;
-		player1Points = new SimpleIntegerProperty(score.player1Points.get());
-		player2Points = new SimpleIntegerProperty(score.player2Points.get());
+		whitePoints = new SimpleIntegerProperty(score.whitePoints.get());
+		blackPoints = new SimpleIntegerProperty(score.blackPoints.get());
 	}
 
 	public void updatePoints(List<Piece> pieces) {
-		int player1Points = 0;
-		int player2Points = 0;
+		int whitePoints = 0;
+		int blackPoints = 0;
 		for (Piece piece : pieces) {
 			if (piece.getPlayerPosition() == Value.BOTTOM) {
-				player1Points += piece.getPoints();
+				whitePoints += piece.getPoints();
 			} else {
-				player2Points += piece.getPoints();
+				blackPoints += piece.getPoints();
 			}
 		}
-		this.player1Points.set(player1Points);
-		this.player2Points.set(player2Points);
+		this.whitePoints.set(whitePoints);
+		this.blackPoints.set(blackPoints);
 	}
 
 	public boolean hasNextRound() {
-		if (player1Points.get() < points && player2Points.get() < points) {
+		if (whitePoints.get() < points && blackPoints.get() < points) {
 			return true;
 		} else {
 			return false;
@@ -75,25 +75,25 @@ public class Score extends Observable implements Serializable {
 		return points;
 	}
 
-	public IntegerProperty getPlayer1Points() {
-		return player1Points;
+	public IntegerProperty getWhitePoints() {
+		return whitePoints;
 	}
 
-	public IntegerProperty getPlayer2Points() {
-		return player2Points;
+	public IntegerProperty getBlackPoints() {
+		return blackPoints;
 	}
 
 	private void writeObject(ObjectOutputStream out) throws IOException {
 		out.defaultWriteObject();
-		out.writeInt(player1Points.get());
-		out.writeInt(player2Points.get());
+		out.writeInt(whitePoints.get());
+		out.writeInt(blackPoints.get());
 	}
 
 	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
 		in.defaultReadObject();
-		player1Points = new SimpleIntegerProperty();
-		player1Points.set(in.readInt());
-		player2Points = new SimpleIntegerProperty();
-		player2Points.set(in.readInt());
+		whitePoints = new SimpleIntegerProperty();
+		whitePoints.set(in.readInt());
+		blackPoints = new SimpleIntegerProperty();
+		blackPoints.set(in.readInt());
 	}
 }

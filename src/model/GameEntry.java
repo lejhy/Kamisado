@@ -15,20 +15,20 @@ public class GameEntry implements Serializable {
 
 	private static final long serialVersionUID = 7786195751904987114L;
 	private Game game;
-	private transient StringProperty player1Name;
-	private transient StringProperty player2Name;
-	private transient IntegerProperty player1Points;
-	private transient IntegerProperty player2Points;
+	private transient StringProperty whiteName;
+	private transient StringProperty blackName;
+	private transient IntegerProperty whitePoints;
+	private transient IntegerProperty blackPoints;
 	private transient IntegerProperty points;
 	private transient IntegerProperty turn;
 	private transient SimpleLongProperty time;
 
 	public GameEntry(Game game, long time) {
 		this.game = game;
-		this.player1Name = game.getPlayer1().getName();
-		this.player2Name = game.getPlayer2().getName();
-		this.player1Points = game.getScore().getPlayer1Points();
-		this.player2Points = game.getScore().getPlayer2Points();
+		this.whiteName = game.getWhite().getName();
+		this.blackName = game.getBlack().getName();
+		this.whitePoints = game.getScore().getWhitePoints();
+		this.blackPoints = game.getScore().getBlackPoints();
 		this.points = new SimpleIntegerProperty(game.getScore().getPoints());
 		this.turn = new SimpleIntegerProperty(game.getTurn());
 		this.time = new SimpleLongProperty(time);
@@ -38,20 +38,20 @@ public class GameEntry implements Serializable {
 		return game;
 	}
 
-	public String getPlayer1Name() {
-		return player1Name.get();
+	public String getWhiteName() {
+		return whiteName.get();
 	}
 
-	public String getPlayer2Name() {
-		return player2Name.get();
+	public String getBlackName() {
+		return blackName.get();
 	}
 
-	public int getPlayer1Points() {
-		return player1Points.get();
+	public int getWhitePoints() {
+		return whitePoints.get();
 	}
 
-	public int getPlayer2Points() {
-		return player2Points.get();
+	public int getBlackPoints() {
+		return blackPoints.get();
 	}
 
 	public int getPoints() {
@@ -70,20 +70,20 @@ public class GameEntry implements Serializable {
 		this.game = game;
 	}
 
-	public void setPlayer1Name(String name) {
-		player1Name.set(name);
+	public void setWhiteName(String name) {
+		whiteName.set(name);
 	}
 
-	public void setPlayer2Name(String name) {
-		player2Name.set(name);
+	public void setBlackName(String name) {
+		blackName.set(name);
 	}
 
-	public void setplayer1Points(int points) {
-		player1Points.set(points);
+	public void setwhitePoints(int points) {
+		whitePoints.set(points);
 	}
 
-	public void setplayer2Points(int points) {
-		player2Points.set(points);
+	public void setblackPoints(int points) {
+		blackPoints.set(points);
 	}
 
 	public void setPoints(int points) {
@@ -100,10 +100,10 @@ public class GameEntry implements Serializable {
 
 	private void writeObject(ObjectOutputStream out) throws IOException {
 		out.defaultWriteObject();
-		out.writeObject(player1Name.get());
-		out.writeObject(player2Name.get());
-		out.writeInt(player1Points.get());
-		out.writeInt(player2Points.get());
+		out.writeObject(whiteName.get());
+		out.writeObject(blackName.get());
+		out.writeInt(whitePoints.get());
+		out.writeInt(blackPoints.get());
 		out.writeInt(points.get());
 		out.writeInt(turn.get());
 		out.writeLong(time.get());
@@ -111,14 +111,14 @@ public class GameEntry implements Serializable {
 
 	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
 		in.defaultReadObject();
-		player1Name = new SimpleStringProperty();
-		player1Name.set((String) in.readObject());
-		player2Name = new SimpleStringProperty();
-		player2Name.set((String) in.readObject());
-		player1Points = new SimpleIntegerProperty();
-		player1Points.set(in.readInt());
-		player2Points = new SimpleIntegerProperty();
-		player2Points.set(in.readInt());
+		whiteName = new SimpleStringProperty();
+		whiteName.set((String) in.readObject());
+		blackName = new SimpleStringProperty();
+		blackName.set((String) in.readObject());
+		whitePoints = new SimpleIntegerProperty();
+		whitePoints.set(in.readInt());
+		blackPoints = new SimpleIntegerProperty();
+		blackPoints.set(in.readInt());
 		points = new SimpleIntegerProperty();
 		points.set(in.readInt());
 		turn = new SimpleIntegerProperty();

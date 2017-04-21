@@ -148,16 +148,16 @@ public class GameViewController extends ViewController {
 	private URL location;
 
 	@FXML
-	private Label player2Label;
+	private Label blackLabel;
 
 	@FXML
-	private Label player2Score;
+	private Label blackScore;
 
 	@FXML
-	private Label player1Score;
+	private Label whiteScore;
 
 	@FXML
-	private Label player1Label;
+	private Label whiteLabel;
 
 	@FXML
 	private ProgressIndicator loading;
@@ -265,8 +265,8 @@ public class GameViewController extends ViewController {
 
 	@FXML
 	void initialize() {
-		assert player2Label != null : "fx:id=\"player2Name\" was not injected: check your FXML file 'Game.fxml'.";
-		assert player1Label != null : "fx:id=\"player1Name\" was not injected: check your FXML file 'Game.fxml'.";
+		assert blackLabel != null : "fx:id=\"blackName\" was not injected: check your FXML file 'Game.fxml'.";
+		assert whiteLabel != null : "fx:id=\"whiteName\" was not injected: check your FXML file 'Game.fxml'.";
 		assert loading != null : "fx:id=\"loading\" was not injected: check your FXML file 'Game.fxml'.";
 		assert timer != null : "fx:id=\"timer\" was not injected: check your FXML file 'Game.fxml'.";
 		assert gameView != null : "fx:id=\"gameView\" was not injected: check your FXML file 'Game.fxml'.";
@@ -456,20 +456,20 @@ public class GameViewController extends ViewController {
 		undo.setVisible(false);
 	}
 
-	public void setPlayer1Name(String player1) {
-		player1Label.setText(player1);
+	public void setWhiteName(String white) {
+		whiteLabel.setText(white);
 	}
 
-	public void setPlayer2Name(String player2) {
-		player2Label.setText(player2);
+	public void setBlackName(String black) {
+		blackLabel.setText(black);
 	}
 
-	public void setPlayer1Score(int newScore) {
-		player1Score.setText(String.valueOf(newScore));
+	public void setWhiteScore(int newScore) {
+		whiteScore.setText(String.valueOf(newScore));
 	}
 
-	public void setPlayer2Score(int newScore) {
-		player2Score.setText(String.valueOf(newScore));
+	public void setBlackScore(int newScore) {
+		blackScore.setText(String.valueOf(newScore));
 	}
 
 	public void setGame(Game game) {

@@ -25,16 +25,16 @@ public class ScoreViewController extends ViewController {
 	private TableView<ScoreEntry> scoreTable;
 
 	@FXML
-	private TableColumn<ScoreEntry, String> Player1Name;
+	private TableColumn<ScoreEntry, String> WhiteName;
 
 	@FXML
-	private TableColumn<ScoreEntry, Integer> Player1Score;
+	private TableColumn<ScoreEntry, Integer> WhiteScore;
 
 	@FXML
-	private TableColumn<ScoreEntry, String> player2Name;
+	private TableColumn<ScoreEntry, String> BlackName;
 
 	@FXML
-	private TableColumn<ScoreEntry, Integer> Player2Score;
+	private TableColumn<ScoreEntry, Integer> BlackScore;
 
 	@FXML
 	void keyboardInput(KeyEvent event) {
@@ -55,10 +55,10 @@ public class ScoreViewController extends ViewController {
 	@FXML
 	void initialize() {
 		assert scoreTable != null : "fx:id=\"scoreTable\" was not injected: check your FXML file 'ScoreView.fxml'.";
-		Player1Name.setCellValueFactory(new PropertyValueFactory<ScoreEntry, String>("player1Name"));
-		Player1Score.setCellValueFactory(new PropertyValueFactory<ScoreEntry, Integer>("player1Points"));
-		player2Name.setCellValueFactory(new PropertyValueFactory<ScoreEntry, String>("player2Name"));
-		Player2Score.setCellValueFactory(new PropertyValueFactory<ScoreEntry, Integer>("player2Points"));
+		WhiteName.setCellValueFactory(new PropertyValueFactory<ScoreEntry, String>("whiteName"));
+		WhiteScore.setCellValueFactory(new PropertyValueFactory<ScoreEntry, Integer>("whitePoints"));
+		BlackName.setCellValueFactory(new PropertyValueFactory<ScoreEntry, String>("blackName"));
+		BlackScore.setCellValueFactory(new PropertyValueFactory<ScoreEntry, Integer>("blackPoints"));
 	}
 
 	public void setScoreList(ObservableList<ScoreEntry> sl) {

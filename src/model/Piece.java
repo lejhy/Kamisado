@@ -183,8 +183,8 @@ public abstract class Piece implements Serializable {
 
 	public List<Move> getValidBottomMoves() {
 		List<Move> moves = new ArrayList<Move>();
-		moves.addAll(getValidWhiteStraightMoves());
-		moves.addAll(getValidWhiteDiagonalMoves());
+		moves.addAll(getValidBottomStraightMoves());
+		moves.addAll(getValidBottomDiagonalMoves());
 		if (isValidBottomSumoPush(new Position(position.x, position.y - 1))) {
 			moves.add(new Move(position.x, position.y, position.x, position.y - 1));
 		}
@@ -194,7 +194,7 @@ public abstract class Piece implements Serializable {
 		return moves;
 	}
 
-	public List<Move> getValidWhiteStraightMoves() {
+	public List<Move> getValidBottomStraightMoves() {
 		List<Move> moves = new ArrayList<Move>();
 		int i = 1;
 		Move move = new Move(position.x, position.y, position.x, position.y - i);
@@ -206,7 +206,7 @@ public abstract class Piece implements Serializable {
 		return moves;
 	}
 
-	public List<Move> getValidWhiteDiagonalMoves() {
+	public List<Move> getValidBottomDiagonalMoves() {
 		List<Move> moves = new ArrayList<Move>();
 		int i = 1;
 		Move move = new Move(position.x, position.y, position.x + i, position.y - i);

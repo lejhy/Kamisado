@@ -9,8 +9,8 @@ import javafx.beans.value.ChangeListener;
 public abstract class Game extends Observable implements Serializable {
 
 	private static final long serialVersionUID = -1675794642107456053L;
-	protected Player player1;
-	protected Player player2;
+	protected Player white;
+	protected Player black;
 	protected Board board;
 	protected boolean randomBoard;
 	protected int turn;
@@ -60,17 +60,17 @@ public abstract class Game extends Observable implements Serializable {
 
 	public Player getCurrentPlayer() {
 		if (board.getLastPlayerPosition() == Value.BOTTOM) {
-			return player2;
+			return black;
 		} else {
-			return player1;
+			return white;
 		}
 	}
 
 	public Player getLastPlayer() {
 		if (board.getLastPlayerPosition() == Value.BOTTOM) {
-			return player1;
+			return white;
 		} else {
-			return player2;
+			return black;
 		}
 	}
 
@@ -78,12 +78,12 @@ public abstract class Game extends Observable implements Serializable {
 		return board.getValidPiece();
 	}
 
-	public Player getPlayer1() {
-		return player1;
+	public Player getWhite() {
+		return white;
 	}
 
-	public Player getPlayer2() {
-		return player2;
+	public Player getBlack() {
+		return black;
 	}
 
 	public boolean isGameOver() {
@@ -96,28 +96,28 @@ public abstract class Game extends Observable implements Serializable {
 
 	public Player getRoundWinner() {
 		if (board.getWinnerPosition() == Value.BOTTOM) {
-			return player1;
+			return white;
 		} else {
-			return player2;
+			return black;
 		}
 	}
 
 	public Player getOverallWinner() {
-		if (getPlayer1Points() > getPlayer2Points()) {
-			return player1;
-		} else if (getPlayer1Points() < getPlayer2Points()) {
-			return player2;
+		if (getWhitePoints() > getBlackPoints()) {
+			return white;
+		} else if (getWhitePoints() < getBlackPoints()) {
+			return black;
 		} else {
 			return null;
 		}
 	}
 
-	public int getPlayer1Points() {
-		return score.getPlayer1Points().get();
+	public int getWhitePoints() {
+		return score.getWhitePoints().get();
 	}
 
-	public int getPlayer2Points() {
-		return score.getPlayer2Points().get();
+	public int getBlackPoints() {
+		return score.getBlackPoints().get();
 	}
 
 	public int getRound() {
@@ -162,20 +162,20 @@ public abstract class Game extends Observable implements Serializable {
 		board.addObserver(observer);
 	}
 
-	public String getPlayer1Name() {
-		return player1.getName().get();
+	public String getWhiteName() {
+		return white.getName().get();
 	}
 
-	public String getPlayer2Name() {
-		return player2.getName().get();
+	public String getBlackName() {
+		return black.getName().get();
 	}
 
-	public void addPlayer1PointsListener(ChangeListener<Number> listener) {
-		score.getPlayer1Points().addListener(listener);
+	public void addWhitePointsListener(ChangeListener<Number> listener) {
+		score.getWhitePoints().addListener(listener);
 	}
 
-	public void addPlayer2PointsListener(ChangeListener<Number> listener) {
-		score.getPlayer2Points().addListener(listener);
+	public void addBlackPointsListener(ChangeListener<Number> listener) {
+		score.getBlackPoints().addListener(listener);
 	}
 
 	public List<Move> getValidMoves() {
@@ -190,9 +190,9 @@ public abstract class Game extends Observable implements Serializable {
 		return getCurrentPlayer().getType();
 	}
 
-	public Game(Player player1, Player player2, int points, boolean randomBoard) {
-		this.player1 = player1;
-		this.player2 = player2;
+	public Game(Player white, Player black, int points, boolean randomBoard) {
+		this.white = white;
+		this.black = black;
 		this.randomBoard = randomBoard;
 		board = new Board();
 		turn = 0;
@@ -200,8 +200,8 @@ public abstract class Game extends Observable implements Serializable {
 	}
 
 	public Game(Game game) {
-		this.player1 = new Player(game.getPlayer1());
-		this.player2 = new Player(game.getPlayer2());
+		this.white = new Player(game.getWhite());
+		this.black = new Player(game.getBlack());
 		this.randomBoard = game.randomBoard;
 		board = new Board(game.getBoard());
 		turn = game.getTurn();

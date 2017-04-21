@@ -20,10 +20,10 @@
       </Label>
       <TableView fx:id="loadGameTable">
         <columns>
-          <TableColumn fx:id="player1Name" editable="false" minWidth="-1.0" prefWidth="300.0" sortType="DESCENDING" text="Player 1" />
-          <TableColumn fx:id="player1Score" editable="false" minWidth="-1.0" prefWidth="300.0" sortType="DESCENDING" text="Score" />
-            <TableColumn fx:id="player2Name" editable="false" minWidth="-1.0" prefWidth="300.0" sortType="DESCENDING" text="Player 2" />
-            <TableColumn fx:id="player2Score" editable="false" minWidth="-1.0" prefWidth="300.0" sortType="DESCENDING" text="Score" />
+          <TableColumn fx:id="whiteName" editable="false" minWidth="-1.0" prefWidth="300.0" sortType="DESCENDING" text="Player 1" />
+          <TableColumn fx:id="whiteScore" editable="false" minWidth="-1.0" prefWidth="300.0" sortType="DESCENDING" text="Score" />
+            <TableColumn fx:id="blackName" editable="false" minWidth="-1.0" prefWidth="300.0" sortType="DESCENDING" text="Player 2" />
+            <TableColumn fx:id="blackScore" editable="false" minWidth="-1.0" prefWidth="300.0" sortType="DESCENDING" text="Score" />
             <TableColumn fx:id="points" editable="false" minWidth="-1.0" prefWidth="300.0" sortType="DESCENDING" text="Points" />
             <TableColumn fx:id="turn" editable="false" minWidth="-1.0" prefWidth="300.0" sortType="DESCENDING" text="Turn" />
             <TableColumn fx:id="time" editable="false" minWidth="-1.0" prefWidth="300.0" sortType="DESCENDING" text="Time" />

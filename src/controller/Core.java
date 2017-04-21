@@ -132,20 +132,20 @@ public class Core extends Observable implements Observer {
 		view.displayScene(mainMenuViewController);
 	}
 
-	public void newGame(Player player1, Player player2, int time, int points, boolean randomBoard, Value gameMode) {
+	public void newGame(Player white, Player black, int time, int points, boolean randomBoard, Value gameMode) {
 		if (game != null)
 			game.purge();
 		if (gameMode == Value.SPEED_MODE) {
-			this.game = new SpeedGame(player1, player2, time, points, randomBoard);
+			this.game = new SpeedGame(white, black, time, points, randomBoard);
 		} else {
-			this.game = new NormalGame(player1, player2, points, randomBoard);
+			this.game = new NormalGame(white, black, points, randomBoard);
 		}
 		game.addObserver(this);
-		game.addPlayer1PointsListener((observable, oldValue, newValue) -> {
+		game.addWhitePointsListener((observable, oldValue, newValue) -> {
 			if (game.hasNextRound() == false)
 				data.addScore(game);
 		});
-		game.addPlayer2PointsListener((observable, oldValue, newValue) -> {
+		game.addBlackPointsListener((observable, oldValue, newValue) -> {
 			if (game.hasNextRound() == false)
 				data.addScore(game);
 		});
@@ -159,16 +159,16 @@ public class Core extends Observable implements Observer {
 		game.addObserver(gameViewController);
 		game.addBoardObserver(gameViewController);
 
-		gameViewController.setPlayer1Name(game.getPlayer1Name());
-		gameViewController.setPlayer2Name(game.getPlayer2Name());
+		gameViewController.setWhiteName(game.getWhiteName());
+		gameViewController.setBlackName(game.getBlackName());
 
-		gameViewController.setPlayer1Score(0);
-		gameViewController.setPlayer2Score(0);
-		game.addPlayer1PointsListener((o, ov, nv) -> {
-			gameViewController.setPlayer1Score(nv.intValue());
+		gameViewController.setWhiteScore(0);
+		gameViewController.setBlackScore(0);
+		game.addWhitePointsListener((o, ov, nv) -> {
+			gameViewController.setWhiteScore(nv.intValue());
 		});
-		game.addPlayer2PointsListener((o, ov, nv) -> {
-			gameViewController.setPlayer2Score(nv.intValue());
+		game.addBlackPointsListener((o, ov, nv) -> {
+			gameViewController.setBlackScore(nv.intValue());
 		});
 
 		view.displayScene(gameViewController);

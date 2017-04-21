@@ -37,8 +37,8 @@ public class FileData {
 	}
 
 	public void addScore(Game game) {
-		scoreList.add(new ScoreEntry(game.getPlayer1().getName().get(), game.getPlayer2().getName().get(),
-				game.getScore().getPlayer1Points().get(), game.getScore().getPlayer2Points().get()));
+		scoreList.add(new ScoreEntry(game.getWhite().getName().get(), game.getBlack().getName().get(),
+				game.getScore().getWhitePoints().get(), game.getScore().getBlackPoints().get()));
 	}
 
 	public ObservableList<GameEntry> getGameList() {

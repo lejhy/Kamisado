@@ -23,12 +23,12 @@
    <children>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
          <children>
-            <Label fx:id="player2Label" alignment="CENTER" contentDisplay="CENTER" styleClass="title" text="Player2">
+            <Label fx:id="blackLabel" alignment="CENTER" contentDisplay="CENTER" styleClass="title" text="Black">
                <VBox.margin>
                   <Insets top="30.0" />
                </VBox.margin>
             </Label>
-            <Label fx:id="player2Score" alignment="CENTER" contentDisplay="CENTER" prefHeight="66.0" prefWidth="200.0" styleClass="header" text="0" wrapText="true" />
+            <Label fx:id="blackScore" alignment="CENTER" contentDisplay="CENTER" prefHeight="66.0" prefWidth="200.0" styleClass="header" text="0" wrapText="true" />
             <Label alignment="CENTER" contentDisplay="CENTER" styleClass="subtitle" text="vs.">
                <font>
                   <Font size="21.0" />
@@ -37,8 +37,8 @@
                   <Insets bottom="3.0" />
                </VBox.margin>
             </Label>
-            <Label fx:id="player1Score" alignment="CENTER" contentDisplay="CENTER" prefHeight="66.0" prefWidth="200.0" styleClass="header" text="0" wrapText="true" />
-            <Label fx:id="player1Label" alignment="CENTER" contentDisplay="CENTER" styleClass="title" text="Player1" />
+            <Label fx:id="whiteScore" alignment="CENTER" contentDisplay="CENTER" prefHeight="66.0" prefWidth="200.0" styleClass="header" text="0" wrapText="true" />
+            <Label fx:id="whiteLabel" alignment="CENTER" contentDisplay="CENTER" styleClass="title" text="White" />
             <ProgressIndicator fx:id="loading" visible="false">
                <VBox.margin>
                   <Insets bottom="10.0" top="20.0" />

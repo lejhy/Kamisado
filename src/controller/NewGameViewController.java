@@ -24,10 +24,10 @@ public class NewGameViewController extends ViewController {
 	private URL location;
 
 	@FXML
-	private TextField player1NameInput;
+	private TextField whitePlayerNameInput;
 
 	@FXML
-	private ToggleGroup player1Type;
+	private ToggleGroup whitePlayerType;
 
 	@FXML
 	private ToggleGroup gameMode;
@@ -36,7 +36,7 @@ public class NewGameViewController extends ViewController {
 	private CheckBox randomBoard;
 
 	@FXML
-	private TextField player2NameInput;
+	private TextField blackPlayerNameInput;
 
 	@FXML
 	private Label timeLabel;
@@ -51,30 +51,30 @@ public class NewGameViewController extends ViewController {
 	private Slider pointsInput;
 
 	@FXML
-	private ToggleGroup player2Type;
+	private ToggleGroup blackPlayerType;
 
 	@FXML
 	void keyboardInput(KeyEvent event) {
 		switch (event.getCode()) {
 		case S:
-			if (!player1NameInput.isFocused() && !player2NameInput.isFocused())
+			if (!whitePlayerNameInput.isFocused() && !blackPlayerNameInput.isFocused())
 				newGame();
 			break;
 		case M:
 			RadioButton rb = (RadioButton) gameMode.getSelectedToggle();
-			if (!player1NameInput.isFocused() && !player2NameInput.isFocused())
+			if (!whitePlayerNameInput.isFocused() && !blackPlayerNameInput.isFocused())
 				rb.requestFocus();
 			break;
 		case DIGIT1:
-			if (!player2NameInput.isFocused())
-				player1NameInput.requestFocus();
+			if (!blackPlayerNameInput.isFocused())
+				whitePlayerNameInput.requestFocus();
 			break;
 		case DIGIT2:
-			if (!player1NameInput.isFocused())
-				player2NameInput.requestFocus();
+			if (!whitePlayerNameInput.isFocused())
+				blackPlayerNameInput.requestFocus();
 			break;
 		case B:
-			if (!player1NameInput.isFocused() && !player2NameInput.isFocused())
+			if (!whitePlayerNameInput.isFocused() && !blackPlayerNameInput.isFocused())
 				core.mainMenu();
 			break;
 		default:
@@ -94,11 +94,11 @@ public class NewGameViewController extends ViewController {
 
 	@FXML
 	void initialize() {
-		assert player1NameInput != null : "fx:id=\"player1NameInput\" was not injected: check your FXML file 'NewGameView.fxml'.";
-		assert player1Type != null : "fx:id=\"player1Type\" was not injected: check your FXML file 'NewGameView.fxml'.";
+		assert whitePlayerNameInput != null : "fx:id=\"whitePlayerNameInput\" was not injected: check your FXML file 'NewGameView.fxml'.";
+		assert whitePlayerType != null : "fx:id=\"whitePlayerType\" was not injected: check your FXML file 'NewGameView.fxml'.";
 		assert gameMode != null : "fx:id=\"gameMode\" was not injected: check your FXML file 'NewGameView.fxml'.";
-		assert player2NameInput != null : "fx:id=\"player2NameInput\" was not injected: check your FXML file 'NewGameView.fxml'.";
-		assert player2Type != null : "fx:id=\"player2Type\" was not injected: check your FXML file 'NewGameView.fxml'.";
+		assert blackPlayerNameInput != null : "fx:id=\"blackPlayerNameInput\" was not injected: check your FXML file 'NewGameView.fxml'.";
+		assert blackPlayerType != null : "fx:id=\"blackPlayerType\" was not injected: check your FXML file 'NewGameView.fxml'.";
 		pointsInput.valueProperty().addListener((observable, oldValue, newValue) -> {
 			pointsLabel.setText("Points: " + String.valueOf(newValue.intValue()));
 		});
@@ -118,27 +118,27 @@ public class NewGameViewController extends ViewController {
 	}
 
 	private void newGame() {
-		Value player1TypeValue = getRBSelectionValue(player1Type);
-		Value player2TypeValue = getRBSelectionValue(player2Type);
+		Value whiteTypeValue = getRBSelectionValue(whitePlayerType);
+		Value blackTypeValue = getRBSelectionValue(blackPlayerType);
 		Value gameModeValue = getRBSelectionValue(gameMode);
 		boolean randomBoardValue = randomBoard.isSelected();
 		int time = (int) timeInput.getValue() * 1000;
 		int points = (int) pointsInput.getValue();
 
-		String player1Name = player1NameInput.getText();
-		if (player1Name.equals("")) {
-			player1Name = "Player 1";
+		String whitePlayerName = whitePlayerNameInput.getText();
+		if (whitePlayerName.equals("")) {
+			whitePlayerName = "White";
 		}
 
-		String player2Name = player2NameInput.getText();
-		if (player2Name.equals("")) {
-			player2Name = "Player 2";
+		String blackPlayerName = blackPlayerNameInput.getText();
+		if (blackPlayerName.equals("")) {
+			blackPlayerName = "Black";
 		}
 
-		Player player1 = new Player(player1Name, player1TypeValue);
-		Player player2 = new Player(player2Name, player2TypeValue);
+		Player white = new Player(whitePlayerName, whiteTypeValue);
+		Player black = new Player(blackPlayerName, blackTypeValue);
 
-		core.newGame(player1, player2, time, points, randomBoardValue, gameModeValue);
+		core.newGame(white, black, time, points, randomBoardValue, gameModeValue);
 	}
 
 	public Value getRBSelectionValue(ToggleGroup toggleGroup) {

@@ -20,16 +20,16 @@ public class LoadGameViewController extends ViewController {
 	private TableView<GameEntry> loadGameTable;
 
 	@FXML
-	private TableColumn<GameEntry, String> player1Name;
+	private TableColumn<GameEntry, String> whiteName;
 
 	@FXML
-	private TableColumn<GameEntry, Integer> player1Score;
+	private TableColumn<GameEntry, Integer> whiteScore;
 
 	@FXML
-	private TableColumn<GameEntry, String> player2Name;
+	private TableColumn<GameEntry, String> blackName;
 
 	@FXML
-	private TableColumn<GameEntry, Integer> player2Score;
+	private TableColumn<GameEntry, Integer> blackScore;
 
 	@FXML
 	private TableColumn<GameEntry, Integer> points;
@@ -67,10 +67,10 @@ public class LoadGameViewController extends ViewController {
 	@FXML
 	void initialize() {
 		assert loadGameTable != null : "fx:id=\"loadGameTable\" was not injected: check your FXML file 'LoadGameView.fxml'.";
-		player1Name.setCellValueFactory(new PropertyValueFactory<GameEntry, String>("player1Name"));
-		player1Score.setCellValueFactory(new PropertyValueFactory<GameEntry, Integer>("player1Points"));
-		player2Name.setCellValueFactory(new PropertyValueFactory<GameEntry, String>("player2Name"));
-		player2Score.setCellValueFactory(new PropertyValueFactory<GameEntry, Integer>("player2Points"));
+		whiteName.setCellValueFactory(new PropertyValueFactory<GameEntry, String>("whiteName"));
+		whiteScore.setCellValueFactory(new PropertyValueFactory<GameEntry, Integer>("whitePoints"));
+		blackName.setCellValueFactory(new PropertyValueFactory<GameEntry, String>("blackName"));
+		blackScore.setCellValueFactory(new PropertyValueFactory<GameEntry, Integer>("blackPoints"));
 		points.setCellValueFactory(new PropertyValueFactory<GameEntry, Integer>("points"));
 		turn.setCellValueFactory(new PropertyValueFactory<GameEntry, Integer>("turn"));
 		time.setCellValueFactory(gameEntry -> {
