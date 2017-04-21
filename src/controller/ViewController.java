@@ -2,10 +2,10 @@ package controller;
 
 import java.util.Observer;
 
-public abstract class Controller implements Observer {
+public abstract class ViewController implements Observer {
 	protected Core core;
 
-	public Controller() {
+	public ViewController() {
 	}
 
 	public void setCore(Core core) {

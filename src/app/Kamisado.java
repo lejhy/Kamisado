@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 import view.View;
 
 /**
- * Filip Lejhanec Fraser Steel
+ * Filip Lejhanec, Fraser Steel
  */
 
 public class Kamisado extends Application {
@@ -17,12 +17,12 @@ public class Kamisado extends Application {
 		Core core = new Core();
 		View view = new View(primaryStage);
 		core.setView(view);
-		core.setMainMenuViewController(view.loadFXML("fxml/MainMenuView.fxml", "Kamisado.css"));
-		core.setNewGameViewController(view.loadFXML("fxml/NewGameView.fxml", "Kamisado.css"));
-		core.setLoadGameViewController(view.loadFXML("fxml/LoadGameView.fxml", "Kamisado.css"));
-		core.setScoreViewController(view.loadFXML("fxml/ScoreView.fxml", "Kamisado.css"));
-		core.setSettingsViewController(view.loadFXML("fxml/SettingsView.fxml", "Kamisado.css"));
-		core.setGameViewController(view.loadFXML("fxml/GameView.fxml", "Kamisado.css"));
+		core.setMainMenuViewController(view.loadFXML("MainMenuView.fxml", "Kamisado.css"));
+		core.setNewGameViewController(view.loadFXML("NewGameView.fxml", "Kamisado.css"));
+		core.setLoadGameViewController(view.loadFXML("LoadGameView.fxml", "Kamisado.css"));
+		core.setScoreViewController(view.loadFXML("ScoreView.fxml", "Kamisado.css"));
+		core.setSettingsViewController(view.loadFXML("SettingsView.fxml", "Kamisado.css"));
+		core.setGameViewController(view.loadFXML("GameView.fxml", "Kamisado.css"));
 
 		primaryStage.setResizable(false);
 		primaryStage.setTitle("Kamisado");

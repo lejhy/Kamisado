@@ -15,7 +15,7 @@ import javafx.scene.input.KeyEvent;
 import model.Player;
 import model.Value;
 
-public class NewGameViewController extends Controller {
+public class NewGameViewController extends ViewController {
 
 	@FXML
 	private ResourceBundle resources;

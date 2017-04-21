@@ -9,7 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
 
-public class MainMenuViewController extends Controller {
+public class MainMenuViewController extends ViewController {
 	@FXML
 	private ResourceBundle resources;
 

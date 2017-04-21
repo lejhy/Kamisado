@@ -4,8 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.Kamisado;
-import controller.Controller;
+import controller.ViewController;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,30 +14,30 @@ import javafx.stage.WindowEvent;
 public class View {
 	private Stage stage;
 	private List<Scene> scenes;
-	private List<Controller> controllers;
+	private List<ViewController> controllers;
 
 	public View(Stage stage) {
 		this.stage = stage;
 		this.stage.setResizable(false);
 		this.scenes = new ArrayList<Scene>();
-		this.controllers = new ArrayList<Controller>();
+		this.controllers = new ArrayList<ViewController>();
 	}
 
-	public void displayScene(Controller controller) {
+	public void displayScene(ViewController controller) {
 		Scene scene = findScene(controller);
 		this.stage.setScene(scene);
 	}
 
-	public Controller loadFXML(String fxmlFile, String cssFile) {
+	public ViewController loadFXML(String fxmlFile, String cssFile) {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(Kamisado.class.getResource(fxmlFile));
+			loader.setLocation(getClass().getResource(fxmlFile));
 
 			Scene scene = new Scene(loader.load());
-			Controller controller = loader.getController();
+			ViewController controller = loader.getController();
 
 			if (cssFile != null)
-				scene.getStylesheets().add("Kamisado.css");
+				scene.getStylesheets().add(getClass().getResource(cssFile).toString());
 
 			if (scenes.isEmpty())
 				stage.setScene(scene);
@@ -55,7 +54,7 @@ public class View {
 		}
 	}
 
-	public Scene findScene(Controller controllerToMatch) {
+	public Scene findScene(ViewController controllerToMatch) {
 		for (int i = 0; i < controllers.size(); i++) {
 			if (controllers.get(i) == controllerToMatch) {
 				return scenes.get(i);

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" onKeyPressed="#keyboardInput" prefHeight="600.0" prefWidth="800.0" style="-: #1d1d1d;" styleClass="background" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SettingsViewController">
+<VBox alignment="CENTER" onKeyPressed="#keyboardInput" prefHeight="600.0" prefWidth="800.0" style="-: #1d1d1d;" styleClass="background" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SettingsViewController">
    <children>
       <Label styleClass="header" text="Settings">
          <VBox.margin>

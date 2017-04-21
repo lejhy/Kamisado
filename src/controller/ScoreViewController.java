@@ -13,7 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import model.ScoreEntry;
 
-public class ScoreViewController extends Controller {
+public class ScoreViewController extends ViewController {
 
 	@FXML
 	private ResourceBundle resources;

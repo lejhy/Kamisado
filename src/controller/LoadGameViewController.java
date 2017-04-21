@@ -14,7 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import model.GameEntry;
 
-public class LoadGameViewController extends Controller {
+public class LoadGameViewController extends ViewController {
 
 	@FXML
 	private TableView<GameEntry> loadGameTable;

@@ -34,7 +34,7 @@ import model.Sumo;
 import model.TripleSumo;
 import model.Value;
 
-public class GameViewController extends Controller {
+public class GameViewController extends ViewController {
 	private Position position;
 	private Game game;
 

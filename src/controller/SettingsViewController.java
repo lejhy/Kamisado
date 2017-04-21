@@ -7,9 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.input.KeyEvent;
-import sound.Soundtrack;
 
-public class SettingsViewController extends Controller {
+public class SettingsViewController extends ViewController {
 	Soundtrack soundtrack = null;
 
 	@FXML

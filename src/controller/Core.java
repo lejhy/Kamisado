@@ -18,7 +18,6 @@ import model.Player;
 import model.Position;
 import model.SpeedGame;
 import model.Value;
-import sound.Soundtrack;
 import view.View;
 
 public class Core extends Observable implements Observer {
@@ -129,11 +128,11 @@ public class Core extends Observable implements Observer {
 		System.exit(0);
 	}
 
-	void mainMenu() {
+	public void mainMenu() {
 		view.displayScene(mainMenuViewController);
 	}
 
-	void newGame(Player player1, Player player2, int time, int points, boolean randomBoard, Value gameMode) {
+	public void newGame(Player player1, Player player2, int time, int points, boolean randomBoard, Value gameMode) {
 		if (game != null)
 			game.purge();
 		if (gameMode == Value.SPEED_MODE) {
@@ -269,36 +268,36 @@ public class Core extends Observable implements Observer {
 		});
 	}
 
-	public void setMainMenuViewController(Controller mainMenuViewController) {
+	public void setMainMenuViewController(ViewController mainMenuViewController) {
 		this.mainMenuViewController = (MainMenuViewController) mainMenuViewController;
 		this.addObserver(mainMenuViewController);
 		this.mainMenuViewController.setCore(this);
 	}
 
-	public void setNewGameViewController(Controller newGameViewController) {
+	public void setNewGameViewController(ViewController newGameViewController) {
 		this.newGameViewController = (NewGameViewController) newGameViewController;
 		this.newGameViewController.setCore(this);
 	}
 
-	public void setLoadGameViewController(Controller loadGameViewController) {
+	public void setLoadGameViewController(ViewController loadGameViewController) {
 		this.loadGameViewController = (LoadGameViewController) loadGameViewController;
 		this.loadGameViewController.setCore(this);
 		this.loadGameViewController.setGameList(data.getGameList());
 	}
 
-	public void setScoreViewController(Controller scoreViewController) {
+	public void setScoreViewController(ViewController scoreViewController) {
 		this.scoreViewController = (ScoreViewController) scoreViewController;
 		this.scoreViewController.setCore(this);
 		this.scoreViewController.setScoreList(data.getScoreList());
 	}
 
-	public void setSettingsViewController(Controller settingsViewController) {
+	public void setSettingsViewController(ViewController settingsViewController) {
 		this.settingsViewController = (SettingsViewController) settingsViewController;
 		this.settingsViewController.setCore(this);
 		this.settingsViewController.setSoundtrack(soundtrack);
 	}
 
-	public void setGameViewController(Controller gameViewController) {
+	public void setGameViewController(ViewController gameViewController) {
 		this.gameViewController = (GameViewController) gameViewController;
 		this.addObserver(gameViewController);
 		this.gameViewController.setCore(this);
