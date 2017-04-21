@@ -162,8 +162,8 @@ public class Core extends Observable implements Observer {
 		gameViewController.setWhiteName(game.getWhiteName());
 		gameViewController.setBlackName(game.getBlackName());
 
-		gameViewController.setWhiteScore(0);
-		gameViewController.setBlackScore(0);
+		gameViewController.setWhiteScore(game.getWhitePoints());
+		gameViewController.setBlackScore(game.getBlackPoints());
 		game.addWhitePointsListener((o, ov, nv) -> {
 			gameViewController.setWhiteScore(nv.intValue());
 		});
