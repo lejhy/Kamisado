@@ -176,4 +176,10 @@ public class NewGameViewController extends ViewController {
 	public void update(Observable o, Object arg) {
 
 	}
+
+	@Override
+	public void setCore(Core core) {
+		this.core = core;
+		core.setNewGameViewController(this);
+	}
 }

@@ -849,4 +849,10 @@ public class GameViewController extends ViewController {
 			undo.setVisible(false);
 		}
 	}
+
+	@Override
+	public void setCore(Core core) {
+		this.core = core;
+		core.setGameViewController(this);
+	}
 }

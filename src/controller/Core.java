@@ -21,7 +21,7 @@ import model.Value;
 import view.View;
 
 public class Core extends Observable implements Observer {
-	private FileData data;
+	private FileData fileData;
 	private Soundtrack soundtrack;
 	private Game game;
 	private Position selection;
@@ -34,13 +34,12 @@ public class Core extends Observable implements Observer {
 	private SettingsViewController settingsViewController;
 	private GameViewController gameViewController;
 
-	public Core() {
-		data = new FileData("Kamisado.config");
-		try {
-			soundtrack = new Soundtrack(getClass().getResourceAsStream("Playlist.txt"));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			exit();
+	public Core(FileData fileData, Soundtrack soundtrack, View view) {
+		this.fileData = fileData;
+		this.soundtrack = soundtrack;
+		this.view = view;
+		for (ViewController controller : view.getControllers()){
+			controller.setCore(this);
 		}
 		this.game = null;
 		this.selection = new Position(-1, -1);
@@ -88,7 +87,7 @@ public class Core extends Observable implements Observer {
 	}
 
 	public void saveGame() {
-		data.addGame(game.clone());
+		fileData.addGame(game.clone());
 	}
 
 	public void resumeGame() {
@@ -124,12 +123,12 @@ public class Core extends Observable implements Observer {
 	}
 
 	public void exit() {
-		data.saveDataToFile();
+		fileData.saveDataToFile();
 		System.exit(0);
 	}
 
 	public void mainMenu() {
-		view.displayScene(mainMenuViewController);
+		view.displayScene(getMainMenuViewController());
 	}
 
 	public void newGame(Player white, Player black, int time, int points, boolean randomBoard, Value gameMode) {
@@ -143,11 +142,11 @@ public class Core extends Observable implements Observer {
 		game.addObserver(this);
 		game.addWhitePointsListener((observable, oldValue, newValue) -> {
 			if (game.hasNextRound() == false)
-				data.addScore(game);
+				fileData.addScore(game);
 		});
 		game.addBlackPointsListener((observable, oldValue, newValue) -> {
 			if (game.hasNextRound() == false)
-				data.addScore(game);
+				fileData.addScore(game);
 		});
 		selection = game.getValidPiecePosition();
 		wireGameView();
@@ -258,6 +257,22 @@ public class Core extends Observable implements Observer {
 		setChanged();
 		notifyObservers();
 	}
+	
+	public void setFileData(FileData fileData) {
+		this.fileData = fileData;
+	}
+	
+	public FileData getFileData() {
+		return fileData;
+	}
+	
+	public void setSoundtrack(Soundtrack soundtrack) {
+		this.soundtrack = soundtrack;
+	}
+	
+	public Soundtrack getSoundtrack() {
+		return soundtrack;
+	}
 
 	public void setView(View view) {
 		this.view = view;
@@ -268,38 +283,51 @@ public class Core extends Observable implements Observer {
 		});
 	}
 
-	public void setMainMenuViewController(ViewController mainMenuViewController) {
-		this.mainMenuViewController = (MainMenuViewController) mainMenuViewController;
-		this.addObserver(mainMenuViewController);
-		this.mainMenuViewController.setCore(this);
+	public MainMenuViewController getMainMenuViewController() {
+		return mainMenuViewController;
 	}
 
-	public void setNewGameViewController(ViewController newGameViewController) {
-		this.newGameViewController = (NewGameViewController) newGameViewController;
-		this.newGameViewController.setCore(this);
+	public NewGameViewController getNewGameViewController() {
+		return newGameViewController;
 	}
 
-	public void setLoadGameViewController(ViewController loadGameViewController) {
-		this.loadGameViewController = (LoadGameViewController) loadGameViewController;
-		this.loadGameViewController.setCore(this);
-		this.loadGameViewController.setGameList(data.getGameList());
+	public void setNewGameViewController(NewGameViewController newGameViewController) {
+		this.newGameViewController = newGameViewController;
 	}
 
-	public void setScoreViewController(ViewController scoreViewController) {
-		this.scoreViewController = (ScoreViewController) scoreViewController;
-		this.scoreViewController.setCore(this);
-		this.scoreViewController.setScoreList(data.getScoreList());
+	public LoadGameViewController getLoadGameViewController() {
+		return loadGameViewController;
 	}
 
-	public void setSettingsViewController(ViewController settingsViewController) {
-		this.settingsViewController = (SettingsViewController) settingsViewController;
-		this.settingsViewController.setCore(this);
-		this.settingsViewController.setSoundtrack(soundtrack);
+	public void setLoadGameViewController(LoadGameViewController loadGameViewController) {
+		this.loadGameViewController = loadGameViewController;
 	}
 
-	public void setGameViewController(ViewController gameViewController) {
-		this.gameViewController = (GameViewController) gameViewController;
-		this.addObserver(gameViewController);
-		this.gameViewController.setCore(this);
+	public ScoreViewController getScoreViewController() {
+		return scoreViewController;
+	}
+
+	public void setScoreViewController(ScoreViewController scoreViewController) {
+		this.scoreViewController = scoreViewController;
+	}
+
+	public SettingsViewController getSettingsViewController() {
+		return settingsViewController;
+	}
+
+	public void setSettingsViewController(SettingsViewController settingsViewController) {
+		this.settingsViewController = settingsViewController;
+	}
+
+	public GameViewController getGameViewController() {
+		return gameViewController;
+	}
+
+	public void setGameViewController(GameViewController gameViewController) {
+		this.gameViewController = gameViewController;
+	}
+
+	public void setMainMenuViewController(MainMenuViewController mainMenuViewController) {
+		this.mainMenuViewController = mainMenuViewController;
 	}
 }

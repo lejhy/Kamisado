@@ -8,7 +8,5 @@ public abstract class ViewController implements Observer {
 	public ViewController() {
 	}
 
-	public void setCore(Core core) {
-		this.core = core;
-	}
+	public abstract void setCore(Core core);
 }

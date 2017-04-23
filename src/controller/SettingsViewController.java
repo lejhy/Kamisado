@@ -60,4 +60,11 @@ public class SettingsViewController extends ViewController {
 	public void update(Observable arg0, Object arg1) {
 		// TODO Auto-generated method stub
 	}
+	
+	@Override
+	public void setCore(Core core) {
+		this.core = core;
+		setSoundtrack(core.getSoundtrack());
+		core.setSettingsViewController(this);
+	}
 }

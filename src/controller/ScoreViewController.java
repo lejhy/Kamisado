@@ -70,4 +70,11 @@ public class ScoreViewController extends ViewController {
 		// TODO Auto-generated method stub
 
 	}
+	
+	@Override
+	public void setCore(Core core){
+		this.core = core;
+		setScoreList(core.getFileData().getScoreList());
+		core.setScoreViewController(this);
+	}
 }

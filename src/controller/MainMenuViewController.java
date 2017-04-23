@@ -90,4 +90,11 @@ public class MainMenuViewController extends ViewController {
 			}
 		}
 	}
+
+	@Override
+	public void setCore(Core core) {
+		this.core = core;
+		core.setMainMenuViewController(this);
+		core.addObserver(this);
+	}
 }

@@ -1,6 +1,10 @@
 package app;
 
+import java.io.FileNotFoundException;
+
 import controller.Core;
+import controller.FileData;
+import controller.Soundtrack;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -14,16 +18,24 @@ public class Kamisado extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
-		Core core = new Core();
+		
 		View view = new View(primaryStage);
-		core.setView(view);
-		core.setMainMenuViewController(view.loadFXML("MainMenuView.fxml", "Kamisado.css"));
-		core.setNewGameViewController(view.loadFXML("NewGameView.fxml", "Kamisado.css"));
-		core.setLoadGameViewController(view.loadFXML("LoadGameView.fxml", "Kamisado.css"));
-		core.setScoreViewController(view.loadFXML("ScoreView.fxml", "Kamisado.css"));
-		core.setSettingsViewController(view.loadFXML("SettingsView.fxml", "Kamisado.css"));
-		core.setGameViewController(view.loadFXML("GameView.fxml", "Kamisado.css"));
-
+		FileData fileData = new FileData("Kamisado.config");
+		Soundtrack soundtrack = null;
+		try {
+			soundtrack = new Soundtrack(getClass().getResourceAsStream("Playlist.txt"));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			System.exit(0);
+		}
+		view.loadFXML("MainMenuView.fxml", "Kamisado.css");
+		view.loadFXML("NewGameView.fxml", "Kamisado.css");
+		view.loadFXML("LoadGameView.fxml", "Kamisado.css");
+		view.loadFXML("ScoreView.fxml", "Kamisado.css");
+		view.loadFXML("SettingsView.fxml", "Kamisado.css");
+		view.loadFXML("GameView.fxml", "Kamisado.css");
+		Core core = new Core(fileData, soundtrack, view);
+		
 		primaryStage.setResizable(false);
 		primaryStage.setTitle("Kamisado");
 		primaryStage.getIcons().add(new Image("img/icon.png"));

@@ -53,6 +53,10 @@ public class View {
 			return null;
 		}
 	}
+	
+	public List<ViewController> getControllers() {
+		return controllers;
+	}
 
 	public Scene findScene(ViewController controllerToMatch) {
 		for (int i = 0; i < controllers.size(); i++) {
