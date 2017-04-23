@@ -854,5 +854,6 @@ public class GameViewController extends ViewController {
 	public void setCore(Core core) {
 		this.core = core;
 		core.setGameViewController(this);
+		core.addObserver(this);
 	}
 }

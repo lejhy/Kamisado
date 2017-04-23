@@ -49,6 +49,17 @@ public class Board extends Observable implements Serializable {
 		this.gameOver = new SimpleBooleanProperty(board.isGameOver());
 		this.gameOverCause = board.getGameOverCause();
 	}
+	
+	// Constructor for more optimised shallow copy, only good enough for AI calculations 
+	public Board(Board board, Value[][] tiles, List<List<Move>> previousMoves) {
+		this.tiles = tiles;
+		initPieces(board.getPieces());
+		this.previousMoves = previousMoves;
+		this.lastPlayerPosition = board.lastPlayerPosition;
+		this.lastColor = board.lastColor;
+		this.gameOver = new SimpleBooleanProperty(board.isGameOver());
+		this.gameOverCause = board.getGameOverCause();
+	}
 
 	private void initPreviousMoves() {
 		this.previousMoves = new ArrayList<List<Move>>();

@@ -14,6 +14,8 @@ public final class AI {
 		int b = 10000;
 		int value = 0;
 		Value currentPlayerPos = board.getCurrentPlayerPosition();
+		// create a new local board for shallow copying
+		board = new Board(board);
 		Board newBoard;
 		Move bestMove = new Move(-1, -1, -1, -1);
 		List<Move> moves = board.getValidMoves();
@@ -22,7 +24,7 @@ public final class AI {
 		} else {
 			for (int i = 0; i < moves.size(); i++) {
 				Move move = moves.get(i);
-				newBoard = new Board(board);
+				newBoard = new Board(board, board.getTiles(), board.getPreviousMoves());
 				newBoard.makeMove(move);
 				if (newBoard.isWinningMove(newBoard.getLastPlayerPosition(), move)) {
 					return move;
@@ -66,7 +68,7 @@ public final class AI {
 			} else {
 				for (int i = 0; i < moves.size(); i++) {
 					Move move = moves.get(i);
-					newBoard = new Board(board);
+					newBoard = new Board(board, board.getTiles(), board.getPreviousMoves());
 					newBoard.makeMove(move);
 					if (newBoard.isWinningMove(newBoard.getLastPlayerPosition(), move)) {
 						return -10 * depth;
@@ -103,7 +105,7 @@ public final class AI {
 			} else {
 				for (int i = 0; i < moves.size(); i++) {
 					Move move = moves.get(i);
-					newBoard = new Board(board);
+					newBoard = new Board(board, board.getTiles(), board.getPreviousMoves());
 					newBoard.makeMove(move);
 					if (newBoard.isWinningMove(newBoard.getLastPlayerPosition(), move)) {
 						return 10 * depth;
