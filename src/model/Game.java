@@ -194,7 +194,7 @@ public abstract class Game extends Observable implements Serializable {
 		this.white = white;
 		this.black = black;
 		this.randomBoard = randomBoard;
-		board = new Board();
+		board = new Board(randomBoard);
 		turn = 0;
 		score = new Score(points);
 	}

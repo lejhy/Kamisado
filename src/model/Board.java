@@ -30,8 +30,10 @@ public class Board extends Observable implements Serializable {
 		return tiles;
 	}
 
-	public Board() {
+	public Board(boolean randomizedTiles) {
 		initTiles();
+		if (randomizedTiles)
+			randomizeTiles();
 		initPieces();
 		initPreviousMoves();
 		lastPlayerPosition = Value.TOP;
@@ -50,7 +52,8 @@ public class Board extends Observable implements Serializable {
 		this.gameOverCause = board.getGameOverCause();
 	}
 	
-	// Constructor for more optimised shallow copy, only good enough for AI calculations 
+	// Constructor for more optimised shallow copy
+	// Good for speeding up AI calculations where tiles don't change and previousMoves will be discarded
 	public Board(Board board, Value[][] tiles, List<List<Move>> previousMoves) {
 		this.tiles = tiles;
 		initPieces(board.getPieces());
